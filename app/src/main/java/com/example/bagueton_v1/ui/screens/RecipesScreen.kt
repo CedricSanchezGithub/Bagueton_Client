@@ -1,4 +1,4 @@
-package com.example.bagueton_v1.ui.theme.screens
+package com.example.bagueton_v1.ui.screens
 
 import android.content.res.Configuration
 import androidx.compose.foundation.Image
@@ -23,7 +23,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.bagueton_v1.R
-import com.example.bagueton_v1.ui.theme.Bagueton_v1Theme
 
 @Composable
 fun RecipesScreen() {
@@ -112,6 +111,7 @@ fun RecipesScreen() {
 
 
 @Preview(showBackground = true, showSystemUi = true, uiMode = Configuration.UI_MODE_NIGHT_YES)
+@Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun RecipesScreenPreview() {
 

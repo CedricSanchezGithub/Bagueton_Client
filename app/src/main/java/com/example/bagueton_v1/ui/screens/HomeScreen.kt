@@ -1,4 +1,4 @@
-package com.example.bagueton_v1.ui.theme.screens
+package com.example.bagueton_v1.ui.screens
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
@@ -31,12 +31,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
 import com.example.bagueton_v1.R
-import com.example.bagueton_v1.ui.theme.Bagueton_v1Theme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HomeScreen() {
+fun HomeScreen(
+    navHostController: NavHostController? = null) {
 
     val searchText = remember { mutableStateOf("") }
     Column {

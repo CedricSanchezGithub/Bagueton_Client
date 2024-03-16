@@ -1,4 +1,4 @@
-package com.example.bagueton_v1
+package com.example.bagueton_v1.ui.viewmodel
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -10,8 +10,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.example.bagueton_v1.ui.theme.Bagueton_v1Theme
-import com.example.bagueton_v1.ui.theme.screens.HomeScreen
+import com.example.bagueton_v1.ui.screens.Bagueton_v1Theme
+import com.example.bagueton_v1.ui.screens.HomeScreen
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
