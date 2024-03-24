@@ -5,6 +5,7 @@ import com.example.bagueton_v1.R
 data class Recipe(val id: Int, val name: String, val imageResId: Int, val recipe: String)
 
 
+/*
 val myRecipe = Recipe(
     id = 1,
     name = "Croissant",
@@ -13,3 +14,4 @@ val myRecipe = Recipe(
 )
 
 
+*/

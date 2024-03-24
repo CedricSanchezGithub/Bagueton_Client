@@ -1,4 +1,5 @@
 package com.example.bagueton_v1.ui.screens
+import android.content.res.Configuration.UI_MODE_NIGHT_NO
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
@@ -50,7 +51,8 @@ fun HomeScreen(
             modifier = Modifier,
             searchText = searchText
         )
-        Spacer(modifier = Modifier.height(16.dp))
+        Spacer(Modifier.weight(1f, true))
+
         Row {
             Text(text = "Liste des commandes :", modifier = Modifier.padding(horizontal = 16.dp) )
 
@@ -75,7 +77,8 @@ fun HomeScreen(
             Text(text = "Agenda")
 
         }
-        Spacer(modifier = Modifier.height(16.dp))
+        Spacer(Modifier.weight(1f, true))
+
         Text(text = "Vos recettes les plus utilisées :", modifier = Modifier.padding(horizontal = 16.dp) )
         Spacer(modifier = Modifier.height(16.dp))
 
@@ -106,6 +109,7 @@ fun HomeScreen(
 
 
 @Preview(showBackground = true, showSystemUi = true, uiMode = UI_MODE_NIGHT_YES)
+@Preview(showBackground = true, showSystemUi = true, uiMode = UI_MODE_NIGHT_NO)
 @Composable
 fun HomeScreenPreview() {
 
