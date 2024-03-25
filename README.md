@@ -1,3 +1,6 @@
+![UI](https://github.com/CedricSanchezGithub/Bagueton_Client/assets/129597649/cf5f722c-1c9e-4dc4-9a82-9f944b0bcb0e)
+
+
 # Bagueton Client
 
 Ceci est le côté de l'application Bagueton, une application Android d'outils de boulangerie.
