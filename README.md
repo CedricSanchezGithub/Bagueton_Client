@@ -1,4 +1,4 @@
-![UI](https://github.com/CedricSanchezGithub/Bagueton_Client/assets/129597649/cf5f722c-1c9e-4dc4-9a82-9f944b0bcb0e)
+
 
 
 # Bagueton Client
@@ -19,3 +19,6 @@ Bagueton Client est la seconde partie de mon projet d'étude "Bagueton" servant 
 
 - **Interface** : Kotlin avec Android Jetpack Compose comme framework de développement d'interface utilisateur (UI) .
 - **Backend** : Bagueton API [disponible ici](https://github.com/CedricSanchezGithub/Bagueton_v1).
+
+
+![UI](https://github.com/CedricSanchezGithub/Bagueton_Client/assets/129597649/cf5f722c-1c9e-4dc4-9a82-9f944b0bcb0e)
