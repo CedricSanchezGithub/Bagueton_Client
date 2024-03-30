@@ -1,4 +1,4 @@
-package com.example.bagueton_v1.ui.theme
+package com.example.bagueton_v1.ui.ui.theme
 
 import androidx.compose.ui.graphics.Color
 

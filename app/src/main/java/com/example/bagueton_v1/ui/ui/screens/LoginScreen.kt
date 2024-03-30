@@ -1,4 +1,4 @@
-package com.example.bagueton_v1.ui.screens
+package com.example.bagueton_v1.ui.ui.screens
 
 import android.content.res.Configuration
 import androidx.compose.foundation.layout.Column
@@ -23,6 +23,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
+import com.example.bagueton_v1.ui.screens.Bagueton_v1Theme
+import com.example.bagueton_v1.ui.ui.MyBottomAppBar
 
 @Composable
 fun LoginScreen(

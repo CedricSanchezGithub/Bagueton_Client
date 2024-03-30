@@ -1,4 +1,4 @@
-package com.example.bagueton_v1.ui.screens
+package com.example.bagueton_v1.ui.ui.screens
 
 import android.content.res.Configuration
 import androidx.compose.foundation.Image
@@ -22,10 +22,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
 import com.example.bagueton_v1.R
+import com.example.bagueton_v1.ui.screens.Bagueton_v1Theme
+import com.example.bagueton_v1.ui.ui.MyBottomAppBar
+import com.example.bagueton_v1.ui.ui.SearchBar
+
+
 
 @Composable
-fun RecipesScreen() {
+fun RecipesScreen(navHostController: NavHostController? = null) {
 
     val searchText = remember { mutableStateOf("") }
 
@@ -104,8 +110,7 @@ fun RecipesScreen() {
 
         }
         Spacer(Modifier.weight(1f, true))
-
-        MyBottomAppBar()
+        MyBottomAppBar(navHostController = navHostController)
     }
 }
 
