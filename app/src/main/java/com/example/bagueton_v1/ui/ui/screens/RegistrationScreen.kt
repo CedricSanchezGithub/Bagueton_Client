@@ -20,6 +20,8 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
@@ -31,13 +33,22 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.bagueton_v1.R
 import com.example.bagueton_v1.ui.AccountViewModel
+import com.example.bagueton_v1.ui.BaguetonViewModel
 import com.example.bagueton_v1.ui.screens.Bagueton_v1Theme
 import com.example.bagueton_v1.ui.ui.MyBottomAppBar
 
 @Composable
-fun LoginScreen(navHostController: NavHostController? = null,
+fun RegistrationScreen(navHostController: NavHostController? = null,
                 accountViewModel: AccountViewModel) {
 
+
+
+
+    // États pour stocker le nom d'utilisateur et le mot de passe entrés par l'utilisateur
+    val username = remember { mutableStateOf("") }
+    val password = remember { mutableStateOf("") }
+    // État pour gérer l'affichage des messages d'erreur
+    val errorMessage = remember { mutableStateOf("") }
 
     Column(
         modifier = Modifier
@@ -60,21 +71,31 @@ fun LoginScreen(navHostController: NavHostController? = null,
 
             // Champ pour le nom d'utilisateur
             OutlinedTextField(
-                value = accountViewModel.username.value,
-                onValueChange = { accountViewModel.username.value = it },
-                label = { Text("Nom d'utilisateur") },
+                value = accountViewModel.choosenUsername.value,
+                onValueChange = { accountViewModel.choosenUsername.value = it },
+                label = { Text("Choisir un nom d'utilisateur") },
                 singleLine = true,
                 modifier = Modifier
                     .fillMaxWidth()
             )
 
-            Spacer(modifier = Modifier.height(8.dp))
 
             // Champ pour le mot de passe
             OutlinedTextField(
-                value = accountViewModel.password.value,
-                onValueChange = { accountViewModel.password.value = it },
-                label = { Text("Mot de passe") },
+                value = accountViewModel.choosenPassword.value,
+                onValueChange = {  accountViewModel.choosenPassword.value = it },
+                label = { Text("Choisir un mot de passe") },
+                singleLine = true,
+                visualTransformation = PasswordVisualTransformation(),
+                modifier = Modifier
+                    .fillMaxWidth()
+
+            )
+
+            OutlinedTextField(
+                value = accountViewModel.choosenPasswordAgain.value,
+                onValueChange = {  accountViewModel.choosenPasswordAgain.value = it },
+                label = { Text("Confirmer le mot de passe") },
                 singleLine = true,
                 visualTransformation = PasswordVisualTransformation(),
                 modifier = Modifier
@@ -89,27 +110,33 @@ fun LoginScreen(navHostController: NavHostController? = null,
             Button(
                 onClick = {
                     // Logique de validation ou de connexion
-                    if (accountViewModel.username.value.isNotBlank() && accountViewModel.password.value.isNotBlank()) {
+                    if (username.value.isNotBlank() && password.value.isNotBlank()) {
                         // Supposons que la connexion est réussie
                     } else {
-                        accountViewModel.errorMessage.value = "Nom d'utilisateur ou mot de passe invalide"
+                        errorMessage.value = "Nom d'utilisateur ou mot de passe invalide"
                     }
                 },Modifier.fillMaxWidth(1f)
 
             ) {
-                Text("Se connecter")
+                Text("S'inscrire")
             }
 
             // Affichage des messages d'erreur
-            if (accountViewModel.errorMessage.value.isNotEmpty()) {
+            if (errorMessage.value.isNotEmpty()) {
                 Text(text = "errorMessage.value", color = MaterialTheme.colorScheme.error)
             }
             Spacer(modifier = Modifier.height(8.dp))
+            Row( modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween
+            ){
+
+
+            }
         }
 
 
         Spacer(modifier = Modifier.weight(1f))
-        MyBottomAppBar(navHostController)
+        MyBottomAppBar()
 
     }
 }
@@ -117,11 +144,11 @@ fun LoginScreen(navHostController: NavHostController? = null,
 @Preview(showBackground = true, showSystemUi = true, uiMode = Configuration.UI_MODE_NIGHT_NO)
 @Preview(showBackground = true, showSystemUi = true, uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
-fun LoginScreenPreview() {
+fun RegistrationScreenPreview() {
 
     Bagueton_v1Theme {
         Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
-            LoginScreen(accountViewModel=AccountViewModel())
+            RegistrationScreen(accountViewModel = AccountViewModel())
         }
     }
 }

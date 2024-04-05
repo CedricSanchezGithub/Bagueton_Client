@@ -135,11 +135,8 @@ fun Bagueton_v1Theme(
     useDarkTheme: Boolean = isSystemInDarkTheme(),
     content: @Composable() () -> Unit
 ) {
-    val colors = if (!useDarkTheme) {
-        LightColors
-    } else {
-        DarkColors
-    }
+    val colors = LightColors
+
 
     MaterialTheme(
         colorScheme = colors,

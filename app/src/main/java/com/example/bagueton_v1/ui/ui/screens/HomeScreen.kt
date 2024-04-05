@@ -11,39 +11,44 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
+import coil.compose.rememberAsyncImagePainter
+import coil.compose.rememberImagePainter
 import com.example.bagueton_v1.R
+import com.example.bagueton_v1.ui.BaguetonViewModel
 import com.example.bagueton_v1.ui.screens.Bagueton_v1Theme
 import com.example.bagueton_v1.ui.ui.MyBottomAppBar
 import com.example.bagueton_v1.ui.ui.SearchBar
 
+
+
 @Composable
 fun HomeScreen(
-    navHostController: NavHostController? = null) {
+    navHostController: NavHostController? = null, baguetonViewModel: BaguetonViewModel) {
 
-    val searchText = remember { mutableStateOf("") }
+    LaunchedEffect(key1 = true) {
+        baguetonViewModel.loadRecipes()
+    }
+
     Column {
-        Spacer(modifier = Modifier.height(16.dp))
 
-        Text(text = "Bienvenue, Utilisateur", modifier = Modifier.padding(horizontal = 16.dp) )
-        Spacer(modifier = Modifier.height(16.dp))
-
-        SearchBar(
-            modifier = Modifier,
-            searchText = searchText
-        )
+        SearchBar(modifier = Modifier, baguetonViewModel = BaguetonViewModel(), searchText = baguetonViewModel.searchText.value)
+        Spacer(Modifier.weight(1f, true))
 
         Row {
             Text(text = "Liste des commandes :", modifier = Modifier.padding(horizontal = 16.dp) )
@@ -51,20 +56,26 @@ fun HomeScreen(
         }
         Spacer(modifier = Modifier.height(16.dp))
         LazyRow {
-            // Supposons que vous avez plusieurs images, vous pouvez les ajouter ici
-            items(listOf(R.drawable.babka, R.drawable.croissant, R.drawable.cookie)) { image ->
+            // Prend uniquement les 5 premiers éléments de la liste pour l'affichage
+            val imagesToShow = baguetonViewModel.recipeList.take(5)
+            items(imagesToShow) { recipe ->
                 Image(
-                    painter = painterResource(id = image),
-                    contentDescription = "Image de cookie",
-                    modifier = Modifier.size(150.dp) // Définit la taille de chaque image
+                    painter = rememberAsyncImagePainter(recipe.image),
+                    contentDescription = "Image de ${recipe.title}",
+                    modifier = Modifier.size(150.dp).padding(10.dp)
+                        .clip(RoundedCornerShape(8.dp)).fillMaxSize(),
+                    contentScale = ContentScale.Crop
+
                 )
             }
         }
+
         Spacer(modifier = Modifier.height(16.dp))
+
         Button(onClick = { /*TODO*/ },
             modifier = Modifier
-                .height(40.dp) // Hauteur personnalisée
-                .padding(horizontal = 16.dp) // Padding horizontal
+                .height(40.dp)
+                .padding(horizontal = 16.dp)
         ) {
             Text(text = "Agenda")
 
@@ -75,23 +86,25 @@ fun HomeScreen(
         Spacer(modifier = Modifier.height(16.dp))
 
         LazyRow {
-            items(listOf(R.drawable.ciabatta, R.drawable.viennois, R.drawable.focaccia, R.drawable.croissant, R.drawable.cookie, R.drawable.viennois)) { image ->
+            // Prend uniquement les 3 premiers éléments de la liste pour l'affichage
+            val imagesToShow = baguetonViewModel.recipeList.takeLast(4)
+            items(imagesToShow) { recipe ->
                 Image(
-                    painter = painterResource(id = image),
-                    contentDescription = "Image de cookie",
-                    modifier = Modifier.size(150.dp)
+                    painter = rememberAsyncImagePainter(model = recipe.image),
+                    contentDescription = "Image de ${recipe.title}",
+                    modifier = Modifier.size(150.dp).padding(10.dp)
+                        .clip(RoundedCornerShape(8.dp)).fillMaxSize(),
+                    contentScale = ContentScale.Crop
                 )
             }
         }
         Spacer(modifier = Modifier.height(16.dp))
-        Button(onClick = { navHostController?.navigate("recipesScreen") },
+        Button(onClick = { navHostController?.navigate("ListRecipeScreen") },
             modifier = Modifier
                 .height(40.dp)
                 .padding(horizontal = 16.dp)
         ) {
             Text(text = "Recettes")
-        }
-        Row {
         }
         Spacer(Modifier.weight(1f, true))
         MyBottomAppBar(navHostController)
@@ -106,7 +119,7 @@ fun HomeScreenPreview() {
 
     Bagueton_v1Theme {
         Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
-            HomeScreen()
+            HomeScreen(baguetonViewModel = BaguetonViewModel())
         }
     }
 }

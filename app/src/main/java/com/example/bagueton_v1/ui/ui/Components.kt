@@ -1,17 +1,15 @@
 package com.example.bagueton_v1.ui.ui
 
-import android.content.res.Configuration
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
@@ -24,11 +22,9 @@ import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -41,16 +37,13 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.min
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.example.bagueton_v1.R
-import com.example.bagueton_v1.ui.screens.Bagueton_v1Theme
-import com.example.bagueton_v1.ui.ui.screens.RecipesScreen
-import org.intellij.lang.annotations.JdkConstants.HorizontalAlignment
+import com.example.bagueton_v1.ui.BaguetonViewModel
 
 @Composable
-fun Header(){
+fun Header(baguetonViewModel: BaguetonViewModel){
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
 
         val configuration = LocalConfiguration.current
@@ -58,9 +51,9 @@ fun Header(){
 
         Box(modifier = Modifier
             .fillMaxWidth()) { // Ajoute un padding autour de la Box, si nécessaire
-            SearchBar(modifier = Modifier)
+            SearchBar(modifier = Modifier, baguetonViewModel = BaguetonViewModel())
             Image(
-                painter = painterResource(R.drawable.croissant),
+                painter = painterResource(baguetonViewModel.recipeList.size),
                 contentDescription = "Croissants",
                 modifier = Modifier
                     .fillMaxWidth()
@@ -85,7 +78,7 @@ fun Header(){
             )
         }
 
-        Row {
+       /* Row {
             Image(
                 painter = painterResource(R.drawable.croissant2),
                 contentDescription = "Croissants",
@@ -121,17 +114,20 @@ fun Header(){
                     .padding(12.dp)
                     .clip(RoundedCornerShape(10.dp)),
                 contentScale = ContentScale.Crop)
-        }
+        }*/
     }
 }
 @Composable
-fun SearchBar(modifier: Modifier = Modifier, searchText: MutableState<String>? = null) {
+fun SearchBar(modifier: Modifier = Modifier, searchText: String? = null, baguetonViewModel: BaguetonViewModel) {
 
+    Spacer(modifier = Modifier.height(16.dp))
+    Text(text = "Bienvenue, Utilisateur", modifier = Modifier.padding(horizontal = 16.dp) )
+    Spacer(modifier = Modifier.height(16.dp))
 
     if (searchText != null) {
         TextField(
-            value = searchText.value,
-            onValueChange = { searchText.value = it },
+            value = baguetonViewModel.searchText.value,
+            onValueChange = { baguetonViewModel.searchText.value = it },
             singleLine = true,
             leadingIcon = {
                 Icon(
@@ -141,9 +137,9 @@ fun SearchBar(modifier: Modifier = Modifier, searchText: MutableState<String>? =
                 )
             },
             trailingIcon = {
-                if (searchText.value.isNotEmpty()) {
+                if (baguetonViewModel.searchText.value.isNotEmpty()) {
                     IconButton(onClick = {
-                        searchText.value = ""
+                        baguetonViewModel.searchText.value = ""
                     }) {
                         Icon(
                             imageVector = Icons.Default.Close,
@@ -172,17 +168,17 @@ fun MyBottomAppBar(navHostController: NavHostController? = null) {
                 Modifier.size(40.dp))
         }
         Spacer(Modifier.weight(1f, true))
-        IconButton(onClick = { /* Gérer le clic ici */ }) {
-            Icon(Icons.Filled.Build, contentDescription = "Accueil",
+        IconButton(onClick = { navHostController?.navigate("ToolsScreen") }) {
+            Icon(Icons.Filled.Build, contentDescription = "Outils",
                 Modifier.size(40.dp))
         }
         Spacer(Modifier.weight(1f, true))
-        IconButton(onClick = { /* Gérer le clic ici */ }) {
+        IconButton(onClick = { navHostController?.navigate("FavoriteScreen") }) {
             Icon(Icons.Filled.Favorite, contentDescription = "Favoris",
                 Modifier.size(40.dp))
         }
         Spacer(Modifier.weight(1f, true))
-        IconButton(onClick = { /* Gérer le clic ici */ }) {
+        IconButton(onClick = { navHostController?.navigate("LoginScreen")  }) {
             Icon(Icons.Filled.AccountCircle, contentDescription = "Paramètres",
                 Modifier.size(40.dp))
         }
@@ -209,12 +205,12 @@ fun PreviewMyBottomAppBar() {
 @Preview(showBackground = true, showSystemUi = false)
 @Composable
 fun HeaderPreview() {
-    Header()
+    Header(baguetonViewModel = BaguetonViewModel())
 }
 @Preview(showBackground = true, showSystemUi = false)
 @Composable
 fun SearchBarPreview() {
-    SearchBar()
+    SearchBar(baguetonViewModel = BaguetonViewModel())
 }
 @Preview(showBackground = true, showSystemUi = false)
 @Composable

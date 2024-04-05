@@ -10,7 +10,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import com.example.bagueton_v1.ui.AccountViewModel
 import com.example.bagueton_v1.ui.AppNavigation
+import com.example.bagueton_v1.ui.BaguetonViewModel
 import com.example.bagueton_v1.ui.screens.Bagueton_v1Theme
 import com.example.bagueton_v1.ui.ui.screens.HomeScreen
 
@@ -24,25 +26,9 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    AppNavigation()
+                    AppNavigation(baguetonViewModel = BaguetonViewModel(), accountViewModel = AccountViewModel())
                 }
             }
         }
-    }
-}
-
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    Bagueton_v1Theme {
-        HomeScreen()
     }
 }

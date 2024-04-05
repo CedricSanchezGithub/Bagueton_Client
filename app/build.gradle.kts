@@ -69,18 +69,21 @@ dependencies {
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
     //Requete
-    implementation("com.squareup.okhttp3:okhttp:+")
+    implementation("com.squareup.okhttp3:okhttp:5.0.0-alpha.12")
     //Parsing JSON
-    implementation("com.google.code.gson:gson:+")
+    implementation("com.google.code.gson:gson:2.10.1")
     //Téléchargement d'image
     implementation("com.github.bumptech.glide:compose:1.0.0-beta01")
     //Navigation
-    implementation("androidx.navigation:navigation-compose:2.+")
+    implementation("androidx.navigation:navigation-compose:2.7.7")
     //Utilisation générale
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:+")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.8.1-Beta")
     //LifeCycleScope
-    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.+")
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.7.0")
     //ViewModelScope
-    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.+")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.7.0")
+    // Coil-Compose pour le chargement d'images dans Jetpack Compose.
+    implementation( "io.coil-kt:coil-compose:2.6.0")
+
 
 }

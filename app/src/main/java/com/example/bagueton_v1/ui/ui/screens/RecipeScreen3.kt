@@ -17,7 +17,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.bagueton_v1.ui.model.croissantRecipe
+import com.example.bagueton_v1.ui.BaguetonViewModel
 import com.example.bagueton_v1.ui.model.ingredients
 import com.example.bagueton_v1.ui.screens.Bagueton_v1Theme
 import com.example.bagueton_v1.ui.ui.Header
@@ -26,18 +26,18 @@ import com.example.bagueton_v1.ui.ui.MyBottomAppBar
 @Composable
 fun RecipeScreen3(){
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
-        Header()
+        Header(baguetonViewModel = BaguetonViewModel())
         Spacer(Modifier.weight(1f, true))
 
-            Steps()
+            Steps(baguetonViewModel = BaguetonViewModel())
             Spacer(Modifier.weight(1f, true))
             MyBottomAppBar()
 
     }
 }
 @Composable
-fun Steps() {
-    Text(text = croissantRecipe.steps,
+fun Steps(baguetonViewModel: BaguetonViewModel) {
+    Text(text = baguetonViewModel.stepsRecipe.value,
         fontSize = 20.sp,
         modifier = Modifier.fillMaxWidth(0.7f) // Utilisez 70% de la largeur disponible
     )
