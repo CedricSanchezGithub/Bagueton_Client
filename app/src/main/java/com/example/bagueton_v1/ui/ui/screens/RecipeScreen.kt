@@ -10,16 +10,17 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.NavHostController
 import com.example.bagueton_v1.ui.BaguetonViewModel
 import com.example.bagueton_v1.ui.screens.Bagueton_v1Theme
 import com.example.bagueton_v1.ui.ui.Header
 import com.example.bagueton_v1.ui.ui.MyBottomAppBar
 
 @Composable
-fun RecipeScreen(){
+fun RecipeScreen(id: Long?, navHostController: NavHostController? = null, baguetonViewModel: BaguetonViewModel) {
 
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
-        Header(baguetonViewModel = BaguetonViewModel())
+        Header(baguetonViewModel = BaguetonViewModel(), id)
         Spacer(Modifier.weight(1f, true))
         MyBottomAppBar()
     }
@@ -36,7 +37,7 @@ fun RecipeScreenPreview() {
     Bagueton_v1Theme {
 
         Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
-            RecipeScreen()
+            RecipeScreen(baguetonViewModel = BaguetonViewModel(), id = 1)
         }
     }
 }

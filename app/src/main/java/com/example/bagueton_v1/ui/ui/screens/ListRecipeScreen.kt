@@ -3,6 +3,7 @@ package com.example.bagueton_v1.ui.ui.screens
 import android.content.res.Configuration
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -51,7 +52,6 @@ fun ListRecipeScreen(navHostController: NavHostController? = null, baguetonViewM
         SearchBar(modifier = Modifier, searchText = baguetonViewModel.searchText.value, baguetonViewModel = BaguetonViewModel())
         Row {
             Spacer(Modifier.weight(1f, true))
-
             Button(onClick = {  navHostController?.navigate("createrecipescreen")  }) {
                 Text("Ajouter une recette")
             }
@@ -90,7 +90,7 @@ fun ImageGrid(recipes: List<RecipeBean>) {
                             painter = rememberAsyncImagePainter(recipe.image),
                             contentDescription = "Image for ${recipe.title}",
                             modifier = Modifier
-                                .fillMaxSize(),
+                                .fillMaxSize().clickable {  },
                             contentScale = ContentScale.Crop
                         )
                         Box(

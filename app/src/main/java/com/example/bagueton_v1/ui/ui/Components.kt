@@ -31,6 +31,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shadow
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.painterResource
@@ -39,43 +40,51 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
+import coil.compose.rememberAsyncImagePainter
 import com.example.bagueton_v1.R
 import com.example.bagueton_v1.ui.BaguetonViewModel
 
 @Composable
-fun Header(baguetonViewModel: BaguetonViewModel){
+fun Header(baguetonViewModel: BaguetonViewModel, id :Long?){
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
 
         val configuration = LocalConfiguration.current
         val screenHeight = configuration.screenHeightDp.dp
+        val recipe = baguetonViewModel.recipeList.find { it.id_recipe == id }
 
         Box(modifier = Modifier
-            .fillMaxWidth()) { // Ajoute un padding autour de la Box, si nécessaire
+            .fillMaxWidth()) {
             SearchBar(modifier = Modifier, baguetonViewModel = BaguetonViewModel())
-            Image(
-                painter = painterResource(baguetonViewModel.recipeList.size),
-                contentDescription = "Croissants",
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .clip(RoundedCornerShape(bottomStart = 10.dp, bottomEnd = 10.dp))
-                    .heightIn(max = screenHeight / 2), // Applique un arrondi aux coins de l'Image
-                contentScale = ContentScale.Crop // Ajuste le remplissage de l'image
+            if (recipe != null) {
+                Image(
+                    painter = rememberAsyncImagePainter(recipe.image),
+                    contentDescription = recipe.title,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .clip(RoundedCornerShape(bottomStart = 10.dp, bottomEnd = 10.dp))
+                        .heightIn(max = screenHeight / 2),
+                    contentScale = ContentScale.Crop
 
-            )
-
-            Text(
-                text = "Croissants",
-                fontSize = 40.sp,
-                modifier = Modifier
-                    .align(Alignment.Center) // Centre le texte dans la Box
-                    .padding(16.dp), // Ajoute un padding au texte, si nécessaire
-                color = Color.White, // Assurez-vous que la couleur du texte se démarque sur l'image
-                style = TextStyle(shadow = Shadow( // Optionnel : Ajoute une ombre pour améliorer la lisibilité sur des images variées
-                    color = Color.Black,
-                    offset = Offset(4f, 4f),
-                    blurRadius = 8f)
                 )
-            )
+            }
+
+            if (recipe != null) {
+                recipe.title?.let {
+                    Text(
+                        text = it,
+                        fontSize = 40.sp,
+                        modifier = Modifier
+                            .align(Alignment.Center)
+                            .padding(16.dp),
+                        color = Color.White,
+                        style = TextStyle(shadow = Shadow(
+                            color = Color.Black,
+                            offset = Offset(4f, 4f),
+                            blurRadius = 8f)
+                        )
+                    )
+                }
+            }
         }
 
        /* Row {
@@ -205,7 +214,7 @@ fun PreviewMyBottomAppBar() {
 @Preview(showBackground = true, showSystemUi = false)
 @Composable
 fun HeaderPreview() {
-    Header(baguetonViewModel = BaguetonViewModel())
+    Header(baguetonViewModel = BaguetonViewModel(), null)
 }
 @Preview(showBackground = true, showSystemUi = false)
 @Composable

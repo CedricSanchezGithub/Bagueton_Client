@@ -1,5 +1,5 @@
 package com.example.bagueton_v1.ui.ui.screens
-
+/*
 import android.content.res.Configuration
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -55,4 +55,4 @@ fun RecipeScreen3Preview() {
             RecipeScreen3()
         }
     }
-}
+*/
