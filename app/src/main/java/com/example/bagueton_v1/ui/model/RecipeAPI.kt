@@ -23,7 +23,7 @@ object RecipeAPI {
     val MEDIA_TYPE_JSON = "application/json; charset=utf-8".toMediaType()
     val gson = Gson()
     val client = OkHttpClient()
-    private const val URL_SERVER = "http://2.9.163.31:8081/bagueton"
+    private const val URL_SERVER = "http://90.51.140.217:8081/bagueton"
     // http://localhost:8080 http://2.9.163.31:8081/bagueton
 
 
