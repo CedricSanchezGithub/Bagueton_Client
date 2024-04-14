@@ -128,42 +128,43 @@ fun Header(baguetonViewModel: BaguetonViewModel, id :Long?){
 }
 @Composable
 fun SearchBar(modifier: Modifier = Modifier, searchText: String? = null, baguetonViewModel: BaguetonViewModel) {
+    Column(modifier = modifier) {
+        Spacer(modifier = Modifier.height(16.dp))
+        Text(text = "Bienvenue, Utilisateur", modifier = Modifier.padding(horizontal = 16.dp))
+        Spacer(modifier = Modifier.height(16.dp))
 
-    Spacer(modifier = Modifier.height(16.dp))
-    Text(text = "Bienvenue, Utilisateur", modifier = Modifier.padding(horizontal = 16.dp) )
-    Spacer(modifier = Modifier.height(16.dp))
-
-    if (searchText != null) {
-        TextField(
-            value = baguetonViewModel.searchText.value,
-            onValueChange = { baguetonViewModel.searchText.value = it },
-            singleLine = true,
-            leadingIcon = {
-                Icon(
-                    imageVector = Icons.Default.Search,
-                    tint = MaterialTheme.colorScheme.primary,
-                    contentDescription = null
-                )
-            },
-            trailingIcon = {
-                if (baguetonViewModel.searchText.value.isNotEmpty()) {
-                    IconButton(onClick = {
-                        baguetonViewModel.searchText.value = ""
-                    }) {
-                        Icon(
-                            imageVector = Icons.Default.Close,
-                            contentDescription = "Effacer"
-                        )
+            TextField(
+                value = baguetonViewModel.searchText.value,
+                onValueChange = { baguetonViewModel.searchText.value = it },
+                singleLine = true,
+                leadingIcon = {
+                    Icon(
+                        imageVector = Icons.Default.Search,
+                        tint = MaterialTheme.colorScheme.primary,
+                        contentDescription = null
+                    )
+                },
+                trailingIcon = {
+                    if (baguetonViewModel.searchText.value.isNotEmpty()) {
+                        IconButton(onClick = {
+                            baguetonViewModel.searchText.value = ""
+                        }) {
+                            Icon(
+                                imageVector = Icons.Default.Close,
+                                contentDescription = "Effacer"
+                            )
+                        }
                     }
-                }
-            },
-            placeholder = { Text("Rechercher") },
-            modifier = modifier
-                .fillMaxWidth()
-                .heightIn(min = 56.dp)
-        )
+                },
+                placeholder = { Text("Rechercher") },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .heightIn(min = 56.dp)
+            )
+
     }
 }
+
 @Composable
 fun MyBottomAppBar(navHostController: NavHostController? = null) {
     BottomAppBar(

@@ -16,8 +16,13 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.Button
+import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -45,23 +50,35 @@ import com.example.bagueton_v1.ui.ui.SearchBar
 
 @Composable
 fun ListRecipeScreen(navHostController: NavHostController? = null, baguetonViewModel: BaguetonViewModel) {
-
-    Column (horizontalAlignment = Alignment.CenterHorizontally) {
-        Modifier.fillMaxWidth()
-
-        SearchBar(modifier = Modifier, searchText = baguetonViewModel.searchText.value, baguetonViewModel = BaguetonViewModel())
-        Row {
-            Spacer(Modifier.weight(1f, true))
-            Button(onClick = {  navHostController?.navigate("createrecipescreen")  }) {
-                Text("Ajouter une recette")
+    Scaffold (
+        topBar = {
+            SearchBar(baguetonViewModel = baguetonViewModel)
+        },
+        bottomBar = {
+            MyBottomAppBar(navHostController = navHostController)
+        },
+        floatingActionButton = {
+            FloatingActionButton(
+                containerColor = MaterialTheme.colorScheme.primary,
+                onClick = {  navHostController?.navigate("createrecipescreen")  }) {
+                Icon(Icons.Default.Add, contentDescription = "Add",
+                    Modifier.background(MaterialTheme.colorScheme.primary))
             }
-            Spacer(Modifier.weight(1f, true))
-
         }
-        ImageGrid(recipes = baguetonViewModel.recipeList)
-        Spacer(Modifier.weight(1f, true))
-        Spacer(Modifier.weight(1f, true))
-        MyBottomAppBar(navHostController = navHostController)
+
+    ){innerPadding ->
+
+        Column(
+            modifier = Modifier
+                .padding(innerPadding),
+            verticalArrangement = Arrangement.spacedBy(16.dp),
+        ){
+
+            Column (horizontalAlignment = Alignment.CenterHorizontally) {
+                Modifier.fillMaxWidth()
+                ImageGrid(recipes = baguetonViewModel.recipeList)
+            }
+        }
     }
 }
 
@@ -69,6 +86,7 @@ fun ListRecipeScreen(navHostController: NavHostController? = null, baguetonViewM
 fun ImageGrid(recipes: List<RecipeBean>) {
     // Création d'une liste de sous-listes, chaque sous-liste pouvant contenir jusqu'à deux éléments
     val chunkedRecipes = recipes.chunked(2)
+
 
     // Affiche une grille de recettes avec des images et des titres superposés avec effet de gradient.
     LazyColumn {

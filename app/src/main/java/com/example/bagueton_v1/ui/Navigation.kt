@@ -46,7 +46,7 @@ fun AppNavigation(baguetonViewModel: BaguetonViewModel, accountViewModel: Accoun
     NavHost(navController = navHostController, startDestination = Routes.HomeScreen.route) {
         //Route 1 vers notre HomeScreen
         composable(route = Routes.HomeScreen.route)   { HomeScreen(navHostController, baguetonViewModel) }
-        //Route 2 vers la liste de recettes
+        //Route 2 vers la recettes
         composable(
             route = Routes.RecipeScreen.route,
             arguments = listOf(navArgument("id_recipe") { type = NavType.LongType })
@@ -54,7 +54,8 @@ fun AppNavigation(baguetonViewModel: BaguetonViewModel, accountViewModel: Accoun
             val idNav = it.arguments?.getLong("id_recipe") ?: 10
             RecipeScreen(id = idNav,navHostController, baguetonViewModel)
         }
-
+        // Route 3 vers la liste des recettes
+        composable(route = Routes.ListRecipeScreen.route) { ListRecipeScreen(navHostController, baguetonViewModel)}
         //Route 4 vers ajouter une recette
         composable(route = Routes.CreateRecipeScreen.route){ CreateRecipeScreen(navHostController, baguetonViewModel) }
         //Route 5 vers l'écran de connexion

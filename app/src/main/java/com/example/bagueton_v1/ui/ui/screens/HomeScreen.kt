@@ -2,6 +2,7 @@ package com.example.bagueton_v1.ui.ui.screens
 import android.content.res.Configuration.UI_MODE_NIGHT_NO
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -14,6 +15,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -36,7 +38,6 @@ import com.example.bagueton_v1.ui.ui.MyBottomAppBar
 import com.example.bagueton_v1.ui.ui.SearchBar
 
 
-
 @Composable
 fun HomeScreen(
     navHostController: NavHostController? = null, baguetonViewModel: BaguetonViewModel) {
@@ -45,71 +46,84 @@ fun HomeScreen(
         baguetonViewModel.loadRecipes()
     }
 
-    Column {
-
-        SearchBar(modifier = Modifier, baguetonViewModel = BaguetonViewModel(), searchText = baguetonViewModel.searchText.value)
-        Spacer(Modifier.weight(1f, true))
-
-        Row {
-            Text(text = "Liste des commandes :", modifier = Modifier.padding(horizontal = 16.dp) )
-
-        }
-        Spacer(modifier = Modifier.height(16.dp))
-        LazyRow {
-            // Prend uniquement les 5 premiers éléments de la liste pour l'affichage
-            val imagesToShow = baguetonViewModel.recipeList.take(5)
-            items(imagesToShow) { recipe ->
-                Image(
-                    painter = rememberAsyncImagePainter(recipe.image),
-                    contentDescription = "Image de ${recipe.title}",
-                    modifier = Modifier.size(150.dp).padding(10.dp)
-                        .clip(RoundedCornerShape(8.dp)).fillMaxSize(),
-                    contentScale = ContentScale.Crop
-
-                )
-            }
+    Scaffold (
+        topBar = {
+            SearchBar(baguetonViewModel = baguetonViewModel)
+        },
+        bottomBar = {
+            MyBottomAppBar(navHostController = navHostController)
         }
 
-        Spacer(modifier = Modifier.height(16.dp))
+    ){innerPadding ->
 
-        Button(onClick = { /*TODO*/ },
+        Column(
             modifier = Modifier
-                .height(40.dp)
-                .padding(horizontal = 16.dp)
+                .padding(innerPadding),
+            verticalArrangement = Arrangement.spacedBy(16.dp),
         ) {
-            Text(text = "Agenda")
 
-        }
-        Spacer(Modifier.weight(1f, true))
+            Spacer(modifier = Modifier.weight(1f))
 
-        Text(text = "Vos recettes les plus utilisées :", modifier = Modifier.padding(horizontal = 16.dp) )
-        Spacer(modifier = Modifier.height(16.dp))
-
-        LazyRow {
-            // Prend uniquement les 3 premiers éléments de la liste pour l'affichage
-            val imagesToShow = baguetonViewModel.recipeList.takeLast(4)
-            items(imagesToShow) { recipe ->
-                Image(
-                    painter = rememberAsyncImagePainter(model = recipe.image),
-                    contentDescription = "Image de ${recipe.title}",
-                    modifier = Modifier.size(150.dp).padding(10.dp)
-                        .clip(RoundedCornerShape(8.dp)).fillMaxSize(),
-                    contentScale = ContentScale.Crop
-                )
+            Row {
+                Text(text = "Liste des commandes :", modifier = Modifier.padding(horizontal = 16.dp) )
             }
+            LazyRow {
+                // Prend uniquement les 5 premiers éléments de la liste pour l'affichage
+                val imagesToShow = baguetonViewModel.recipeList.take(5)
+                items(imagesToShow) { recipe ->
+                    Image(
+                        painter = rememberAsyncImagePainter(recipe.image),
+                        contentDescription = "Image de ${recipe.title}",
+                        modifier = Modifier
+                            .size(150.dp)
+                            .padding(10.dp)
+                            .clip(RoundedCornerShape(8.dp))
+                            .fillMaxSize(),
+                        contentScale = ContentScale.Crop
+
+                    )
+                }
+            }
+            Button(onClick = { /*TODO*/ },
+                modifier = Modifier
+                    .height(40.dp)
+                    .padding(horizontal = 16.dp)
+            ) {
+                Text(text = "Agenda")
+
+            }
+            Spacer(modifier = Modifier.weight(1f))
+
+            Text(text = "Vos recettes les plus utilisées :", modifier = Modifier.padding(horizontal = 16.dp) )
+
+            LazyRow {
+                // Prend uniquement les 3 premiers éléments de la liste pour l'affichage
+                val imagesToShow = baguetonViewModel.recipeList.takeLast(4)
+                items(imagesToShow) { recipe ->
+                    Image(
+                        painter = rememberAsyncImagePainter(model = recipe.image),
+                        contentDescription = "Image de ${recipe.title}",
+                        modifier = Modifier
+                            .size(150.dp)
+                            .padding(10.dp)
+                            .clip(RoundedCornerShape(8.dp))
+                            .fillMaxSize(),
+                        contentScale = ContentScale.Crop
+                    )
+                }
+            }
+            Button(onClick = { navHostController?.navigate("ListRecipeScreen") },
+                modifier = Modifier
+                    .height(40.dp)
+                    .padding(horizontal = 16.dp)
+            ) {
+                Text(text = "Recettes")
+            }
+            Spacer(modifier = Modifier.weight(1f))
         }
-        Spacer(modifier = Modifier.height(16.dp))
-        Button(onClick = { navHostController?.navigate("ListRecipeScreen") },
-            modifier = Modifier
-                .height(40.dp)
-                .padding(horizontal = 16.dp)
-        ) {
-            Text(text = "Recettes")
-        }
-        Spacer(Modifier.weight(1f, true))
-        MyBottomAppBar(navHostController)
     }
 }
+
 
 
 @Preview(showBackground = true, showSystemUi = true, uiMode = UI_MODE_NIGHT_YES)
