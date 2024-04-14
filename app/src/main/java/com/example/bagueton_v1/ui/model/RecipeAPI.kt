@@ -1,6 +1,9 @@
 package com.example.bagueton_v1.ui.model
 
 
+import com.example.bagueton_v1.ui.model.RecipeAPI.MEDIA_TYPE_JSON
+import com.example.bagueton_v1.ui.model.RecipeAPI.client
+import com.example.bagueton_v1.ui.model.RecipeAPI.gson
 import com.example.bagueton_v1.ui.model.RecipeAPI.readRecipes
 import com.google.gson.Gson
 import okhttp3.MediaType.Companion.toMediaType
@@ -32,6 +35,32 @@ object RecipeAPI {
         println("Données de la recette '$title' envoyées")
         println(res)
     }
+
+    fun readRecipes() : List<RecipeBean>{
+        var json = sendGet("$URL_SERVER/readrecipes")
+        val res = gson.fromJson(json, Array<RecipeBean>::class.java).toList()
+        println("/readrecipes: $res")
+        return res
+    }
+
+    fun deleteRecipe(id_recipe: Long?, recipeBean: RecipeBean) {
+
+        var res = sendPost("$URL_SERVER/deleteRecipe", RecipeBean(id_recipe = id_recipe))
+        println("Recette <${recipeBean.title}> supprimée")
+    }
+
+    fun sendGet(url: String): String {
+        println("url : $url")
+        val request = Request.Builder().url(url).get().build()
+
+        return client.newCall(request).execute().use { //it:Response
+            if (!it.isSuccessful) {
+                throw Exception("Réponse du serveur incorrect :${it.code}")
+            }
+            it.body.string()
+        }
+    }
+}
     fun sendPost(url: String, toSend: Any?): String {
         println("url : $url")
 
@@ -47,24 +76,3 @@ object RecipeAPI {
             it.body.string()
         }
     }
-
-
-    fun readRecipes() : List<RecipeBean>{
-        var json = sendGet("$URL_SERVER/readrecipes")
-        val res = gson.fromJson(json, Array<RecipeBean>::class.java).toList()
-        println("/readrecipes: $res")
-        return res
-    }
-
-    fun sendGet(url: String): String {
-        println("url : $url")
-        val request = Request.Builder().url(url).get().build()
-
-        return client.newCall(request).execute().use { //it:Response
-            if (!it.isSuccessful) {
-                throw Exception("Réponse du serveur incorrect :${it.code}")
-            }
-            it.body.string()
-        }
-    }
-}

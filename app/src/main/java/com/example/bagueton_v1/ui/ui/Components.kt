@@ -22,6 +22,10 @@ import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Snackbar
+import androidx.compose.material3.SnackbarDuration
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
@@ -36,13 +40,19 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import coil.compose.rememberAsyncImagePainter
 import com.example.bagueton_v1.R
 import com.example.bagueton_v1.ui.BaguetonViewModel
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
 
 @Composable
 fun Header(baguetonViewModel: BaguetonViewModel, id :Long?){
@@ -129,10 +139,6 @@ fun Header(baguetonViewModel: BaguetonViewModel, id :Long?){
 @Composable
 fun SearchBar(modifier: Modifier = Modifier, searchText: String? = null, baguetonViewModel: BaguetonViewModel) {
     Column(modifier = modifier) {
-        Spacer(modifier = Modifier.height(16.dp))
-        Text(text = "Bienvenue, Utilisateur", modifier = Modifier.padding(horizontal = 16.dp))
-        Spacer(modifier = Modifier.height(16.dp))
-
             TextField(
                 value = baguetonViewModel.searchText.value,
                 onValueChange = { baguetonViewModel.searchText.value = it },
@@ -161,6 +167,14 @@ fun SearchBar(modifier: Modifier = Modifier, searchText: String? = null, bagueto
                     .fillMaxWidth()
                     .heightIn(min = 56.dp)
             )
+        Spacer(modifier = Modifier.height(16.dp))
+        Text(text = "Bienvenue, Utilisateur",
+            fontWeight = FontWeight(800),
+            textDecoration = TextDecoration.Underline,
+            modifier = Modifier.padding(horizontal = 16.dp)
+                .fillMaxWidth(),
+            textAlign = TextAlign.Center)
+
 
     }
 }
@@ -204,6 +218,28 @@ fun PreviewInfos(){
         }
     }
 
+}
+
+@Composable
+fun ConfirmationSnackbar(snackbarHostState: SnackbarHostState, scope: CoroutineScope, message: String, baguetonViewModel: BaguetonViewModel) {
+    SnackbarHost(hostState = snackbarHostState) { data ->
+        Snackbar(snackbarData = data,)
+    }
+
+    // Fonction pour montrer le Snackbar avec un message
+    fun showSnackbar() {
+        scope.launch {
+            snackbarHostState.showSnackbar(
+                message = message,
+                actionLabel = "OK",
+                duration = SnackbarDuration.Short,
+                )
+        }
+
+    }
+    // Cette fonction est appelée lorsqu'une recette est correctement envoyée au serveur
+    showSnackbar()
+    baguetonViewModel.snackBarValue.value = false
 }
 
 

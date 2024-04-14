@@ -26,6 +26,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
@@ -65,7 +66,10 @@ fun HomeScreen(
             Spacer(modifier = Modifier.weight(1f))
 
             Row {
-                Text(text = "Liste des commandes :", modifier = Modifier.padding(horizontal = 16.dp) )
+                Text(text = "Liste des commandes :",
+                    modifier = Modifier.padding(horizontal = 16.dp),
+                            textDecoration = TextDecoration.Underline,
+                )
             }
             LazyRow {
                 // Prend uniquement les 5 premiers éléments de la liste pour l'affichage
@@ -94,7 +98,10 @@ fun HomeScreen(
             }
             Spacer(modifier = Modifier.weight(1f))
 
-            Text(text = "Vos recettes les plus utilisées :", modifier = Modifier.padding(horizontal = 16.dp) )
+            Text(text = "Vos recettes les plus utilisées :",
+                modifier = Modifier.padding(horizontal = 16.dp),
+                textDecoration = TextDecoration.Underline,
+            )
 
             LazyRow {
                 // Prend uniquement les 3 premiers éléments de la liste pour l'affichage

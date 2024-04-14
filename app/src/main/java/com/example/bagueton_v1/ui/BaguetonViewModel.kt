@@ -1,5 +1,6 @@
 package com.example.bagueton_v1.ui
 
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
@@ -25,6 +26,7 @@ class BaguetonViewModel : ViewModel() {
     var titleRecipe =  mutableStateOf("")
     var stepsRecipe =  mutableStateOf("")
     var ingredientsRecipe =  mutableStateOf("")
+    var snackBarValue = mutableStateOf(false)
 
 
     // Fonction pour créer une nouvelle recette. Gère l'opération de manière asynchrone à l'aide de coroutines.
@@ -36,6 +38,7 @@ class BaguetonViewModel : ViewModel() {
                 val newRecipe = RecipeBean(title = title, steps = steps, ingredients = ingredient)
                 launch(Dispatchers.Main) { // Bascule vers le thread principal pour effectuer des modifications de l'UI.
                     recipeList.add(newRecipe) // Ajoute la nouvelle recette à la liste observable, déclenchant une mise à jour de l'UI.
+                    snackBarValue.value = true
                 }
             }
             catch (e: IOException) {
