@@ -3,13 +3,18 @@ package com.example.bagueton_v1.ui.model
 
 import com.example.bagueton_v1.ui.model.RecipeAPI.MEDIA_TYPE_JSON
 import com.example.bagueton_v1.ui.model.RecipeAPI.client
+import com.example.bagueton_v1.ui.model.RecipeAPI.createRecipe
+import com.example.bagueton_v1.ui.model.RecipeAPI.deleteRecipe
 import com.example.bagueton_v1.ui.model.RecipeAPI.gson
 import com.example.bagueton_v1.ui.model.RecipeAPI.readRecipes
 import com.google.gson.Gson
+import com.google.gson.JsonSyntaxException
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.RequestBody.Companion.toRequestBody
+import okhttp3.Response
+import java.io.IOException
 
 data class RecipeBean(
     val id_recipe: Long? = null,
@@ -19,6 +24,9 @@ data class RecipeBean(
     val steps: String? = "liste d'étape vide"
 )
 
+fun main() {
+
+}
 
 
 object RecipeAPI {
@@ -26,8 +34,8 @@ object RecipeAPI {
     val MEDIA_TYPE_JSON = "application/json; charset=utf-8".toMediaType()
     val gson = Gson()
     val client = OkHttpClient()
-    private const val URL_SERVER = "http://90.51.140.217:8081/bagueton"
-    // http://localhost:8080 http://2.9.163.31:8081/bagueton
+    private const val URL_SERVER = "http://192.168.1.26:8081/bagueton"
+    // http://localhost:8080 http://90.51.140.217:8081/bagueton
 
 
     fun createRecipe(title: String?, ingredients: String?, steps: String?){
@@ -36,17 +44,31 @@ object RecipeAPI {
         println(res)
     }
 
-    fun readRecipes() : List<RecipeBean>{
-        var json = sendGet("$URL_SERVER/readrecipes")
-        val res = gson.fromJson(json, Array<RecipeBean>::class.java).toList()
-        println("/readrecipes: $res")
-        return res
+    fun readRecipes() : List<RecipeBean> {
+        try {
+            val json = sendGet("$URL_SERVER/readrecipes")
+            val res = Gson().fromJson(json, Array<RecipeBean>::class.java).toList()
+            println("/readrecipes: $res")
+            return res
+        } catch (e: JsonSyntaxException) {
+            println("Erreur de syntaxe JSON: ${e.message}")
+            // Gérer l'erreur de conversion JSON
+        } catch (e: IOException) {
+            println("Erreur d'IO: ${e.message}")
+            // Gérer les erreurs d'entrée/sortie, par exemple un problème de réseau
+        } catch (e: Exception) {
+            println("Erreur inattendue: ${e.message}")
+            // Gérer toute autre exception inattendue
+        }
+        return emptyList() // Retourner une liste vide en cas d'erreur
     }
 
-    fun deleteRecipe(id_recipe: Long?, recipeBean: RecipeBean) {
+    fun deleteRecipe(id_recipe: Long?) {
 
-        var res = sendPost("$URL_SERVER/deleteRecipe", RecipeBean(id_recipe = id_recipe))
-        println("Recette <${recipeBean.title}> supprimée")
+        val res = sendDelete("$URL_SERVER/deleterecipe/$id_recipe")
+        println(res)
+        println("Recette <${id_recipe}> supprimée")
+
     }
 
     fun sendGet(url: String): String {
@@ -76,3 +98,18 @@ object RecipeAPI {
             it.body.string()
         }
     }
+
+fun sendDelete(url: String): String {
+    println("url : $url")
+    val client = OkHttpClient()
+
+    val request = Request.Builder().url(url).delete().build()
+
+    return try {
+        val response: Response = client.newCall(request).execute()
+        response.body.string() ?: "Empty response"
+    } catch (e: IOException) {
+        e.printStackTrace()
+        "Error: ${e.message}"
+    }
+}

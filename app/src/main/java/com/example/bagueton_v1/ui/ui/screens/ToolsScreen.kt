@@ -27,7 +27,7 @@ fun ToolsScreen(
 
     Column {
 
-        SearchBar(modifier = Modifier, baguetonViewModel = BaguetonViewModel(), searchText = baguetonViewModel.searchText.value)
+        SearchBar(modifier = Modifier, baguetonViewModel = BaguetonViewModel())
 
         Row {
             Text(text = "Écran des outils :", modifier = Modifier.padding(horizontal = 16.dp) )

@@ -13,6 +13,7 @@ import com.example.bagueton_v1.ui.ui.screens.FavoriteScreen
 import com.example.bagueton_v1.ui.ui.screens.HomeScreen
 import com.example.bagueton_v1.ui.ui.screens.ListRecipeScreen
 import com.example.bagueton_v1.ui.ui.screens.LoginScreen
+import com.example.bagueton_v1.ui.ui.screens.PrivacyPolicyScreen
 import com.example.bagueton_v1.ui.ui.screens.RecipeScreen
 import com.example.bagueton_v1.ui.ui.screens.ToolsScreen
 
@@ -26,8 +27,9 @@ sealed class Routes(val route: String) {
     //Route 3
     object CreateRecipeScreen : Routes("createRecipeScreen")
     //Route 4
-    object RecipeScreen : Routes("RecipeScreen"){
-        fun withObject(recipe: RecipeBean) = "MatchDetailScreen/${recipe.id_recipe}"
+
+    object RecipeScreen : Routes("RecipeScreen/{id_recipe}") {
+        fun createRoute(id_recipe: Long) = "RecipeScreen/$id_recipe"
     }
     //Route 5
     object LoginScreen : Routes("LoginScreen")
@@ -35,6 +37,8 @@ sealed class Routes(val route: String) {
     object FavoriteScreen : Routes("FavoriteScreen")
     //Route 7
     object ToolsScreen : Routes("ToolsScreen")
+    //Route 7
+    object PrivacyPolicyScreen : Routes("PrivacyPolicyScreen")
 }
 
 @Composable
@@ -46,14 +50,21 @@ fun AppNavigation(baguetonViewModel: BaguetonViewModel, accountViewModel: Accoun
     NavHost(navController = navHostController, startDestination = Routes.HomeScreen.route) {
         //Route 1 vers notre HomeScreen
         composable(route = Routes.HomeScreen.route)   { HomeScreen(navHostController, baguetonViewModel) }
+
+
         //Route 2 vers la recettes
         composable(
             route = Routes.RecipeScreen.route,
             arguments = listOf(navArgument("id_recipe") { type = NavType.LongType })
-        ) {
-            val idNav = it.arguments?.getLong("id_recipe") ?: 10
-            RecipeScreen(id = idNav,navHostController, baguetonViewModel)
+        ) { backStackEntry ->
+            val idRecipe = backStackEntry.arguments?.getLong("id_recipe")
+            if (idRecipe != null) {
+                RecipeScreen(idRecipe, navHostController, baguetonViewModel)
+            }
         }
+
+
+
         // Route 3 vers la liste des recettes
         composable(route = Routes.ListRecipeScreen.route) { ListRecipeScreen(navHostController, baguetonViewModel)}
         //Route 4 vers ajouter une recette
@@ -64,5 +75,7 @@ fun AppNavigation(baguetonViewModel: BaguetonViewModel, accountViewModel: Accoun
         composable(route = Routes.FavoriteScreen.route){ FavoriteScreen(navHostController, baguetonViewModel) }
         //Route 7 vers l'écran d'outils
         composable(route = Routes.ToolsScreen.route){ ToolsScreen(navHostController, baguetonViewModel) }
+        //Route 8 vers les politiques de confidentialitées
+        composable(route = Routes.PrivacyPolicyScreen.route){ PrivacyPolicyScreen(navHostController) }
     }
 }

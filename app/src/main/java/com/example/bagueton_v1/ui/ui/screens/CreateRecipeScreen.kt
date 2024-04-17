@@ -38,16 +38,13 @@ import com.example.bagueton_v1.ui.ui.SearchBar
 @Composable
 fun CreateRecipeScreen(
     navHostController: NavHostController? = null,
-    baguetonViewModel: BaguetonViewModel) {
+    baguetonViewModel: BaguetonViewModel, ) {
 
     // snakebar
     val snackbarHostState = remember { SnackbarHostState() }
     val scope = rememberCoroutineScope()
 
     Scaffold (
-        topBar = {
-            SearchBar(baguetonViewModel = baguetonViewModel)
-        },
         bottomBar = {
             MyBottomAppBar(navHostController = navHostController)
         }
@@ -68,7 +65,7 @@ fun CreateRecipeScreen(
             OutlinedTextField(
                 value = baguetonViewModel.ingredientsRecipe.value,
                 onValueChange = { baguetonViewModel.ingredientsRecipe.value = it },
-                label = { Text("Entrez vos ingrédients, séparés par une virgule") },
+                label = { Text("Entrez vos ingrédients, séparés par une virgule*") },
                 modifier = Modifier
                     .fillMaxWidth() // Remplit la largeur maximale disponible.
                     .height(150.dp) // Définit une hauteur fixe pour le champ de texte
@@ -85,7 +82,7 @@ fun CreateRecipeScreen(
             OutlinedTextField(
                 value = baguetonViewModel.stepsRecipe.value,
                 onValueChange = { baguetonViewModel.stepsRecipe.value = it },
-                label = { Text("Entrez vos étapes de préparation") },
+                label = { Text("Entrez vos étapes de préparation, séparés par une virgule*") },
                 modifier = Modifier
                     .fillMaxWidth() // Remplit la largeur maximale disponible.
                     .height(150.dp) // Définit une hauteur fixe pour le champ de texte
@@ -113,7 +110,7 @@ fun CreateRecipeScreen(
             ) {
                 Text(text = "Créer ma recette")
             }
-
+            Text(text = "* Cela permet un meilleur affiage de la recette. \nUne virgule = un saut de ligne.")
             if (baguetonViewModel.snackBarValue.value){
                 ConfirmationSnackbar(snackbarHostState = snackbarHostState, scope = scope, message = "Recette ajoutée avec succès !", BaguetonViewModel())
             }

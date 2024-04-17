@@ -35,109 +35,27 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shadow
-import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import coil.compose.rememberAsyncImagePainter
-import com.example.bagueton_v1.R
 import com.example.bagueton_v1.ui.BaguetonViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
+
+
 @Composable
-fun Header(baguetonViewModel: BaguetonViewModel, id :Long?){
-    Column(horizontalAlignment = Alignment.CenterHorizontally) {
+fun SearchBar(modifier: Modifier = Modifier, baguetonViewModel: BaguetonViewModel, welcomeMessage: String? = "Bienvenue, utilisateur"
 
-        val configuration = LocalConfiguration.current
-        val screenHeight = configuration.screenHeightDp.dp
-        val recipe = baguetonViewModel.recipeList.find { it.id_recipe == id }
-
-        Box(modifier = Modifier
-            .fillMaxWidth()) {
-            SearchBar(modifier = Modifier, baguetonViewModel = BaguetonViewModel())
-            if (recipe != null) {
-                Image(
-                    painter = rememberAsyncImagePainter(recipe.image),
-                    contentDescription = recipe.title,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .clip(RoundedCornerShape(bottomStart = 10.dp, bottomEnd = 10.dp))
-                        .heightIn(max = screenHeight / 2),
-                    contentScale = ContentScale.Crop
-
-                )
-            }
-
-            if (recipe != null) {
-                recipe.title?.let {
-                    Text(
-                        text = it,
-                        fontSize = 40.sp,
-                        modifier = Modifier
-                            .align(Alignment.Center)
-                            .padding(16.dp),
-                        color = Color.White,
-                        style = TextStyle(shadow = Shadow(
-                            color = Color.Black,
-                            offset = Offset(4f, 4f),
-                            blurRadius = 8f)
-                        )
-                    )
-                }
-            }
-        }
-
-       /* Row {
-            Image(
-                painter = painterResource(R.drawable.croissant2),
-                contentDescription = "Croissants",
-                modifier = Modifier
-                    .size(80.dp)
-                    .padding(12.dp)
-                    .clip(RoundedCornerShape(10.dp)),
-                contentScale = ContentScale.Crop)
-
-            Image(
-                painter = painterResource(R.drawable.croissant3),
-                contentDescription = "Croissants",
-                modifier = Modifier
-                    .size(80.dp)
-                    .padding(12.dp)
-                    .clip(RoundedCornerShape(10.dp)),
-                contentScale = ContentScale.Crop)
-
-            Image(
-                painter = painterResource(R.drawable.croissant4),
-                contentDescription = "Croissants",
-                modifier = Modifier
-                    .size(80.dp)
-                    .padding(12.dp)
-                    .clip(RoundedCornerShape(10.dp)),
-                contentScale = ContentScale.Crop)
-
-            Image(
-                painter = painterResource(R.drawable.component_add_picture),
-                contentDescription = "composant ajouter image",
-                modifier = Modifier
-                    .size(80.dp)
-                    .padding(12.dp)
-                    .clip(RoundedCornerShape(10.dp)),
-                contentScale = ContentScale.Crop)
-        }*/
-    }
-}
-@Composable
-fun SearchBar(modifier: Modifier = Modifier, searchText: String? = null, baguetonViewModel: BaguetonViewModel) {
+) {
     Column(modifier = modifier) {
             TextField(
                 value = baguetonViewModel.searchText.value,
@@ -168,14 +86,14 @@ fun SearchBar(modifier: Modifier = Modifier, searchText: String? = null, bagueto
                     .heightIn(min = 56.dp)
             )
         Spacer(modifier = Modifier.height(16.dp))
-        Text(text = "Bienvenue, Utilisateur",
-            fontWeight = FontWeight(800),
-            textDecoration = TextDecoration.Underline,
-            modifier = Modifier.padding(horizontal = 16.dp)
-                .fillMaxWidth(),
-            textAlign = TextAlign.Center)
-
-
+        if (welcomeMessage != null) {
+            Text(text = welcomeMessage,
+                fontWeight = FontWeight(800),
+                textDecoration = TextDecoration.Underline,
+                modifier = Modifier.padding(horizontal = 16.dp)
+                    .fillMaxWidth(),
+                textAlign = TextAlign.Center)
+        }
     }
 }
 
@@ -248,11 +166,7 @@ fun ConfirmationSnackbar(snackbarHostState: SnackbarHostState, scope: CoroutineS
 fun PreviewMyBottomAppBar() {
     MyBottomAppBar()
 }
-@Preview(showBackground = true, showSystemUi = false)
-@Composable
-fun HeaderPreview() {
-    Header(baguetonViewModel = BaguetonViewModel(), null)
-}
+
 @Preview(showBackground = true, showSystemUi = false)
 @Composable
 fun SearchBarPreview() {
