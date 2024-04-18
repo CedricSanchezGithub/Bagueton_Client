@@ -29,6 +29,9 @@ class BaguetonViewModel : ViewModel() {
     var snackBarValue = mutableStateOf(false)
 
 
+
+
+
     // Fonction pour créer une nouvelle recette. Gère l'opération de manière asynchrone à l'aide de coroutines.
     fun createRecipe(title: String, ingredient: String, steps: String){
         viewModelScope.launch(Dispatchers.Default) {

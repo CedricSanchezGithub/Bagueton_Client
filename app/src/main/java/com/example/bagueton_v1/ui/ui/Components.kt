@@ -1,6 +1,7 @@
 package com.example.bagueton_v1.ui.ui
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -39,6 +40,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
@@ -85,8 +87,8 @@ fun SearchBar(modifier: Modifier = Modifier, baguetonViewModel: BaguetonViewMode
                     .fillMaxWidth()
                     .heightIn(min = 56.dp)
             )
-        Spacer(modifier = Modifier.height(16.dp))
         if (welcomeMessage != null) {
+        Spacer(modifier = Modifier.height(16.dp))
             Text(text = welcomeMessage,
                 fontWeight = FontWeight(800),
                 textDecoration = TextDecoration.Underline,
@@ -100,7 +102,6 @@ fun SearchBar(modifier: Modifier = Modifier, baguetonViewModel: BaguetonViewMode
 @Composable
 fun MyBottomAppBar(navHostController: NavHostController? = null) {
     BottomAppBar(
-        // Personnalisez l'apparence de votre BottomAppBar ici
         containerColor = MaterialTheme.colorScheme.primary,
         contentColor = MaterialTheme.colorScheme.onPrimary,
 

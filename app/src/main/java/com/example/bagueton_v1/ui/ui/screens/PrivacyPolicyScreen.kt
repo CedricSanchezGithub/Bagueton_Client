@@ -76,7 +76,7 @@ fun PrivacyPolicyScreen(navHostController : NavHostController? = null) {
                 Spacer(modifier = Modifier.height(16.dp))
 
                 SectionTitle("Contact")
-                sectionBody("Pour toute question concernant cette politique ou vos données personnelles, n'hésitez pas à nous contacter à admin@bagueton.com.")
+                sectionBody("Pour toute question concernant cette politique ou vos données personnelles, n'hésitez pas à nous contacter à admin@lynxproject.fr.")
             }
         }
     }

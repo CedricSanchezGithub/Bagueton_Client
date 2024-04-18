@@ -11,12 +11,15 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material3.ExtendedFloatingActionButton
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -56,11 +59,12 @@ fun ListRecipeScreen(navHostController: NavHostController? = null, baguetonViewM
             MyBottomAppBar(navHostController = navHostController)
         },
         floatingActionButton = {
-            FloatingActionButton(
+            ExtendedFloatingActionButton(
                 containerColor = MaterialTheme.colorScheme.primary,
                 onClick = {  navHostController?.navigate("createrecipescreen")  }) {
-                Icon(Icons.Default.Add, contentDescription = "Add",
-                    Modifier.background(MaterialTheme.colorScheme.primary))
+                (Icon(Icons.Filled.Edit, "Extended floating action button.",
+                    Modifier.background(MaterialTheme.colorScheme.primary)))
+                Text(text = "Nouvelle recette")
             }
         }
 
@@ -74,14 +78,14 @@ fun ListRecipeScreen(navHostController: NavHostController? = null, baguetonViewM
 
             Column (horizontalAlignment = Alignment.CenterHorizontally) {
                 Modifier.fillMaxWidth()
-                ImageGrid(recipes = baguetonViewModel.recipeList)
+                ImageGrid(recipes = baguetonViewModel.recipeList, navHostController)
             }
         }
     }
 }
 
 @Composable
-fun ImageGrid(recipes: List<RecipeBean>) {
+fun ImageGrid(recipes: List<RecipeBean>, navHostController: NavHostController?) {
     // Création d'une liste de sous-listes, chaque sous-liste pouvant contenir jusqu'à deux éléments
     val chunkedRecipes = recipes.chunked(2)
 
@@ -106,7 +110,8 @@ fun ImageGrid(recipes: List<RecipeBean>) {
                             painter = rememberAsyncImagePainter(recipe.image),
                             contentDescription = "Image for ${recipe.title}",
                             modifier = Modifier
-                                .fillMaxSize().clickable {  },
+                                .fillMaxSize()
+                                .clickable { run { navHostController?.navigate("RecipeScreen/${recipe.id_recipe}") } },
                             contentScale = ContentScale.Crop
                         )
                         Box(

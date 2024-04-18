@@ -54,7 +54,7 @@ fun CreateRecipeScreen(
         Column(horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier.padding(innerPadding)) {
             Spacer(modifier = Modifier.height(16.dp))
-            Text(text = "Laissez vous guider")
+            Text(text = "Nouvelle recette")
             Spacer(modifier = Modifier.height(16.dp))
 
             OutlinedTextField(
@@ -110,7 +110,9 @@ fun CreateRecipeScreen(
             ) {
                 Text(text = "Créer ma recette")
             }
-            Text(text = "* Cela permet un meilleur affiage de la recette. \nUne virgule = un saut de ligne.")
+            Spacer(modifier = Modifier.height(32.dp))
+
+            Text(text = "* Permet un meilleur affichage de la recette. \nUne virgule = un saut de ligne.")
             if (baguetonViewModel.snackBarValue.value){
                 ConfirmationSnackbar(snackbarHostState = snackbarHostState, scope = scope, message = "Recette ajoutée avec succès !", BaguetonViewModel())
             }
