@@ -43,7 +43,6 @@ fun PrivacyPolicyScreen(navHostController : NavHostController? = null) {
                 // Sous-titre et corps du texte
                 Spacer(modifier = Modifier.height(32.dp))
                 SectionTitle("Données Personnelles Collectées")
-                Spacer(modifier = Modifier.height(16.dp))
                 sectionBody(
                     """
             Nous utilisons des services d'authentification tiers, tels que Google et Facebook, pour faciliter votre connexion à notre application. Nous ne stockons aucune donnée personnelle vous concernant sur nos serveurs à part les recettes que vous créez. Ces données ne contiennent aucune information personnelle à moins que vous ne choisissiez d'inclure de telles informations dans vos recettes.

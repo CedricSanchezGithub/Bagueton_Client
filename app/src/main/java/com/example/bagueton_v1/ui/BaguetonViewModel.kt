@@ -22,12 +22,18 @@ class BaguetonViewModel : ViewModel() {
     // Déclaration de listes et variables observables.
     // Ces variables sont observées par l'interface utilisateur (UI) et toute modification déclenchera une mise à jour de l'UI.
     var recipeList = mutableStateListOf<RecipeBean>()
+
     var searchText =   mutableStateOf("")
+
     var titleRecipe =  mutableStateOf("")
     var stepsRecipe =  mutableStateOf("")
     var ingredientsRecipe =  mutableStateOf("")
+
     var snackBarValue = mutableStateOf(false)
 
+    var newTitleRecipe =  mutableStateOf("")
+    var newStepsRecipe =  mutableStateOf("")
+    var newIngredientsRecipe =  mutableStateOf("")
 
 
 
@@ -61,6 +67,24 @@ class BaguetonViewModel : ViewModel() {
                 }
             }
 
+            catch (e: IOException) {
+                e.printStackTrace()
+            }
+        }
+    }
+
+    fun updateRecipe(id_recipe: Long, title: String, ingredient: String, steps: String){
+        viewModelScope.launch(Dispatchers.Default) {
+            // Lance une coroutine dans le contexte du ViewModelScope sur le dispatcher par défaut pour des opérations non bloquantes.
+            try {
+                RecipeAPI.updateRecipe(id_recipe, title = title, steps = steps, ingredients = ingredient)
+                val newRecipe = RecipeBean(title = title, steps = steps, ingredients = ingredient)
+                launch(Dispatchers.Main) { // Bascule vers le thread principal pour effectuer des modifications de l'UI.
+                    recipeList.add(newRecipe) // Ajoute la nouvelle recette à la liste observable, déclenchant une mise à jour de l'UI.
+                    println("Recette $title correctement modifiée")
+                    snackBarValue.value = true
+                }
+            }
             catch (e: IOException) {
                 e.printStackTrace()
             }

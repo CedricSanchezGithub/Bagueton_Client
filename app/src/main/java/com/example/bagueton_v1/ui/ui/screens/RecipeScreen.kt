@@ -2,8 +2,8 @@ package com.example.bagueton_v1.ui.ui.screens
 
 import android.content.res.Configuration
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -16,6 +16,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
@@ -25,7 +29,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shadow
 import androidx.compose.ui.layout.ContentScale
@@ -39,6 +42,7 @@ import androidx.navigation.NavHostController
 import coil.compose.rememberAsyncImagePainter
 import com.example.bagueton_v1.ui.BaguetonViewModel
 import com.example.bagueton_v1.ui.model.RecipeBean
+import com.example.bagueton_v1.ui.previewBaguetonViewModel
 import com.example.bagueton_v1.ui.screens.Bagueton_v1Theme
 import com.example.bagueton_v1.ui.ui.MyBottomAppBar
 import com.example.bagueton_v1.ui.ui.SearchBar
@@ -50,26 +54,42 @@ fun RecipeScreen(id_recipe: Long?,
 ) {
     Scaffold (
         topBar = {
-            SearchBar(baguetonViewModel = baguetonViewModel, welcomeMessage = null)
+            SearchBar(baguetonViewModel = baguetonViewModel,welcomeMessage = "Bienvenue, utilisateur",
+                navHostController = navHostController
+            )
         },
         bottomBar = {
             MyBottomAppBar(navHostController = navHostController,
             )
-        }){innerPadding ->
-        val recipe = baguetonViewModel.recipeList.find { it.id_recipe == id_recipe }
+
+        },
+        floatingActionButton = {
+            FloatingActionButton(
+
+                containerColor = MaterialTheme.colorScheme.primary,
+                onClick = {  navHostController?.navigate("UpdateRecipeScreenRecipeScreen.kt/${id_recipe}")  }) {
+                (Icon(
+                    Icons.Filled.Edit, "Extended floating action button.",
+                    Modifier.background(MaterialTheme.colorScheme.primary)))
+            }
+        },)
+    {innerPadding ->
+        val recipe = baguetonViewModel.recipeList.find { it.idRecipe == id_recipe }
         val scrollState = rememberScrollState()
 
         Column(horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier
                 .background(MaterialTheme.colorScheme.secondaryContainer)
                 .padding(innerPadding)
+                .fillMaxHeight()
                 .verticalScroll(scrollState),) {
             if (recipe != null) {
+
                 HeaderRecipeScreen(baguetonViewModel, recipe)
             }
             Spacer(modifier = Modifier.height(16.dp))
             if (recipe != null) {
-                BodyRecipeScreen(baguetonViewModel, id_recipe, recipe)
+                BodyRecipeScreen(recipe)
             }
         }
     }
@@ -77,39 +97,35 @@ fun RecipeScreen(id_recipe: Long?,
 
 @Composable
 fun HeaderRecipeScreen(baguetonViewModel: BaguetonViewModel, recipe: RecipeBean) {
+    Modifier.padding(16.dp)
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
         val configuration = LocalConfiguration.current
         val screenHeight = configuration.screenHeightDp.dp
 
-        Box(modifier = Modifier.fillMaxWidth()) {
-
+        Box()
+        {
             recipe.let {
                 Image(
                     painter = rememberAsyncImagePainter(it.image),
                     contentDescription = it.title,
                     modifier = Modifier
                         .fillMaxWidth()
-                        .heightIn(max = screenHeight / 2)
-                        .clip(RoundedCornerShape(0.dp, 8.dp, 20.dp, 20.dp)),
+                        .heightIn(max = screenHeight / 3)
+                        .padding(8.dp)
+                        .border(1.dp, MaterialTheme.colorScheme.primary, RoundedCornerShape(50.dp, 160.dp, 50.dp, 160.dp))
+                        .clip(RoundedCornerShape(50.dp, 160.dp, 50.dp, 160.dp)),
                     contentScale = ContentScale.Crop
                 )
 
                 Text(
                     text = it.title.orEmpty(),
-                    fontSize = 40.sp,
+                    fontSize = 30.sp,
+                    textAlign = TextAlign.End,
                     modifier = Modifier
                         .align(Alignment.BottomCenter)
+                        .padding(32.dp)
                         .fillMaxWidth()
-                        .height(100.dp)
-                        .background(
-                            Brush.verticalGradient(
-                                colors = listOf(
-                                    Color.Transparent,
-                                    Color.Black.copy(alpha = 0.7f)
-                                ),
-                                startY = Float.POSITIVE_INFINITY
-                            )
-                        ),
+                        .height(30.dp),
                     color = Color.White,
                     style = TextStyle(
                         shadow = Shadow(
@@ -127,29 +143,53 @@ fun HeaderRecipeScreen(baguetonViewModel: BaguetonViewModel, recipe: RecipeBean)
 
 
 @Composable
-fun BodyRecipeScreen(baguetonViewModel: BaguetonViewModel, id_recipe: Long?, recipe: RecipeBean){
+fun BodyRecipeScreen(recipe: RecipeBean){
 
 
-    Column {
+    Column(Modifier.padding(32.dp)) {
+        Box(
+            modifier = Modifier
+                .fillMaxHeight()
+                .fillMaxWidth()
+                .background(MaterialTheme.colorScheme.background, RoundedCornerShape(20.dp, 20.dp, 20.dp, 20.dp))
+                .clip(RoundedCornerShape(20.dp, 20.dp, 20.dp, 20.dp))
+                .align(Alignment.CenterHorizontally)
+                .border(1.dp, MaterialTheme.colorScheme.primary, RoundedCornerShape(20.dp, 20.dp, 20.dp, 20.dp))
+                .padding(32.dp)
 
-        recipe.ingredients?.let {
-            Text(text = it.replace(", ", "\n"),
-                textAlign = TextAlign.Center,
-
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .fillMaxHeight()
-            )}
-
+        ) {
+            recipe.ingredients?.let {
+                Text(
+                    text = it.replace(", ", "\n"),
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .fillMaxHeight()
+                        .align(Alignment.Center)  // Centrer le texte dans la Box
+                )
+            }
+        }
         Spacer(modifier = Modifier.height(16.dp))
 
         recipe.steps?.let {
-            Text(text = it.replace(", ", "\n"),
-                textAlign = TextAlign.Center,
+            Box(
                 modifier = Modifier
-                    .fillMaxWidth()
                     .fillMaxHeight()
-            )
+                    .fillMaxWidth()
+                    .background(MaterialTheme.colorScheme.background, RoundedCornerShape(20.dp, 20.dp, 20.dp, 20.dp))
+                    .clip(RoundedCornerShape(20.dp, 20.dp, 20.dp, 20.dp))
+                    .align(Alignment.CenterHorizontally)
+                    .border(1.dp, MaterialTheme.colorScheme.primary, RoundedCornerShape(20.dp, 20.dp, 20.dp, 20.dp))
+                    .padding(32.dp)
+
+
+            ) {
+                Text(
+                    text = it.replace(", ", "\n"),
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier.align(Alignment.Center)  // Centrer le texte dans la Box
+                )
+            }
         }
         Spacer(modifier = Modifier.height(16.dp))
     }
@@ -162,26 +202,13 @@ fun BodyRecipeScreen(baguetonViewModel: BaguetonViewModel, id_recipe: Long?, rec
 @Composable
 
 fun RecipeScreenPreview() {
-    // Création d'un RecipeBean factice
-    fun mockRecipe() = RecipeBean(
-        id_recipe = 1L,
-        title = "Pain à l'ancienne",
-        ingredients = "Farine, Eau, Levure, Sel",
-        image = "http://90.51.140.217:8081/campagne.jpg", // Utilisez une URL d'image accessible
-        steps = "1. Mélanger tous les ingrédients, 2. Pétrir la pâte, 3. Laisser reposer la pâte, 4. Façonner et cuire à 240°C pendant 30 minutes."
-    )
 
-
-    // Création d'un BaguetonViewModel factice
-    fun mockBaguetonViewModel() = BaguetonViewModel().apply {
-        // Ajouter la recette factice à la liste des recettes
-        recipeList.add(mockRecipe())
-    }
     Bagueton_v1Theme {
         Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
-            RecipeScreen(
-                id_recipe = 1L,  // ID de la recette factice
-                baguetonViewModel = mockBaguetonViewModel()
+
+            RecipeScreen(  // ID de la recette factice
+                baguetonViewModel = previewBaguetonViewModel(),
+                id_recipe = 3000
             )
         }
     }

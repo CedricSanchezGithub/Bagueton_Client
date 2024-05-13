@@ -84,6 +84,9 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.7.0")
     // Coil-Compose pour le chargement d'images dans Jetpack Compose.
     implementation( "io.coil-kt:coil-compose:2.6.0")
+    // Ajoute plus de choix aux icones
+    implementation ("androidx.compose.material:material-icons-core:1.0.1") // Vérifiez la version la plus récente
+    implementation ("androidx.compose.material:material-icons-extended:1.0.1")
 
 
 }

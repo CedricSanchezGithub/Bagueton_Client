@@ -3,10 +3,7 @@ package com.example.bagueton_v1.ui.model
 
 import com.example.bagueton_v1.ui.model.RecipeAPI.MEDIA_TYPE_JSON
 import com.example.bagueton_v1.ui.model.RecipeAPI.client
-import com.example.bagueton_v1.ui.model.RecipeAPI.createRecipe
-import com.example.bagueton_v1.ui.model.RecipeAPI.deleteRecipe
 import com.example.bagueton_v1.ui.model.RecipeAPI.gson
-import com.example.bagueton_v1.ui.model.RecipeAPI.readRecipes
 import com.google.gson.Gson
 import com.google.gson.JsonSyntaxException
 import okhttp3.MediaType.Companion.toMediaType
@@ -17,7 +14,7 @@ import okhttp3.Response
 import java.io.IOException
 
 data class RecipeBean(
-    val id_recipe: Long? = null,
+    val idRecipe: String? = null,
     val title: String? = null,
     val image: String? = "R.drawable.addimg",
     val ingredients: String? = "liste d'ingrédients vide",
@@ -44,6 +41,12 @@ object RecipeAPI {
         println(res)
     }
 
+    fun updateRecipe(idRecipe: String?, title: String?, ingredients: String?, steps: String?){
+        val res = sendPost("$URL_SERVER/updaterecipe/$idRecipe", RecipeBean(null, title, image = null, ingredients, steps))
+        println("Données de la recette '$title' modifiées")
+        println(res)
+    }
+
     fun readRecipes() : List<RecipeBean> {
         try {
             val json = sendGet("$URL_SERVER/readrecipes")
@@ -63,15 +66,15 @@ object RecipeAPI {
         return emptyList() // Retourner une liste vide en cas d'erreur
     }
 
-    fun deleteRecipe(id_recipe: Long?) {
+    fun deleteRecipe(idRecipe: String?) {
 
-        val res = sendDelete("$URL_SERVER/deleterecipe/$id_recipe")
+        val res = sendDelete("$URL_SERVER/deleterecipe/$idRecipe")
         println(res)
-        println("Recette <${id_recipe}> supprimée")
+        println("Recette <${idRecipe}> supprimée")
 
     }
 
-    fun sendGet(url: String): String {
+    private fun sendGet(url: String): String {
         println("url : $url")
         val request = Request.Builder().url(url).get().build()
 

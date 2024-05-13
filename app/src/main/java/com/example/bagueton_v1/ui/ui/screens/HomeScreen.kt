@@ -2,6 +2,7 @@ package com.example.bagueton_v1.ui.ui.screens
 import android.content.res.Configuration.UI_MODE_NIGHT_NO
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -23,22 +24,22 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import coil.compose.rememberAsyncImagePainter
-import com.example.bagueton_v1.R
 import com.example.bagueton_v1.ui.BaguetonViewModel
+import com.example.bagueton_v1.ui.previewBaguetonViewModel
 import com.example.bagueton_v1.ui.screens.Bagueton_v1Theme
 import com.example.bagueton_v1.ui.ui.MyBottomAppBar
 import com.example.bagueton_v1.ui.ui.SearchBar
 
 
 @Composable
-fun HomeScreen(
-    navHostController: NavHostController? = null, baguetonViewModel: BaguetonViewModel) {
+fun HomeScreen(baguetonViewModel: BaguetonViewModel, navHostController: NavHostController? = null ) {
 
     LaunchedEffect(key1 = true) {
         baguetonViewModel.loadRecipes()
@@ -46,7 +47,9 @@ fun HomeScreen(
 
     Scaffold (
         topBar = {
-            SearchBar(baguetonViewModel = baguetonViewModel)
+            SearchBar(baguetonViewModel = baguetonViewModel,welcomeMessage = "Bienvenue, utilisateur",
+                navHostController = navHostController
+            )
         },
         bottomBar = {
             MyBottomAppBar(navHostController = navHostController)
@@ -76,14 +79,15 @@ fun HomeScreen(
                         painter = rememberAsyncImagePainter(recipe.image),
                         contentDescription = "Image de ${recipe.title}",
                         modifier = Modifier
-                            .clickable {  run { navHostController?.navigate("RecipeScreen/${recipe.id_recipe}") } }
+                            .clickable {  run { navHostController?.navigate("RecipeScreen/${recipe.idRecipe}") } }
                             .size(150.dp)
                             .padding(10.dp)
-                            .clip(RoundedCornerShape(8.dp))
+                            .border(1.dp, MaterialTheme.colorScheme.primary, RoundedCornerShape(16.dp, 32.dp, 16.dp, 32.dp))
+                            .shadow(elevation = 8.dp, shape = RoundedCornerShape(16.dp, 32.dp, 16.dp, 32.dp), clip = true)
+                            .clip(RoundedCornerShape(16.dp, 32.dp, 16.dp, 32.dp))
                             .fillMaxSize(),
 
                         contentScale = ContentScale.Crop,
-
 
                     )
                 }
@@ -111,10 +115,12 @@ fun HomeScreen(
                         painter = rememberAsyncImagePainter(model = recipe.image),
                         contentDescription = "Image de ${recipe.title}",
                         modifier = Modifier
-                            .clickable {  run { navHostController?.navigate("RecipeScreen/${recipe.id_recipe}") } }
+                            .clickable {  run { navHostController?.navigate("RecipeScreen/${recipe.idRecipe}") } }
                             .size(150.dp)
                             .padding(10.dp)
-                            .clip(RoundedCornerShape(8.dp))
+                            .border(1.dp, MaterialTheme.colorScheme.primary, RoundedCornerShape(16.dp, 32.dp, 16.dp, 32.dp))
+                            .shadow(elevation = 8.dp, shape = RoundedCornerShape(16.dp, 32.dp, 16.dp, 32.dp), clip = true)
+                            .clip(RoundedCornerShape(16.dp, 32.dp, 16.dp, 32.dp))
                             .fillMaxSize(),
                         contentScale = ContentScale.Crop
                     )
@@ -141,7 +147,7 @@ fun HomeScreenPreview() {
 
     Bagueton_v1Theme {
         Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
-            HomeScreen(baguetonViewModel = BaguetonViewModel())
+            HomeScreen(baguetonViewModel = previewBaguetonViewModel())
         }
     }
 }

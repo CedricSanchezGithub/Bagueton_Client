@@ -11,15 +11,12 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.Edit
-import androidx.compose.material3.ExtendedFloatingActionButton
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -59,12 +56,11 @@ fun ListRecipeScreen(navHostController: NavHostController? = null, baguetonViewM
             MyBottomAppBar(navHostController = navHostController)
         },
         floatingActionButton = {
-            ExtendedFloatingActionButton(
+            FloatingActionButton(
                 containerColor = MaterialTheme.colorScheme.primary,
                 onClick = {  navHostController?.navigate("createrecipescreen")  }) {
-                (Icon(Icons.Filled.Edit, "Extended floating action button.",
+                (Icon(Icons.Filled.Add, "Extended floating action button.",
                     Modifier.background(MaterialTheme.colorScheme.primary)))
-                Text(text = "Nouvelle recette")
             }
         }
 
@@ -111,7 +107,7 @@ fun ImageGrid(recipes: List<RecipeBean>, navHostController: NavHostController?) 
                             contentDescription = "Image for ${recipe.title}",
                             modifier = Modifier
                                 .fillMaxSize()
-                                .clickable { run { navHostController?.navigate("RecipeScreen/${recipe.id_recipe}") } },
+                                .clickable { run { navHostController?.navigate("RecipeScreen/${recipe.idRecipe}") } },
                             contentScale = ContentScale.Crop
                         )
                         Box(
