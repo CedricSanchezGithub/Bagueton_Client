@@ -24,19 +24,50 @@ data class Recipe(
         Ingredient("Beurre pour la pâte", "50g")
     )
 
-/*    // Création de la recette de croissant
-    val croissantRecipe = Recipe(
-        id = 1,
-        name = "Croissant",
-        steps = "Mélangez farine, sucre, sel. Incorporez beurre, levure délayée. Pétrissez, laissez reposer. Étalez, pliez en trois, répétez. Roulez en croissants, laissez lever. Dorez au jaune d'œuf, cuisez à 200°C.",
-        imageResId = R.drawable.croissant,
-        ingredients = ingredients
-    )*/
-/*fun main() {
+data class WeatherBean(
+    var current: Current,
+    var location: Location
+)
 
-    // Affichage de la recette
-    println("Recette: ${croissantRecipe.name}")
-    croissantRecipe.ingredients.forEach {
-        println("${it.name}: ${it.quantity}")
-    }
-}*/
+data class Current(
+    var cloud: Int,
+    var condition: Condition,
+    var feelslike_c: Double,
+    var feelslike_f: Double,
+    var gust_kph: Double,
+    var gust_mph: Int,
+    var humidity: Int,
+    var is_day: Int,
+    var last_updated: String,
+    var last_updated_epoch: Int,
+    var precip_in: Double,
+    var precip_mm: Double,
+    var pressure_in: Double,
+    var pressure_mb: Int,
+    var temp_c: Int,
+    var temp_f: Int,
+    var uv: Int,
+    var vis_km: Int,
+    var vis_miles: Int,
+    var wind_degree: Int,
+    var wind_dir: String,
+    var wind_kph: Double,
+    var wind_mph: Double
+)
+
+data class Location(
+    var country: String,
+    var lat: Double,
+    var localtime: String,
+    var localtime_epoch: Int,
+    var lon: Double,
+    var name: String,
+    var region: String,
+    var tz_id: String
+)
+
+data class Condition(
+    var code: Int,
+    var icon: String,
+    var text: String
+)

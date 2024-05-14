@@ -23,6 +23,8 @@ data class RecipeBean(
 
 fun main() {
 
+
+
 }
 
 
@@ -86,21 +88,21 @@ object RecipeAPI {
         }
     }
 }
-    fun sendPost(url: String, toSend: Any?): String {
-        println("url : $url")
+fun sendPost(url: String, toSend: Any?): String {
+    println("url : $url")
 
-        val json = gson.toJson(toSend)
+    val json = gson.toJson(toSend)
 
-        val body = json.toRequestBody(MEDIA_TYPE_JSON)
-        val request = Request.Builder().url(url).post(body).build()
+    val body = json.toRequestBody(MEDIA_TYPE_JSON)
+    val request = Request.Builder().url(url).post(body).build()
 
-        return client.newCall(request).execute().use {
-            if (!it.isSuccessful) {
-                throw Exception("Réponse du serveur incorrect :${it.code}")
-            }
-            it.body.string()
+    return client.newCall(request).execute().use {
+        if (!it.isSuccessful) {
+            throw Exception("Réponse du serveur incorrect :${it.code}")
         }
+        it.body.string()
     }
+}
 
 fun sendDelete(url: String): String {
     println("url : $url")
