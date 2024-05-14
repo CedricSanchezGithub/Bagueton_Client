@@ -14,10 +14,9 @@ import com.example.bagueton_v1.ui.ui.screens.LoginScreen
 import com.example.bagueton_v1.ui.ui.screens.PrivacyPolicyScreen
 import com.example.bagueton_v1.ui.ui.screens.RecipeScreen
 import com.example.bagueton_v1.ui.ui.screens.ToolsScreen
+import com.example.bagueton_v1.ui.ui.screens.UnboardingScreen
 import com.example.bagueton_v1.ui.ui.screens.UpdateRecipeScreen
 
-//sealed permet de dire qu'une classe est héritable (ici par SearchScreen et DetailScreen)
-//Uniquement par les sous classes qu'elle contient
 sealed class Routes(val route: String) {
     //Route 1
     object HomeScreen : Routes("HomeScreen")
@@ -26,9 +25,8 @@ sealed class Routes(val route: String) {
     //Route 3
     object CreateRecipeScreen : Routes("createRecipeScreen")
     //Route 4
-
     object RecipeScreen : Routes("RecipeScreen/{id_recipe}") {
-        fun createRoute(id_recipe: Long) = "RecipeScreen/$id_recipe"
+        fun createRoute(id: String) = "RecipeScreen/$id"
     }
     //Route 5
     object LoginScreen : Routes("LoginScreen")
@@ -38,9 +36,11 @@ sealed class Routes(val route: String) {
     object ToolsScreen : Routes("ToolsScreen")
     //Route 7
     object PrivacyPolicyScreen : Routes("PrivacyPolicyScreen")
-    object UpdateRecipeScreen : Routes("UpdateRecipeScreen/{id_recipe}"){
-        fun createRoute(id_recipe: Long) = "UpdateRecipeScreen/$id_recipe"
-
+    //Route 8
+    object UnboardingScreen : Routes("UnboardingScreen")
+    //Route 9
+    object UpdateRecipeScreen : Routes("UpdateRecipeScreen/{id}"){
+        fun createRoute(id: String) = "UpdateRecipeScreen/$id"
     }
 }
 
@@ -53,21 +53,16 @@ fun AppNavigation(baguetonViewModel: BaguetonViewModel, accountViewModel: Accoun
     NavHost(navController = navHostController, startDestination = Routes.HomeScreen.route) {
         //Route 1 vers notre HomeScreen
         composable(route = Routes.HomeScreen.route)   { HomeScreen(baguetonViewModel,navHostController) }
-
-
         //Route 2 vers la recettes
         composable(
             route = Routes.RecipeScreen.route,
-            arguments = listOf(navArgument("id_recipe") { type = NavType.LongType })
+            arguments = listOf(navArgument("id") { type = NavType.StringType })
         ) { backStackEntry ->
-            val idRecipe = backStackEntry.arguments?.getLong("id_recipe")
-            if (idRecipe != null) {
-                RecipeScreen(idRecipe, navHostController, baguetonViewModel)
+            val id = backStackEntry.arguments?.getString("id")
+            if (id != null) {
+                RecipeScreen(id, navHostController, baguetonViewModel)
             }
         }
-
-
-
         // Route 3 vers la liste des recettes
         composable(route = Routes.ListRecipeScreen.route) { ListRecipeScreen(navHostController, baguetonViewModel)}
         //Route 4 vers ajouter une recette
@@ -78,15 +73,17 @@ fun AppNavigation(baguetonViewModel: BaguetonViewModel, accountViewModel: Accoun
         composable(route = Routes.ToolsScreen.route){ ToolsScreen(navHostController, baguetonViewModel) }
         //Route 7 vers les politiques de confidentialitées
         composable(route = Routes.PrivacyPolicyScreen.route){ PrivacyPolicyScreen(navHostController) }
-        //Route 2 vers la recettes
+//      // Route 8 vers l'écran de modification
         composable(
             route = Routes.UpdateRecipeScreen.route,
-            arguments = listOf(navArgument("id_recipe") { type = NavType.LongType })
+            arguments = listOf(navArgument("id") { type = NavType.StringType })
         ) { backStackEntry ->
-            val idRecipe = backStackEntry.arguments?.getLong("id_recipe")
-            if (idRecipe != null) {
-                UpdateRecipeScreen( navHostController, baguetonViewModel, idRecipe)
+            val id = backStackEntry.arguments?.getString("id")
+            if (id != null) {
+                UpdateRecipeScreen( navHostController, baguetonViewModel, id)
             }
         }
+        // Route 9 vers l'écran d'unboarding
+        composable(route = Routes.UnboardingScreen.route){ UnboardingScreen(navHostController, baguetonViewModel) }
     }
 }

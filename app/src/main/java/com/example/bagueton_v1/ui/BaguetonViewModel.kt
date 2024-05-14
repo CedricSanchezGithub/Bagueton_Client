@@ -73,11 +73,12 @@ class BaguetonViewModel : ViewModel() {
         }
     }
 
-    fun updateRecipe(id_recipe: Long, title: String, ingredient: String, steps: String){
+    fun updateRecipe(id: String, title: String, ingredient: String, steps: String){
         viewModelScope.launch(Dispatchers.Default) {
-            // Lance une coroutine dans le contexte du ViewModelScope sur le dispatcher par défaut pour des opérations non bloquantes.
+            // Lance une c
+            // oroutine dans le contexte du ViewModelScope sur le dispatcher par défaut pour des opérations non bloquantes.
             try {
-                RecipeAPI.updateRecipe(id_recipe, title = title, steps = steps, ingredients = ingredient)
+                RecipeAPI.updateRecipe(id, title = title, steps = steps, ingredients = ingredient)
                 val newRecipe = RecipeBean(title = title, steps = steps, ingredients = ingredient)
                 launch(Dispatchers.Main) { // Bascule vers le thread principal pour effectuer des modifications de l'UI.
                     recipeList.add(newRecipe) // Ajoute la nouvelle recette à la liste observable, déclenchant une mise à jour de l'UI.

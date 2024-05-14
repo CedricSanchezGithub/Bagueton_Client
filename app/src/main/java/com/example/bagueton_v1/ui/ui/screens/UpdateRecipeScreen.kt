@@ -46,12 +46,12 @@ import com.example.bagueton_v1.ui.ui.MyBottomAppBar
 fun UpdateRecipeScreen(
     navHostController: NavHostController? = null,
     baguetonViewModel: BaguetonViewModel,
-    id_recipe : Long ? = null) {
+    id : String ? = null) {
 
     // snakebar
     val snackbarHostState = remember { SnackbarHostState() }
     val scope = rememberCoroutineScope()
-    val recipe = baguetonViewModel.recipeList.find { it.idRecipe == id_recipe }
+    val recipe = baguetonViewModel.recipeList.find { it.idRecipe == id }
 
 
     Scaffold (
@@ -116,9 +116,9 @@ fun UpdateRecipeScreen(
 
                 Button(
                     onClick = {
-                        if (id_recipe != null) {
+                        if (id != null) {
                             baguetonViewModel.updateRecipe(
-                                id_recipe = id_recipe,
+                                id = id,
                                 title = baguetonViewModel.newTitleRecipe.value,
                                 ingredient = baguetonViewModel.newIngredientsRecipe.value,
                                 steps = baguetonViewModel.newStepsRecipe.value
@@ -140,7 +140,7 @@ fun UpdateRecipeScreen(
                 Spacer(modifier = Modifier.height(32.dp))
 
                 Button(
-                    onClick = {deleteRecipe(id_recipe)},
+                    onClick = {deleteRecipe(id)},
                     modifier = Modifier
                         .height(40.dp) // Hauteur personnalisée
                         .padding(horizontal = 16.dp),
@@ -171,7 +171,7 @@ fun UpdateRecipeScreenPreview() {
 
     Bagueton_v1Theme {
         Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
-            UpdateRecipeScreen(baguetonViewModel = previewBaguetonViewModel(),  id_recipe = 4000)
+            UpdateRecipeScreen(baguetonViewModel = previewBaguetonViewModel(),  id = "4000")
         }
     }
 }

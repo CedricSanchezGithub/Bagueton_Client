@@ -48,7 +48,7 @@ import com.example.bagueton_v1.ui.ui.MyBottomAppBar
 import com.example.bagueton_v1.ui.ui.SearchBar
 
 @Composable
-fun RecipeScreen(id_recipe: Long?,
+fun RecipeScreen(id: String?,
                  navHostController: NavHostController? = null,
                  baguetonViewModel: BaguetonViewModel,
 ) {
@@ -67,14 +67,14 @@ fun RecipeScreen(id_recipe: Long?,
             FloatingActionButton(
 
                 containerColor = MaterialTheme.colorScheme.primary,
-                onClick = {  navHostController?.navigate("UpdateRecipeScreenRecipeScreen.kt/${id_recipe}")  }) {
+                onClick = {  navHostController?.navigate("UpdateRecipeScreenRecipeScreen.kt/${id}")  }) {
                 (Icon(
                     Icons.Filled.Edit, "Extended floating action button.",
                     Modifier.background(MaterialTheme.colorScheme.primary)))
             }
         },)
     {innerPadding ->
-        val recipe = baguetonViewModel.recipeList.find { it.idRecipe == id_recipe }
+        val recipe = baguetonViewModel.recipeList.find { it.idRecipe == id }
         val scrollState = rememberScrollState()
 
         Column(horizontalAlignment = Alignment.CenterHorizontally,
@@ -208,7 +208,7 @@ fun RecipeScreenPreview() {
 
             RecipeScreen(  // ID de la recette factice
                 baguetonViewModel = previewBaguetonViewModel(),
-                id_recipe = 3000
+                id = "3000"
             )
         }
     }
