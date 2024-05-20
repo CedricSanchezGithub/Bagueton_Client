@@ -126,7 +126,7 @@ fun LoginScreen(navHostController: NavHostController? = null,
                             run { navHostController?.navigate("ContactsFormScreen") }
                         })
                     Spacer(modifier = Modifier.height(8.dp))
-                    Text(text = "Version 0.3.1 : Image Change ")
+                    Text(text = "Version 0.3.2 : Ajout du formulaire de contact ")
                     Spacer(modifier = Modifier.height(8.dp))
                     Text(text = "Politique de Confidentialité",
                         textDecoration = TextDecoration.Underline,
