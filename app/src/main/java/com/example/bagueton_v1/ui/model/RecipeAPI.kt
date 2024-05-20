@@ -4,6 +4,7 @@ package com.example.bagueton_v1.ui.model
 import com.example.bagueton_v1.ui.model.RecipeAPI.MEDIA_TYPE_JSON
 import com.example.bagueton_v1.ui.model.RecipeAPI.client
 import com.example.bagueton_v1.ui.model.RecipeAPI.gson
+import com.example.bagueton_v1.ui.model.RecipeAPI.readRecipes
 import com.google.gson.Gson
 import com.google.gson.JsonSyntaxException
 import okhttp3.MediaType.Companion.toMediaType
@@ -13,18 +14,18 @@ import okhttp3.RequestBody.Companion.toRequestBody
 import okhttp3.Response
 import java.io.IOException
 
-data class RecipeBean(
-    val idRecipe: String? = null,
-    val title: String? = null,
-    val image: String? = "R.drawable.addimg",
-    val ingredients: String? = "liste d'ingrédients vide",
-    val steps: String? = "liste d'étape vide"
-)
+//data class RecipeBean(
+//    val idRecipe: String? = null,
+//    val title: String? = null,
+//    val image: String? = "R.drawable.addimg",
+//    val ingredients: String? = "liste d'ingrédients vide",
+//    val steps: String? = "liste d'étape vide"
+//)
 
 fun main() {
 
-
-
+    val recipesData = readRecipes()
+    println(recipesData.listIterator())
 }
 
 
@@ -33,18 +34,22 @@ object RecipeAPI {
     val MEDIA_TYPE_JSON = "application/json; charset=utf-8".toMediaType()
     val gson = Gson()
     val client = OkHttpClient()
-    private const val URL_SERVER = "http://localhost:8082/bagueton"
+    private const val URL_SERVER = "http://192.168.1.26:8082/bagueton"
     // http://localhost:8080 http://90.51.140.217:8081/bagueton
 
 
-    fun createRecipe(title: String?, ingredients: String?, steps: String?){
-        val res = sendPost("$URL_SERVER/createrecipe", RecipeBean(null, title, image = null, ingredients, steps))
-        println("Données de la recette '$title' envoyées")
-        println(res)
+    fun createRecipe(title: String?, ingredients: List<Ingredient>, steps: List<Step>?){
+        if (true) {
+            val res = sendPost("$URL_SERVER/createrecipe",
+                title?.let { RecipeBean(null, it, images = null, ingredients, steps ) })
+            println("Creation de la recette $title")
+        } else {
+            println("Veuillez remplir tous les champs")
+        }
     }
 
-    fun updateRecipe(idRecipe: String?, title: String?, ingredients: String?, steps: String?){
-        val res = sendPost("$URL_SERVER/updaterecipe/$idRecipe", RecipeBean(null, title, image = null, ingredients, steps))
+    fun updateRecipe(idRecipe: String?, title: String?, ingredientList: List<Ingredient>, stepList: List<Step>?){
+        val res = sendPost("$URL_SERVER/updaterecipe/$idRecipe", title?.let { RecipeBean(null, it, images = null, ingredientList, stepList ) })
         println("Données de la recette '$title' modifiées")
         println(res)
     }
@@ -53,7 +58,7 @@ object RecipeAPI {
         try {
             val json = sendGet("$URL_SERVER/readrecipes")
             val res = Gson().fromJson(json, Array<RecipeBean>::class.java).toList()
-            println("/readrecipes: $res")
+            println("[[[ Lancement de la fonction readrecipes ]]]")
             return res
         } catch (e: JsonSyntaxException) {
             println("Erreur de syntaxe JSON: ${e.message}")
@@ -75,19 +80,20 @@ object RecipeAPI {
         println("Recette <${idRecipe}> supprimée")
 
     }
+}
 
-    private fun sendGet(url: String): String {
-        println("url : $url")
-        val request = Request.Builder().url(url).get().build()
+private fun sendGet(url: String): String {
+    println("url : $url")
+    val request = Request.Builder().url(url).get().build()
 
-        return client.newCall(request).execute().use { //it:Response
-            if (!it.isSuccessful) {
-                throw Exception("Réponse du serveur incorrect :${it.code}")
-            }
-            it.body.string()
+    return client.newCall(request).execute().use { //it:Response
+        if (!it.isSuccessful) {
+            throw Exception("Réponse du serveur incorrect :${it.code}")
         }
+        it.body.string()
     }
 }
+
 fun sendPost(url: String, toSend: Any?): String {
     println("url : $url")
 
@@ -112,7 +118,7 @@ fun sendDelete(url: String): String {
 
     return try {
         val response: Response = client.newCall(request).execute()
-        response.body.string() ?: "Empty response"
+        response.body.string()
     } catch (e: IOException) {
         e.printStackTrace()
         "Error: ${e.message}"

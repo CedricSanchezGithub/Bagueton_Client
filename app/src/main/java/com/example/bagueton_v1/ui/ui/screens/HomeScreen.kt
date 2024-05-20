@@ -5,6 +5,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -22,20 +23,24 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import coil.compose.rememberAsyncImagePainter
+import coil.request.ImageRequest
 import com.example.bagueton_v1.ui.BaguetonViewModel
-import com.example.bagueton_v1.ui.previewBaguetonViewModel
 import com.example.bagueton_v1.ui.screens.Bagueton_v1Theme
 import com.example.bagueton_v1.ui.ui.MyBottomAppBar
 import com.example.bagueton_v1.ui.ui.SearchBar
+import previewBaguetonViewModel
 
 
 @Composable
@@ -68,28 +73,71 @@ fun HomeScreen(baguetonViewModel: BaguetonViewModel, navHostController: NavHostC
             Row {
                 Text(text = "Liste des commandes :",
                     modifier = Modifier.padding(horizontal = 16.dp),
-                            textDecoration = TextDecoration.Underline,
+                    textDecoration = TextDecoration.Underline,
                 )
             }
-            LazyRow {
-                // Prend uniquement les 5 premiers éléments de la liste pour l'affichage
-                val imagesToShow = baguetonViewModel.recipeList.take(5)
-                items(imagesToShow) { recipe ->
-                    Image(
-                        painter = rememberAsyncImagePainter(recipe.image),
-                        contentDescription = "Image de ${recipe.title}",
-                        modifier = Modifier
-                            .clickable {  run { navHostController?.navigate("RecipeScreen/${recipe.idRecipe}") } }
-                            .size(150.dp)
-                            .padding(10.dp)
-                            .border(1.dp, MaterialTheme.colorScheme.primary, RoundedCornerShape(16.dp, 32.dp, 16.dp, 32.dp))
-                            .shadow(elevation = 8.dp, shape = RoundedCornerShape(16.dp, 32.dp, 16.dp, 32.dp), clip = true)
-                            .clip(RoundedCornerShape(16.dp, 32.dp, 16.dp, 32.dp))
-                            .fillMaxSize(),
+            // Prend uniquement les 5 premiers éléments de la liste pour l'affichage
+            val recipeList = baguetonViewModel.recipeList.takeLast(5)
+            println("Recipe image list: ${recipeList.firstOrNull()?.images?.firstOrNull()?.url}")
+            LazyRow(modifier = Modifier.padding(16.dp)) {
+                items(recipeList) { recipe ->
+                    val imageUrl = recipe.images?.firstOrNull()?.url
+                    println("Recipe image list: $imageUrl")
 
-                        contentScale = ContentScale.Crop,
-
-                    )
+                    if (imageUrl != null) {
+                        Image(
+                            painter = rememberAsyncImagePainter(
+                                ImageRequest.Builder(LocalContext.current)
+                                    .data("$imageUrl")
+                                    .crossfade(true)
+                                    .build()
+                            ),
+                            contentDescription = "Image de ${recipe.title}",
+                            modifier = Modifier
+                                .clickable { navHostController?.navigate("RecipeScreen/${recipe.id}") }
+                                .size(150.dp)
+                                .padding(10.dp)
+                                .border(
+                                    1.dp,
+                                    MaterialTheme.colorScheme.primary,
+                                    RoundedCornerShape(16.dp, 32.dp, 16.dp, 32.dp)
+                                )
+                                .shadow(
+                                    elevation = 8.dp,
+                                    shape = RoundedCornerShape(16.dp, 32.dp, 16.dp, 32.dp),
+                                    clip = true
+                                )
+                                .clip(RoundedCornerShape(16.dp, 32.dp, 16.dp, 32.dp))
+                                .fillMaxSize(),
+                            contentScale = ContentScale.Crop
+                        )
+                    } else {
+                        // Optionnel: Ajouter une image ou un texte de remplacement si l'URL est null
+                        Box(
+                            modifier = Modifier
+                                .size(150.dp)
+                                .padding(10.dp)
+                                .border(
+                                    1.dp,
+                                    MaterialTheme.colorScheme.primary,
+                                    RoundedCornerShape(16.dp, 32.dp, 16.dp, 32.dp)
+                                )
+                                .shadow(
+                                    elevation = 8.dp,
+                                    shape = RoundedCornerShape(16.dp, 32.dp, 16.dp, 32.dp),
+                                    clip = true
+                                )
+                                .clip(RoundedCornerShape(16.dp, 32.dp, 16.dp, 32.dp))
+                                .fillMaxSize(),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Text(
+                                text = "Image non disponible",
+                                style = MaterialTheme.typography.bodyLarge,
+                                textAlign = TextAlign.Center
+                            )
+                        }
+                    }
                 }
             }
             Button(onClick = { /*TODO*/ },
@@ -107,23 +155,65 @@ fun HomeScreen(baguetonViewModel: BaguetonViewModel, navHostController: NavHostC
                 textDecoration = TextDecoration.Underline,
             )
 
-            LazyRow {
-                // Prend uniquement les 3 premiers éléments de la liste pour l'affichage
-                val imagesToShow = baguetonViewModel.recipeList.takeLast(4)
-                items(imagesToShow) { recipe ->
-                    Image(
-                        painter = rememberAsyncImagePainter(model = recipe.image),
-                        contentDescription = "Image de ${recipe.title}",
-                        modifier = Modifier
-                            .clickable {  run { navHostController?.navigate("RecipeScreen/${recipe.idRecipe}") } }
-                            .size(150.dp)
-                            .padding(10.dp)
-                            .border(1.dp, MaterialTheme.colorScheme.primary, RoundedCornerShape(16.dp, 32.dp, 16.dp, 32.dp))
-                            .shadow(elevation = 8.dp, shape = RoundedCornerShape(16.dp, 32.dp, 16.dp, 32.dp), clip = true)
-                            .clip(RoundedCornerShape(16.dp, 32.dp, 16.dp, 32.dp))
-                            .fillMaxSize(),
-                        contentScale = ContentScale.Crop
-                    )
+            LazyRow(modifier = Modifier.padding(16.dp)) {
+                items(recipeList.take(5)) { recipe ->
+                    val imageUrl = recipe.images?.firstOrNull()?.url
+                    println("Recipe image list: $imageUrl")
+
+                    if (imageUrl != null) {
+                        Image(
+                            painter = rememberAsyncImagePainter(
+                                ImageRequest.Builder(LocalContext.current)
+                                    .data("$imageUrl")
+                                    .crossfade(true)
+                                    .build()
+                            ),
+                            contentDescription = "Image de ${recipe.title}",
+                            modifier = Modifier
+                                .clickable { navHostController?.navigate("RecipeScreen/${recipe.id}") }
+                                .size(150.dp)
+                                .padding(10.dp)
+                                .border(
+                                    1.dp,
+                                    MaterialTheme.colorScheme.primary,
+                                    RoundedCornerShape(16.dp, 32.dp, 16.dp, 32.dp)
+                                )
+                                .shadow(
+                                    elevation = 8.dp,
+                                    shape = RoundedCornerShape(16.dp, 32.dp, 16.dp, 32.dp),
+                                    clip = true
+                                )
+                                .clip(RoundedCornerShape(16.dp, 32.dp, 16.dp, 32.dp))
+                                .fillMaxSize(),
+                            contentScale = ContentScale.Crop
+                        )
+                    } else {
+                        // Optionnel: Ajouter une image ou un texte de remplacement si l'URL est null
+                        Box(
+                            modifier = Modifier
+                                .size(150.dp)
+                                .padding(10.dp)
+                                .border(
+                                    1.dp,
+                                    MaterialTheme.colorScheme.primary,
+                                    RoundedCornerShape(16.dp, 32.dp, 16.dp, 32.dp)
+                                )
+                                .shadow(
+                                    elevation = 8.dp,
+                                    shape = RoundedCornerShape(16.dp, 32.dp, 16.dp, 32.dp),
+                                    clip = true
+                                )
+                                .clip(RoundedCornerShape(16.dp, 32.dp, 16.dp, 32.dp))
+                                .fillMaxSize(),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Text(
+                                text = "Image non disponible",
+                                style = MaterialTheme.typography.bodyLarge,
+                                textAlign = TextAlign.Center
+                            )
+                        }
+                    }
                 }
             }
             Button(onClick = { navHostController?.navigate("ListRecipeScreen") },

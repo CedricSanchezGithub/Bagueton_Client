@@ -42,10 +42,10 @@ import androidx.navigation.NavHostController
 import coil.compose.rememberAsyncImagePainter
 import com.example.bagueton_v1.ui.BaguetonViewModel
 import com.example.bagueton_v1.ui.model.RecipeBean
-import com.example.bagueton_v1.ui.previewBaguetonViewModel
 import com.example.bagueton_v1.ui.screens.Bagueton_v1Theme
 import com.example.bagueton_v1.ui.ui.MyBottomAppBar
 import com.example.bagueton_v1.ui.ui.SearchBar
+import previewBaguetonViewModel
 
 @Composable
 fun RecipeScreen2(id: String?,
@@ -74,7 +74,7 @@ fun RecipeScreen2(id: String?,
             }
         },)
     {innerPadding ->
-        val recipe = baguetonViewModel.recipeList.find { it.idRecipe == id }
+        val recipe = baguetonViewModel.recipeList.find { it.id == id }
         val scrollState = rememberScrollState()
 
         Column(horizontalAlignment = Alignment.CenterHorizontally,
@@ -106,7 +106,7 @@ fun HeaderRecipeScreen2(baguetonViewModel: BaguetonViewModel, recipe: RecipeBean
         {
             recipe.let {
                 Image(
-                    painter = rememberAsyncImagePainter(it.image),
+                    painter = rememberAsyncImagePainter(it.images),
                     contentDescription = it.title,
                     modifier = Modifier
                         .fillMaxWidth()
@@ -158,16 +158,14 @@ fun BodyRecipe2Screen(recipe: RecipeBean){
                 .padding(32.dp)
 
         ) {
-            recipe.ingredients?.let {
-                Text(
-                    text = it.replace(", ", "\n"),
-                    textAlign = TextAlign.Center,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .fillMaxHeight()
-                        .align(Alignment.Center)  // Centrer le texte dans la Box
-                )
-            }
+            Text(
+                text = recipe.ingredients.toString(),
+                textAlign = TextAlign.Center,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .fillMaxHeight()
+                    .align(Alignment.Center)  // Centrer le texte dans la Box
+            )
         }
         Spacer(modifier = Modifier.height(16.dp))
 
@@ -185,7 +183,7 @@ fun BodyRecipe2Screen(recipe: RecipeBean){
 
             ) {
                 Text(
-                    text = it.replace(", ", "\n"),
+                    text = it.toString(),
                     textAlign = TextAlign.Center,
                     modifier = Modifier.align(Alignment.Center)  // Centrer le texte dans la Box
                 )

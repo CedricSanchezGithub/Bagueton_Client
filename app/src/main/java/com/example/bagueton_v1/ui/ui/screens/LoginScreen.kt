@@ -129,12 +129,18 @@ fun LoginScreen(navHostController: NavHostController? = null,
                         modifier = Modifier.clickable{
                             run { navHostController?.navigate("PrivacyPolicyScreen") }
                         })
-                    Spacer(modifier = Modifier.weight(1f))
+                    Text(text = "page de test",
+                        textDecoration = TextDecoration.Underline,
+                        modifier = Modifier.clickable{
+                            run { navHostController?.navigate("TestScreen") }
+                        })
+                Spacer(modifier = Modifier.weight(1f))
                 }
             }
         }
     }
 }
+
 
 
 @Preview(showBackground = true, showSystemUi = true, uiMode = Configuration.UI_MODE_NIGHT_NO)

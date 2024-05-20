@@ -16,6 +16,7 @@ import com.example.bagueton_v1.ui.ui.screens.RecipeScreen
 import com.example.bagueton_v1.ui.ui.screens.ToolsScreen
 import com.example.bagueton_v1.ui.ui.screens.UnboardingScreen
 import com.example.bagueton_v1.ui.ui.screens.UpdateRecipeScreen
+import com.example.bagueton_v1.ui.ui.screens.TestScreen
 
 sealed class Routes(val route: String) {
     //Route 1
@@ -25,7 +26,7 @@ sealed class Routes(val route: String) {
     //Route 3
     object CreateRecipeScreen : Routes("createRecipeScreen")
     //Route 4
-    object RecipeScreen : Routes("RecipeScreen/{id_recipe}") {
+    object RecipeScreen : Routes("RecipeScreen/{id}") {
         fun createRoute(id: String) = "RecipeScreen/$id"
     }
     //Route 5
@@ -41,16 +42,19 @@ sealed class Routes(val route: String) {
     //Route 9
     object UpdateRecipeScreen : Routes("UpdateRecipeScreen/{id}"){
         fun createRoute(id: String) = "UpdateRecipeScreen/$id"
+        //Route 10
     }
+    object TestScreen : Routes("TestScreen")
+
 }
 
 @Composable
-fun AppNavigation(baguetonViewModel: BaguetonViewModel, accountViewModel: AccountViewModel) {
+fun AppNavigation(baguetonViewModel: BaguetonViewModel, accountViewModel: AccountViewModel, weatherViewModel: WeatherViewModel) {
 
     val navHostController : NavHostController = rememberNavController()
 
     //Import version avec Composable
-    NavHost(navController = navHostController, startDestination = Routes.HomeScreen.route) {
+    NavHost(navController = navHostController, startDestination = Routes.UnboardingScreen.route) {
         //Route 1 vers notre HomeScreen
         composable(route = Routes.HomeScreen.route)   { HomeScreen(baguetonViewModel,navHostController) }
         //Route 2 vers la recettes
@@ -84,6 +88,8 @@ fun AppNavigation(baguetonViewModel: BaguetonViewModel, accountViewModel: Accoun
             }
         }
         // Route 9 vers l'écran d'unboarding
-        composable(route = Routes.UnboardingScreen.route){ UnboardingScreen(navHostController, baguetonViewModel) }
+        composable(route = Routes.UnboardingScreen.route){ UnboardingScreen(navHostController, baguetonViewModel, weatherViewModel) }
+        //Route 10 vers l'écran de test
+        composable(route = Routes.TestScreen.route){ TestScreen(navHostController, baguetonViewModel) }
     }
 }

@@ -97,9 +97,7 @@ fun CreateRecipeScreen(
             )
             Spacer(modifier = Modifier.height(16.dp))
 
-            Button(onClick = { baguetonViewModel.createRecipe(title = baguetonViewModel.titleRecipe.value,
-                ingredient = baguetonViewModel.ingredientsRecipe.value,
-                steps = baguetonViewModel.stepsRecipe.value)
+            Button(onClick = {
 
 
             },

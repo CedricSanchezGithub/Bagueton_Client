@@ -13,6 +13,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.example.bagueton_v1.ui.AccountViewModel
 import com.example.bagueton_v1.ui.AppNavigation
 import com.example.bagueton_v1.ui.BaguetonViewModel
+import com.example.bagueton_v1.ui.WeatherViewModel
 import com.example.bagueton_v1.ui.screens.Bagueton_v1Theme
 import com.example.bagueton_v1.ui.ui.screens.HomeScreen
 
@@ -26,7 +27,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    AppNavigation(baguetonViewModel = BaguetonViewModel(), accountViewModel = AccountViewModel())
+                    AppNavigation(baguetonViewModel = BaguetonViewModel(), accountViewModel = AccountViewModel(), weatherViewModel = WeatherViewModel())
                 }
             }
         }

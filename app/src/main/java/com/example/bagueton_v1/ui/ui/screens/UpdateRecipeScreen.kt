@@ -36,10 +36,10 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.bagueton_v1.ui.BaguetonViewModel
 import com.example.bagueton_v1.ui.model.RecipeAPI.deleteRecipe
-import com.example.bagueton_v1.ui.previewBaguetonViewModel
 import com.example.bagueton_v1.ui.screens.Bagueton_v1Theme
 import com.example.bagueton_v1.ui.ui.ConfirmationSnackbar
 import com.example.bagueton_v1.ui.ui.MyBottomAppBar
+import previewBaguetonViewModel
 
 
 @Composable
@@ -51,7 +51,7 @@ fun UpdateRecipeScreen(
     // snakebar
     val snackbarHostState = remember { SnackbarHostState() }
     val scope = rememberCoroutineScope()
-    val recipe = baguetonViewModel.recipeList.find { it.idRecipe == id }
+    val recipe = baguetonViewModel.recipeList.find { it.id == id }
 
 
     Scaffold (
@@ -73,7 +73,7 @@ fun UpdateRecipeScreen(
                 value = baguetonViewModel.newTitleRecipe.value,
                 onValueChange = { baguetonViewModel.newTitleRecipe.value = it },
                 label = {
-                    if (recipe != null) { Text("${recipe.title}") }
+                    if (recipe != null) { Text(recipe.title) }
                 }
             )
             OutlinedTextField(
@@ -117,12 +117,7 @@ fun UpdateRecipeScreen(
                 Button(
                     onClick = {
                         if (id != null) {
-                            baguetonViewModel.updateRecipe(
-                                id = id,
-                                title = baguetonViewModel.newTitleRecipe.value,
-                                ingredient = baguetonViewModel.newIngredientsRecipe.value,
-                                steps = baguetonViewModel.newStepsRecipe.value
-                            )
+
                         }
 
 

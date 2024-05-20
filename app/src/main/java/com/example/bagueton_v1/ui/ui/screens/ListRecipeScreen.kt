@@ -90,6 +90,7 @@ fun ImageGrid(recipes: List<RecipeBean>, navHostController: NavHostController?) 
     LazyColumn {
         items(chunkedRecipes.size) { index ->
             val rowRecipes = chunkedRecipes[index]
+            val imgUrl = rowRecipes[0].images?.get(0)?.url
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -103,11 +104,11 @@ fun ImageGrid(recipes: List<RecipeBean>, navHostController: NavHostController?) 
                             .clip(RoundedCornerShape(8.dp))
                     ) {
                         Image(
-                            painter = rememberAsyncImagePainter(recipe.image),
+                            painter = rememberAsyncImagePainter(imgUrl),
                             contentDescription = "Image for ${recipe.title}",
                             modifier = Modifier
                                 .fillMaxSize()
-                                .clickable { run { navHostController?.navigate("RecipeScreen/${recipe.idRecipe}") } },
+                                .clickable { run { navHostController?.navigate("RecipeScreen/${recipe.id}") } },
                             contentScale = ContentScale.Crop
                         )
                         Box(
