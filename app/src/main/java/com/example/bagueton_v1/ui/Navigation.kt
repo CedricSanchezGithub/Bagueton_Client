@@ -1,5 +1,7 @@
 package com.example.bagueton_v1.ui
 
+import ContactsFormScreen
+import ContactsViewModel
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
@@ -45,11 +47,12 @@ sealed class Routes(val route: String) {
         //Route 10
     }
     object TestScreen : Routes("TestScreen")
+    object ContactsFormScreen : Routes("ContactsFormScreen")
 
 }
 
 @Composable
-fun AppNavigation(baguetonViewModel: BaguetonViewModel, accountViewModel: AccountViewModel, weatherViewModel: WeatherViewModel) {
+fun AppNavigation(baguetonViewModel: BaguetonViewModel, accountViewModel: AccountViewModel, weatherViewModel: WeatherViewModel, contactsViewModel: ContactsViewModel) {
 
     val navHostController : NavHostController = rememberNavController()
 
@@ -91,5 +94,7 @@ fun AppNavigation(baguetonViewModel: BaguetonViewModel, accountViewModel: Accoun
         composable(route = Routes.UnboardingScreen.route){ UnboardingScreen(navHostController, baguetonViewModel, weatherViewModel) }
         //Route 10 vers l'écran de test
         composable(route = Routes.TestScreen.route){ TestScreen(navHostController, baguetonViewModel) }
+        //Route 10 vers l'écran de contacts
+        composable(route = Routes.ContactsFormScreen.route){ ContactsFormScreen(navHostController, contactsViewModel) }
     }
 }

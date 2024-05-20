@@ -120,21 +120,26 @@ fun LoginScreen(navHostController: NavHostController? = null,
                 Column(modifier = Modifier.fillMaxWidth()) {
 
                     Spacer(modifier = Modifier.weight(1f))
-                    Text(text = "Contact")
+                    Text(text = "Contact",
+                        textDecoration = TextDecoration.Underline,
+                        modifier = Modifier.clickable{
+                            run { navHostController?.navigate("ContactsFormScreen") }
+                        })
                     Spacer(modifier = Modifier.height(8.dp))
-                    Text(text = "Version")
+                    Text(text = "Version 0.3.1 : Image Change ")
                     Spacer(modifier = Modifier.height(8.dp))
                     Text(text = "Politique de Confidentialité",
                         textDecoration = TextDecoration.Underline,
                         modifier = Modifier.clickable{
                             run { navHostController?.navigate("PrivacyPolicyScreen") }
                         })
+
                     Text(text = "page de test",
                         textDecoration = TextDecoration.Underline,
                         modifier = Modifier.clickable{
                             run { navHostController?.navigate("TestScreen") }
                         })
-                Spacer(modifier = Modifier.weight(1f))
+                    Spacer(modifier = Modifier.weight(1f))
                 }
             }
         }

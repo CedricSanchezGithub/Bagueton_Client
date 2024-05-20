@@ -7,6 +7,7 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
@@ -24,6 +25,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -57,7 +59,7 @@ fun RecipeScreen(
         floatingActionButton = {
             FloatingActionButton(
                 containerColor = MaterialTheme.colorScheme.primary,
-                onClick = { navHostController?.navigate("UpdateRecipeScreenRecipeScreen.kt/${id}") }
+                onClick = { navHostController?.navigate("UpdateRecipeScreen/$id") }
             ) {
                 Icon(
                     Icons.Filled.Edit, "Modifier la recette",
@@ -162,10 +164,13 @@ fun BodyRecipeScreen(recipe: RecipeBean) {
                 modifier = Modifier.fillMaxSize(),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                items(recipe.steps ?: emptyList()) { step ->
+                item {
+                    Text(text = "Liste des étapes", modifier = Modifier.padding(16.dp), fontSize = 20.sp, fontWeight = androidx.compose.ui.text.font.FontWeight.Bold, textDecoration = TextDecoration.Underline)
+                }
+                itemsIndexed(recipe.steps ?: emptyList()) { index, step ->
                     Text(
-                        text = step.description,
-                        textAlign = TextAlign.Center,
+                        text = "${index + 1}. ${step.description}",
+                        textAlign = TextAlign.Start,
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(vertical = 4.dp)
@@ -183,6 +188,9 @@ fun IngredientList(ingredients: List<Ingredient>) {
         modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
+        item {
+            Text(text = "Liste des ingrédients", modifier = Modifier.padding(16.dp), fontSize = 20.sp, fontWeight = androidx.compose.ui.text.font.FontWeight.Bold, textDecoration = TextDecoration.Underline)
+        }
         items(ingredients) { ingredient ->
             Text(
                 text = "${ingredient.ingredient}, ${ingredient.quantity}",
