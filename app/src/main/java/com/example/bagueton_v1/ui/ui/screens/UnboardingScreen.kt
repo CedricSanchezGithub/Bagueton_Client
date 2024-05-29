@@ -16,7 +16,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ImageBitmap
@@ -47,10 +46,6 @@ fun UnboardingScreen (navHostController: NavHostController? = null,
                       baguetonViewModel: BaguetonViewModel,
                       weatherViewModel: WeatherViewModel? = null){
 
-    LaunchedEffect(key1 = true) {
-        weatherViewModel?.readWeather()
-    }
-    val data = weatherViewModel?.weatherData
 
     Column {
         Spacer(modifier = Modifier.weight(1f))
@@ -61,7 +56,7 @@ fun UnboardingScreen (navHostController: NavHostController? = null,
                     .height(200.dp)
                     .width(200.dp)
                     .fillMaxWidth(1f)
-                )
+            )
         }
         Spacer(modifier = Modifier.weight(2f))
         Text(text = "Bienvenu sur L'application Bagueton!",

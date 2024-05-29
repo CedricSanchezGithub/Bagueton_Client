@@ -1,10 +1,7 @@
 package com.example.bagueton_v1.ui.ui.screens.tests
-import com.example.bagueton_v1.ui.WeatherViewModel
 import com.example.bagueton_v1.ui.model.RecipeBean
 
-fun main(weatherViewModel: WeatherViewModel) {
 
-}
 
 fun mapRecipes(array: List<RecipeBean>, dataWanted: String? = null) {
     println("[[[ Itération sur $dataWanted ]]]")

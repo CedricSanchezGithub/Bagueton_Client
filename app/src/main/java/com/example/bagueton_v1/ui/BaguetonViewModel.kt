@@ -12,44 +12,44 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.io.IOException
 
-// Définition de la classe ViewModel pour gérer les données liées aux recettes.
 class BaguetonViewModel : ViewModel() {
 
-    // Déclaration de listes et variables observables.
-    // Ces variables sont observées par l'interface utilisateur (UI) et toute modification déclenchera une mise à jour de l'UI.
     var recipeList = mutableStateListOf<RecipeBean>()
 
-    var searchText =   mutableStateOf("")
-
-    var imageRecipe =  mutableStateOf("")
-    var titleRecipe =  mutableStateOf("")
-    var stepsRecipe =  mutableStateOf("")
-    var ingredientsRecipe =  mutableStateOf("")
+    var searchText = mutableStateOf("")
+    var imageRecipe = mutableStateOf("")
+    var titleRecipe = mutableStateOf("")
+    var stepsRecipe = mutableStateOf("")
+    var ingredientsRecipe = mutableStateOf("")
+    var ingredientsList = mutableStateListOf<Ingredient>()
+    var stepsList = mutableStateListOf<Step>()
 
     var snackBarValue = mutableStateOf(false)
 
-    var newTitleRecipe =  mutableStateOf("")
-    var newStepsRecipe =  mutableStateOf("")
-    var newIngredientsRecipe =  mutableStateOf("")
+    var newTitleRecipe = mutableStateOf("")
+    var newStepsRecipe = mutableStateOf("")
+    var newIngredientsRecipe = mutableStateOf("")
 
-
-
-
-    // Fonction pour créer une nouvelle recette. Gère l'opération de manière asynchrone à l'aide de coroutines.
-    fun createRecipe(title: String?, ingredients: List<Ingredient>, steps: List<Step>?){
+    fun createRecipe(title: String, ingredients: List<Ingredient>, steps: List<Step>){
         viewModelScope.launch(Dispatchers.Default) {
-            // Lance une coroutine dans le contexte du ViewModelScope sur le dispatcher par défaut pour des opérations non bloquantes.
             try {
-                RecipeAPI.createRecipe(title = title, steps = steps, ingredients = ingredients)
-                val newRecipe = title?.let { RecipeBean(title = it, steps = steps, ingredients = ingredients) }
-                launch(Dispatchers.Main) { // Bascule vers le thread principal pour effectuer des modifications de l'UI.
-                    if (newRecipe != null) {
-                        recipeList.add(newRecipe)
-                    } // Ajoute la nouvelle recette à la liste observable, déclenchant une mise à jour de l'UI.
+                if (RecipeAPI.isTitleUsed(title)) {
+                    println("Le nom de recette $title est déjà utilisé.")
+                    titleRecipe.value = "$title est déjà utilisé, choisissez un autre nom :)"
+                    return@launch
+                }
+                ingredientsList.clear()
+                ingredientsList.addAll(ingredients)
+                stepsList.clear()
+                stepsList.addAll(steps)
+
+                RecipeAPI.createRecipe(title = title, steps = stepsList, ingredients = ingredientsList)
+                val newRecipe = RecipeBean(title = title, steps = stepsList, ingredients = ingredientsList)
+                launch(Dispatchers.Main) {
+                    recipeList.add(newRecipe)
                     snackBarValue.value = true
                 }
-            }
-            catch (e: IOException) {
+            } catch (e: IOException) {
                 e.printStackTrace()
             }
         }
@@ -64,9 +64,7 @@ class BaguetonViewModel : ViewModel() {
                     recipeList.addAll(newRecipes)
                     println("Chargement des données de recette loadRecipe dans le ViewModel")
                 }
-            }
-
-            catch (e: IOException) {
+            } catch (e: IOException) {
                 e.printStackTrace()
             }
         }
@@ -74,23 +72,35 @@ class BaguetonViewModel : ViewModel() {
 
     fun updateRecipe(id: String, title: String?, ingredients: List<Ingredient>, steps: List<Step>?){
         viewModelScope.launch(Dispatchers.Default) {
-            // Lance une c
-            // oroutine dans le contexte du ViewModelScope sur le dispatcher par défaut pour des opérations non bloquantes.
             try {
                 RecipeAPI.updateRecipe(id, title = title, stepList = steps, ingredientList = ingredients)
                 val newRecipe = title?.let { RecipeBean(title = it, steps = steps, ingredients = ingredients) }
-                launch(Dispatchers.Main) { // Bascule vers le thread principal pour effectuer des modifications de l'UI.
+                launch(Dispatchers.Main) {
                     if (newRecipe != null) {
                         recipeList.add(newRecipe)
-                    } // Ajoute la nouvelle recette à la liste observable, déclenchant une mise à jour de l'UI.
+                    }
                     println("Recette $title correctement modifiée")
                     snackBarValue.value = true
                 }
-            }
-            catch (e: IOException) {
+            } catch (e: IOException) {
                 e.printStackTrace()
             }
         }
     }
-}
 
+    fun addStep() {
+        stepsList.add(Step(description = ""))
+    }
+
+    fun updateStep(index: Int, newDescription: String) {
+        stepsList[index] = Step(description = newDescription)
+    }
+
+    fun addIngredient() {
+        ingredientsList.add(Ingredient(ingredient = "", quantity = ""))
+    }
+
+    fun updateIngredient(index: Int, newIngredient: String, newQuantity: String) {
+        ingredientsList[index] = Ingredient(ingredient = newIngredient, quantity = newQuantity)
+    }
+}

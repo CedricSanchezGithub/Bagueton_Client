@@ -13,11 +13,11 @@ fun fakeRecipes(): List<RecipeBean> {
                 Image(id = null, "http://localhost:8082/images/tourte_aux_seigle.webp")
             ),
             ingredients = listOf(
-                Ingredient(id = null,"Farine de seigle", 500),
-                Ingredient(id = null,"Eau", 350),
-                Ingredient(id = null,"Levure de boulanger", 15),
-                Ingredient(id = null,"Sel", 10),
-                Ingredient(id = null,"Miel", 30)
+                Ingredient(id = null,"Farine de seigle", "500"),
+                Ingredient(id = null,"Eau", "350"),
+                Ingredient(id = null,"Levure de boulanger", "15"),
+                Ingredient(id = null,"Sel", "10"),
+                Ingredient(id = null,"Miel", "30")
             ),
             steps = listOf(
                 Step("Mélanger la farine de seigle et le sel dans un grand bol."),

@@ -50,6 +50,7 @@ android {
 }
 
 dependencies {
+    implementation(libs.androidx.benchmark.macro)
     val navVersion = "2.7.7"
 
     implementation("androidx.navigation:navigation-compose:$navVersion")

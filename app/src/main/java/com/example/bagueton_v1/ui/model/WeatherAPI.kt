@@ -1,16 +1,11 @@
 package com.example.bagueton_v1.ui.model
 
-import com.example.bagueton_v1.ui.WeatherViewModel
 import com.google.gson.Gson
 import com.google.gson.JsonSyntaxException
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import java.io.IOException
 
-fun main(weatherViewModel: WeatherViewModel) {
-
-
-}
 
 // https://rapidapi.com/visual-crossing-corporation-visual-crossing-corporation-default/api/visual-crossing-weather/
 object WeatherAPI {

@@ -3,7 +3,6 @@ package com.example.bagueton_v1.ui
 import androidx.compose.runtime.mutableStateListOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.bagueton_v1.ui.model.Weather
 import com.example.bagueton_v1.ui.model.WeatherAPI
 import com.example.bagueton_v1.ui.model.WeatherBean
 import kotlinx.coroutines.Dispatchers

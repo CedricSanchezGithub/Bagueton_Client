@@ -1,33 +1,29 @@
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.example.bagueton_v1.ui.model.ContactsFormAPI
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import java.io.IOException
 
 class ContactsViewModel : ViewModel() {
     var name = mutableStateOf("")
-        private set
-
     var email = mutableStateOf("")
-        private set
-
     var message = mutableStateOf("")
-        private set
-
     var isSubmitted = mutableStateOf(false)
-        private set
 
-    fun onNameChange(newName: String) {
-        name.value = newName
+
+    fun createForm(name: String, email: String, message: String){
+        viewModelScope.launch(Dispatchers.Default) {
+
+            try {
+                ContactsFormAPI.createContactForm(email, name, message)
+                isSubmitted.value = true
+            }
+            catch (e: IOException) {
+                e.printStackTrace()
+            }
+        }
     }
 
-    fun onEmailChange(newEmail: String) {
-        email.value = newEmail
-    }
-
-    fun onMessageChange(newMessage: String) {
-        message.value = newMessage
-    }
-
-    fun onSubmit() {
-        isSubmitted.value = true
-        // Handle form submission, e.g., send data to a server
-    }
 }

@@ -35,17 +35,15 @@ object RecipeAPI {
     val gson = Gson()
     val client = OkHttpClient()
     private const val URL_SERVER = "http://192.168.1.26:8082/bagueton"
-    // http://localhost:8080 http://90.51.140.217:8081/bagueton
+    // http://localhost:8080 http://90.51.140.217:8082/bagueton http://192.168.1.50:8082/bagueton
 
 
-    fun createRecipe(title: String?, ingredients: List<Ingredient>, steps: List<Step>?){
-        if (true) {
-            val res = sendPost("$URL_SERVER/createrecipe",
-                title?.let { RecipeBean(null, it, images = null, ingredients, steps ) })
-            println("Creation de la recette $title")
-        } else {
-            println("Veuillez remplir tous les champs")
-        }
+    fun createRecipe(title: String, ingredients: List<Ingredient>, steps: List<Step>?){
+        val res = sendPost("$URL_SERVER/createrecipe",
+            RecipeBean(null, title, images = null, ingredients, steps )
+        )
+        println("Creation de la recette $title")
+        println("Resultat: $res")
     }
 
     fun updateRecipe(idRecipe: String?, title: String?, ingredientList: List<Ingredient>, stepList: List<Step>?){
@@ -53,7 +51,12 @@ object RecipeAPI {
         println("Données de la recette '$title' modifiées")
         println(res)
     }
-
+    // vérifier si le titre de la recette est déjà utiliser
+    fun isTitleUsed(title: String): Boolean {
+        val recipes = readRecipes()
+        return recipes.any { it.title == title }
+    }
+    // récupérer toutes les recettes
     fun readRecipes() : List<RecipeBean> {
         try {
             val json = sendGet("$URL_SERVER/readrecipes")

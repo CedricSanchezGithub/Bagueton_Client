@@ -10,6 +10,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.example.bagueton_v1.ui.ui.screens.CreateRecipeScreen
+//import com.example.bagueton_v1.ui.ui.screens.CreateRecipeScreen
 import com.example.bagueton_v1.ui.ui.screens.HomeScreen
 import com.example.bagueton_v1.ui.ui.screens.ListRecipeScreen
 import com.example.bagueton_v1.ui.ui.screens.LoginScreen
@@ -18,7 +19,7 @@ import com.example.bagueton_v1.ui.ui.screens.RecipeScreen
 import com.example.bagueton_v1.ui.ui.screens.ToolsScreen
 import com.example.bagueton_v1.ui.ui.screens.UnboardingScreen
 import com.example.bagueton_v1.ui.ui.screens.UpdateRecipeScreen
-import com.example.bagueton_v1.ui.ui.screens.TestScreen
+import com.example.bagueton_v1.ui.ui.screens.tests.TestScreen
 
 sealed class Routes(val route: String) {
     //Route 1

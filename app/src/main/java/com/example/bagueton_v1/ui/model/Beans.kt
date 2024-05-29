@@ -1,8 +1,5 @@
 package com.example.bagueton_v1.ui.model
 
-import com.example.bagueton_v1.R
-import com.google.gson.annotations.SerializedName
-
 //data class Ingredient(val name: String, val quantity: String)
 //
 //data class Recipe(
@@ -30,12 +27,12 @@ data class Image(
 
 data class Ingredient(
     var id: String ? = null,
-    var ingredient: String,
-    var quantity: Int
+    var ingredient: String?,
+    var quantity: String?
 )
 
 data class Step(
-    var description: String,
+    var description: String?,
     var id: String ? = null
 )
 
@@ -92,6 +89,15 @@ data class Weather(
 data class Wind(
     var deg: Int,
     var speed: Double
+)
+
+data class ContactFormBean(
+
+    var  id: String?,
+    var email: String,
+    var message: String,
+    var name: String
+
 )
 
 //data class WeatherBeans ( var weather: Weather )
