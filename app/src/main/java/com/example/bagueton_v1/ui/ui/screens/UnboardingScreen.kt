@@ -52,10 +52,10 @@ fun UnboardingScreen (navHostController: NavHostController? = null,
             horizontalArrangement = Arrangement.Center) {
 
 //            Image(ImageBitmap.imageResource(id = R.drawable.logo),
-              Image(ImageBitmap.imageResource(id = R.drawable.logo),
+              Image(ImageBitmap.imageResource(id = R.drawable.logobagueton),
                 contentDescription = "logo", modifier = Modifier
-                    .height(200.dp)
-                    .width(200.dp)
+                    .height(300.dp)
+                    .width(300.dp)
                     .fillMaxWidth(1f)
             )
         }
