@@ -1,40 +1,45 @@
 package com.example.bagueton_v1.ui
 
-import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.bagueton_v1.ui.model.WeatherAPI
-import com.example.bagueton_v1.ui.model.WeatherBean
+import com.example.bagueton_v1.ui.model.WeatherResponse
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.io.IOException
 
+
 class WeatherViewModel : ViewModel() {
+var weatherData = mutableStateOf<WeatherResponse?>(null)
 
-    var weatherData = mutableStateListOf<WeatherBean>()
 
-    fun readWeather() {
-        println("Début de readWeather()")
-        weatherData.clear()
-        println("weatherData après clear: $weatherData")
-        viewModelScope.launch(Dispatchers.Default) {
+    fun weatherCallAPI() {
+        viewModelScope.launch(Dispatchers.IO) {
             try {
-                println("Début de la coroutine")
-                val weather = WeatherAPI.readWeather()
-                println("Fin de la coroutine")
-                if (weather != null) {
-                    println("Weather data récupérée: $weather")
-                    launch(Dispatchers.Main) {
-                        weatherData.add(weather)
-                        println("weatherData après ajout: $weatherData")
+                val newWeatherData = WeatherAPI.fetchWeather()
+                withContext(Dispatchers.Main) {
+                    if (newWeatherData != null) {
+                        println("Données de la réponse: $newWeatherData")
+                        weatherData.value = newWeatherData
+                    } else {
+                        println("Réponse vide.")
                     }
-                } else {
-                    println("Aucune donnée météo récupérée")
+                    println("Chargement des données météo dans le ViewModel")
                 }
-                println("Fin de readWeather(), weather: $weather")
             } catch (e: IOException) {
-                println("Erreur IO: ${e.message}")
                 e.printStackTrace()
+                withContext(Dispatchers.Main) {
+                    // Afficher un message d'erreur sur le thread principal
+                    println("Erreur de réseau: ${e.message}")
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
+                withContext(Dispatchers.Main) {
+                    // Afficher un message d'erreur sur le thread principal
+                    println("Erreur: ${e.message}")
+                }
             }
         }
     }

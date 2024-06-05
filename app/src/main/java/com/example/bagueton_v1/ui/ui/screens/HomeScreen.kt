@@ -83,7 +83,6 @@ fun HomeScreen(baguetonViewModel: BaguetonViewModel, navHostController: NavHostC
                 items(recipeList) { recipe ->
                     val imageUrl = recipe.images?.firstOrNull()?.url
                     println("Recipe image list: $imageUrl")
-
                     if (imageUrl != null) {
                         Image(
                             painter = rememberAsyncImagePainter(
@@ -112,7 +111,7 @@ fun HomeScreen(baguetonViewModel: BaguetonViewModel, navHostController: NavHostC
                             contentScale = ContentScale.Crop
                         )
                     } else {
-                        // Optionnel: Ajouter une image ou un texte de remplacement si l'URL est null
+                        // Ajouter un cadre vide et un texte de remplacement si l'URL est null, évite le crash
                         Box(
                             modifier = Modifier
                                 .size(150.dp)
@@ -140,6 +139,7 @@ fun HomeScreen(baguetonViewModel: BaguetonViewModel, navHostController: NavHostC
                     }
                 }
             }
+
             Button(onClick = { /*TODO*/ },
                 modifier = Modifier
                     .height(40.dp)

@@ -16,6 +16,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ImageBitmap
@@ -28,16 +29,11 @@ import coil.compose.rememberAsyncImagePainter
 import com.example.bagueton_v1.R
 import com.example.bagueton_v1.ui.BaguetonViewModel
 import com.example.bagueton_v1.ui.WeatherViewModel
-import com.example.bagueton_v1.ui.model.WeatherAPI.readWeather
 import com.example.bagueton_v1.ui.screens.Bagueton_v1Theme
 import previewBaguetonViewModel
+import kotlin.math.round
 
 fun main() {
-
-    val data = readWeather()
-    if (data != null) {
-        print("boisseron : ${data.weather[0].icon}")
-    }
 
 }
 
@@ -45,13 +41,18 @@ fun main() {
 fun UnboardingScreen (navHostController: NavHostController? = null,
                       baguetonViewModel: BaguetonViewModel,
                       weatherViewModel: WeatherViewModel? = null){
-
+    LaunchedEffect(key1 = true) {
+        weatherViewModel?.weatherCallAPI()
+    }
+    val weatherData = weatherViewModel?.weatherData?.value
 
     Column {
         Spacer(modifier = Modifier.weight(1f))
         Row(modifier = Modifier.fillMaxWidth(1f),
             horizontalArrangement = Arrangement.Center) {
-            Image(ImageBitmap.imageResource(id = R.drawable.logo),
+
+//            Image(ImageBitmap.imageResource(id = R.drawable.logo),
+              Image(ImageBitmap.imageResource(id = R.drawable.logo),
                 contentDescription = "logo", modifier = Modifier
                     .height(200.dp)
                     .width(200.dp)
@@ -68,18 +69,28 @@ fun UnboardingScreen (navHostController: NavHostController? = null,
         Column {
 
             Row {
-                Image(painter = rememberAsyncImagePainter("https://openweathermap.org/img/wn/04d@2x.png"),
-                    contentDescription = "logo", modifier = Modifier
-                        .fillMaxWidth(1f)
-                        .height(100.dp))
+                if (weatherData != null) {
+                    println(weatherData.weather[0].icon)
+                    Image(painter = rememberAsyncImagePainter("https://openweathermap.org/img/wn/${weatherData.weather[0].icon}@2x.png"),
+                        contentDescription = "logo", modifier = Modifier
+                            .fillMaxWidth(1f)
+                            .height(100.dp))
+                }
             }
             Row {
-                Text(text = "16°C",Modifier.fillMaxWidth(1f),
-                    textAlign = TextAlign.Center)
+                Text(
+                    text = "${
+                        weatherData?.main?.temp?.minus(273.15)?.let { round(it * 10) / 10 } ?: "N/A"
+                    } °C",
+                    modifier = Modifier.fillMaxWidth(1f),
+                    textAlign = TextAlign.Center
+                )
             }
             Row {
-                Text(text = "Nuageux",Modifier.fillMaxWidth(1f),
-                    textAlign = TextAlign.Center)
+                weatherData?.name?.let {
+                    Text(text = it,Modifier.fillMaxWidth(1f),
+                        textAlign = TextAlign.Center)
+                }
             }
         }
         Row {

@@ -79,7 +79,7 @@ fun UpdateRecipeScreen(
             OutlinedTextField(
                 value = baguetonViewModel.newIngredientsRecipe.value,
                 onValueChange = { baguetonViewModel.newIngredientsRecipe.value = it },
-                label = { Text("Entrez vos ingrédients, séparés par une virgule*") },
+                label = { "Entrez vos ingrédients, séparés par une virgule*" },
                 modifier = Modifier
                     .fillMaxWidth() // Remplit la largeur maximale disponible.
                     .height(150.dp) // Définit une hauteur fixe pour le champ de texte

@@ -28,7 +28,7 @@ class BaguetonViewModel : ViewModel() {
 
     var newTitleRecipe = mutableStateOf("")
     var newStepsRecipe = mutableStateOf("")
-//    var newIngredientsRecipe = mutableStateOf(Ingredient"")
+    var newIngredientsRecipe = mutableStateOf("")
 
 
     fun createRecipe(title: String, ingredients: List<Ingredient>, steps: List<Step>){
