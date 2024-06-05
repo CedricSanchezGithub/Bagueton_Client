@@ -4,7 +4,6 @@ package com.example.bagueton_v1.ui.model
 import com.example.bagueton_v1.ui.model.RecipeAPI.MEDIA_TYPE_JSON
 import com.example.bagueton_v1.ui.model.RecipeAPI.client
 import com.example.bagueton_v1.ui.model.RecipeAPI.gson
-import com.example.bagueton_v1.ui.model.RecipeAPI.readRecipes
 import com.google.gson.Gson
 import com.google.gson.JsonSyntaxException
 import okhttp3.MediaType.Companion.toMediaType
@@ -21,12 +20,6 @@ import java.io.IOException
 //    val ingredients: String? = "liste d'ingrédients vide",
 //    val steps: String? = "liste d'étape vide"
 //)
-
-fun main() {
-
-    val recipesData = readRecipes()
-    println(recipesData.listIterator())
-}
 
 
 object RecipeAPI {

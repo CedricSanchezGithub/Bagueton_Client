@@ -4,7 +4,15 @@ import android.content.res.Configuration
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.itemsIndexed
@@ -13,7 +21,12 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Edit
-import androidx.compose.material3.*
+import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -105,8 +118,8 @@ fun HeaderRecipeScreen(baguetonViewModel: BaguetonViewModel, recipe: RecipeBean)
                         .fillMaxWidth()
                         .heightIn(max = screenHeight / 3)
                         .padding(8.dp)
-                        .border(1.dp, MaterialTheme.colorScheme.primary, RoundedCornerShape(50.dp))
-                        .clip(RoundedCornerShape(50.dp)),
+                        .border(1.dp, MaterialTheme.colorScheme.primary, RoundedCornerShape(50.dp, 100.dp, 50.dp, 100.dp))
+                        .clip(RoundedCornerShape(50.dp, 100.dp, 50.dp, 100.dp)),
                     contentScale = ContentScale.Crop
                 )
 

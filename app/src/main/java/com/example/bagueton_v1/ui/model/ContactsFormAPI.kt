@@ -13,11 +13,11 @@ object ContactsFormAPI{
 
         val res = sendPost("$URL_SERVER/form",
             ContactFormBean(name, email, name, message))
-        println("Réponse du serveur : $res")
+             println("Réponse du serveur : $res")
 
     }
 
-    fun sendPost(url: String, toSend: Any?): String {
+    private fun sendPost(url: String, toSend: Any?): String {
         println("url : $url")
 
         val json = RecipeAPI.gson.toJson(toSend)
