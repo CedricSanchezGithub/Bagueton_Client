@@ -85,12 +85,9 @@ fun ImageGrid(recipes: List<RecipeBean>, navHostController: NavHostController?) 
     // Création d'une liste de sous-listes, chaque sous-liste pouvant contenir jusqu'à deux éléments
     val chunkedRecipes = recipes.chunked(2)
 
-
-    // Affiche une grille de recettes avec des images et des titres superposés avec effet de gradient.
     LazyColumn {
         items(chunkedRecipes.size) { index ->
             val rowRecipes = chunkedRecipes[index]
-            val imgUrl = rowRecipes[0].images?.get(0)?.url
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -104,7 +101,7 @@ fun ImageGrid(recipes: List<RecipeBean>, navHostController: NavHostController?) 
                             .clip(RoundedCornerShape(8.dp))
                     ) {
                         Image(
-                            painter = rememberAsyncImagePainter(imgUrl),
+                            painter = rememberAsyncImagePainter(recipe.images?.get(0)?.url),
                             contentDescription = "Image for ${recipe.title}",
                             modifier = Modifier
                                 .fillMaxSize()
@@ -113,7 +110,7 @@ fun ImageGrid(recipes: List<RecipeBean>, navHostController: NavHostController?) 
                         )
                         Box(
                             modifier = Modifier
-                                .fillMaxWidth() // Prend toute la largeur
+                                .fillMaxWidth()
                                 .align(Alignment.BottomCenter)
                                 .background(
                                     Brush.verticalGradient(
