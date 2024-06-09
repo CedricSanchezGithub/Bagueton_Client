@@ -84,8 +84,7 @@ fun RecipeScreen2(id: String?,
                 .fillMaxHeight()
                 .verticalScroll(scrollState),) {
             if (recipe != null) {
-
-                HeaderRecipeScreen(baguetonViewModel, recipe)
+                HeaderRecipeScreen(recipe)
             }
             Spacer(modifier = Modifier.height(16.dp))
             if (recipe != null) {

@@ -51,7 +51,6 @@ fun UnboardingScreen (navHostController: NavHostController? = null,
         Row(modifier = Modifier.fillMaxWidth(1f),
             horizontalArrangement = Arrangement.Center) {
 
-//            Image(ImageBitmap.imageResource(id = R.drawable.logo),
               Image(ImageBitmap.imageResource(id = R.drawable.logobagueton),
                 contentDescription = "logo", modifier = Modifier
                     .height(300.dp)
@@ -70,7 +69,6 @@ fun UnboardingScreen (navHostController: NavHostController? = null,
 
             Row {
                 if (weatherData != null) {
-                    println(weatherData.weather[0].icon)
                     Image(painter = rememberAsyncImagePainter("https://openweathermap.org/img/wn/${weatherData.weather[0].icon}@2x.png"),
                         contentDescription = "logo", modifier = Modifier
                             .fillMaxWidth(1f)

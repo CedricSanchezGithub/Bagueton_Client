@@ -55,6 +55,7 @@ object WeatherAPI {
 
         return try {
             val response = call.execute()
+            println(response)
             if (response.isSuccessful) {
                 response.body()
             } else {

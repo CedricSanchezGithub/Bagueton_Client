@@ -11,7 +11,7 @@ object ContactsFormAPI{
 
     fun createContactForm(name: String, email: String, message: String)  {
 
-        val res = sendPost("$URL_SERVER/form",
+        val res: String = sendPost("$URL_SERVER/form",
             ContactFormBean(name, email, name, message))
              println("Réponse du serveur : $res")
 

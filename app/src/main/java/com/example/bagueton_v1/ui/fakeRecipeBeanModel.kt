@@ -39,8 +39,7 @@ fun previewBaguetonViewModel(): BaguetonViewModel {
         recipeList.addAll(fakeRecipes())
         imageRecipe.value = recipeList.first().images?.first()?.url.toString()
         titleRecipe.value = recipeList.first().title
-        stepsRecipe.value = recipeList.first().steps?.joinToString("").toString()
-        ingredientsRecipe.value = recipeList.first().ingredients.joinToString("").toString()
+
 
     }
 }

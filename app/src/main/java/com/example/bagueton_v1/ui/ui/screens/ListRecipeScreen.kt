@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -37,13 +36,12 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import coil.compose.rememberAsyncImagePainter
-
+import com.example.bagueton_v1.R
 import com.example.bagueton_v1.ui.BaguetonViewModel
 import com.example.bagueton_v1.ui.model.RecipeBean
 import com.example.bagueton_v1.ui.screens.Bagueton_v1Theme
 import com.example.bagueton_v1.ui.ui.MyBottomAppBar
 import com.example.bagueton_v1.ui.ui.SearchBar
-
 
 
 @Composable
@@ -100,57 +98,92 @@ fun ImageGrid(recipes: List<RecipeBean>, navHostController: NavHostController?) 
                             .size(150.dp)
                             .clip(RoundedCornerShape(8.dp))
                     ) {
-                        Image(
-                            painter = rememberAsyncImagePainter(recipe.images?.get(0)?.url),
-                            contentDescription = "Image for ${recipe.title}",
-                            modifier = Modifier
-                                .fillMaxSize()
-                                .clickable { run { navHostController?.navigate("RecipeScreen/${recipe.id}") } },
-                            contentScale = ContentScale.Crop
-                        )
-                        Box(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .align(Alignment.BottomCenter)
-                                .background(
-                                    Brush.verticalGradient(
-                                        colors = listOf(
-                                            Color.Transparent,
-                                            Color.Black.copy(alpha = 0.7f)
-                                        ),
-                                        startY = Float.POSITIVE_INFINITY
-                                    )
-                                ),
-                            contentAlignment = Alignment.BottomStart
-                        ) {
-                            Text(
-                                modifier = Modifier.align(Alignment.Center),
-                                text = recipe.title ?: "",
-                                color = Color.White,
-                                style = TextStyle(
-                                    fontSize = 12.sp,
-                                    fontWeight = FontWeight.Bold,
-                                )
+                        val imageUrl = recipe.images?.firstOrNull()?.url
+                        if (imageUrl != null) {
+
+                            Image(
+                                painter = rememberAsyncImagePainter(imageUrl),
+                                contentDescription = "Image for ${recipe.title}",
+                                modifier = Modifier
+                                    .fillMaxSize()
+                                    .clickable { run { navHostController?.navigate("RecipeScreen/${recipe.id}") } },
+                                contentScale = ContentScale.Crop
                             )
+                            Box(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .align(Alignment.BottomCenter)
+                                    .background(
+                                        Brush.verticalGradient(
+                                            colors = listOf(
+                                                Color.Transparent,
+                                                Color.Black.copy(alpha = 0.7f)
+                                            ),
+                                            startY = Float.POSITIVE_INFINITY
+                                        )
+                                    ),
+                                contentAlignment = Alignment.BottomStart
+                            ) {
+                                Text(
+                                    modifier = Modifier.align(Alignment.Center),
+                                    text = recipe.title,
+                                    color = Color.White,
+                                    style = TextStyle(
+                                        fontSize = 12.sp,
+                                        fontWeight = FontWeight.Bold,
+                                    )
+                                )
+                            }
+                        } else {
+                            // Optionally handle the case where there is no image
+                            Image(
+                                painter = rememberAsyncImagePainter(R.drawable.icone),
+                                contentDescription = "Image for ${recipe.title}",
+                                modifier = Modifier
+                                    .fillMaxSize()
+                                    .clickable { run { navHostController?.navigate("RecipeScreen/${recipe.id}") } },
+                                contentScale = ContentScale.Crop
+                            )
+                            Box(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .align(Alignment.BottomCenter)
+                                    .background(
+                                        Brush.verticalGradient(
+                                            colors = listOf(
+                                                Color.Transparent,
+                                                Color.Black.copy(alpha = 0.7f)
+                                            ),
+                                            startY = Float.POSITIVE_INFINITY
+                                        )
+                                    ),
+                                contentAlignment = Alignment.BottomStart
+                            ) {
+                                Text(
+                                    modifier = Modifier.align(Alignment.Center),
+                                    text = recipe.title,
+                                    color = Color.White,
+                                    style = TextStyle(
+                                        fontSize = 12.sp,
+                                        fontWeight = FontWeight.Bold,
+                                    )
+                                )
+                            }
                         }
-                    }
-                    if (rowRecipes.size < 2) {
-                        Spacer(modifier = Modifier.size(150.dp))
                     }
                 }
             }
         }
     }
 }
+    @Preview(showBackground = true, showSystemUi = true, uiMode = Configuration.UI_MODE_NIGHT_YES)
+    @Preview(showBackground = true, showSystemUi = true)
+    @Composable
+    fun ListRecipeScreenPreview() {
 
-@Preview(showBackground = true, showSystemUi = true, uiMode = Configuration.UI_MODE_NIGHT_YES)
-@Preview(showBackground = true, showSystemUi = true)
-@Composable
-fun ListRecipeScreenPreview() {
-
-    Bagueton_v1Theme {
-        Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
-            ListRecipeScreen(baguetonViewModel = BaguetonViewModel())
+        Bagueton_v1Theme {
+            Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
+                ListRecipeScreen(baguetonViewModel = BaguetonViewModel())
+            }
         }
     }
-}

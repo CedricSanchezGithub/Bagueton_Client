@@ -1,5 +1,6 @@
 package com.example.bagueton_v1.ui.ui.screens
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -62,7 +63,6 @@ fun CreateRecipeScreen(
             Text(text = "Nouvelle recette")
             Spacer(modifier = Modifier.height(16.dp))
 
-            // Champ de saisie pour le titre
             TitleInput(
                 title = baguetonViewModel.titleRecipe.value,
                 onTitleChange = { newTitle ->
@@ -119,7 +119,7 @@ fun CreateRecipeScreen(
 @Composable
 fun TitleInput(
     title: String,
-    onTitleChange: (String) -> Unit
+    onTitleChange: (String) -> Unit,
 ) {
     var isTitleFocused by remember { mutableStateOf(false) }
     Column(
@@ -135,6 +135,7 @@ fun TitleInput(
                 .padding(8.dp)
                 .border(1.dp, Color.Gray)
                 .width(300.dp)
+                .background(Color.White)
                 .onFocusChanged { focusState ->
                     isTitleFocused = focusState.isFocused
                 }

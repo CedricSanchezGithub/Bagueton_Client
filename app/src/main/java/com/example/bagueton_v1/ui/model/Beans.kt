@@ -16,7 +16,7 @@ data class RecipeBean(
     var id: String? = null,
     var title: String,
     var images: List<Image>? = null,
-    var ingredients: List<Ingredient>,
+    var ingredients: List<Ingredient>? = null,
     var steps: List<Step>? = null
 )
 

@@ -18,7 +18,6 @@ import com.example.bagueton_v1.ui.ui.screens.PrivacyPolicyScreen
 import com.example.bagueton_v1.ui.ui.screens.RecipeScreen
 import com.example.bagueton_v1.ui.ui.screens.ToolsScreen
 import com.example.bagueton_v1.ui.ui.screens.UnboardingScreen
-import com.example.bagueton_v1.ui.ui.screens.UpdateRecipeScreen
 import com.example.bagueton_v1.ui.ui.screens.tests.TestScreen
 
 sealed class Routes(val route: String) {
@@ -81,16 +80,6 @@ fun AppNavigation(baguetonViewModel: BaguetonViewModel, accountViewModel: Accoun
         composable(route = Routes.ToolsScreen.route){ ToolsScreen(navHostController, baguetonViewModel) }
         //Route 7 vers les politiques de confidentialitées
         composable(route = Routes.PrivacyPolicyScreen.route){ PrivacyPolicyScreen(navHostController) }
-//      // Route 8 vers l'écran de modification
-        composable(
-            route = Routes.UpdateRecipeScreen.route,
-            arguments = listOf(navArgument("id") { type = NavType.StringType })
-        ) { backStackEntry ->
-            val id = backStackEntry.arguments?.getString("id")
-            if (id != null) {
-                UpdateRecipeScreen( navHostController, baguetonViewModel, id)
-            }
-        }
         // Route 9 vers l'écran d'unboarding
         composable(route = Routes.UnboardingScreen.route){ UnboardingScreen(navHostController, baguetonViewModel, weatherViewModel) }
         //Route 10 vers l'écran de test

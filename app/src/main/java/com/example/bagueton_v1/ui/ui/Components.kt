@@ -15,13 +15,14 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.AutoGraph
-import androidx.compose.material.icons.filled.Build
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.RestaurantMenu
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.BottomAppBar
+import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -177,11 +178,29 @@ fun ConfirmationSnackbar(snackbarHostState: SnackbarHostState, scope: CoroutineS
         }
 
     }
-    // Cette fonction est appelée lorsqu'une recette est correctement envoyée au serveur
-    showSnackbar()
-    baguetonViewModel.snackBarValue.value = false
 }
 
+@Composable
+fun ConfirmDeleteDialog(
+    onConfirm: () -> Unit,
+    onDismiss: () -> Unit
+) {
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        title = { Text(text = "Confirmer la suppression") },
+        text = { Text("Êtes-vous sûr de vouloir supprimer cette recette ?") },
+        confirmButton = {
+            Button(onClick = onConfirm) {
+                Text("Confirmer")
+            }
+        },
+        dismissButton = {
+            Button(onClick = onDismiss) {
+                Text("Annuler")
+            }
+        }
+    )
+}
 
 @Preview(showBackground = true, showSystemUi = false)
 @Composable

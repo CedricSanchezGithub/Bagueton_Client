@@ -78,11 +78,9 @@ fun HomeScreen(baguetonViewModel: BaguetonViewModel, navHostController: NavHostC
             }
             // Prend uniquement les 5 premiers éléments de la liste pour l'affichage
             val recipeList = baguetonViewModel.recipeList.takeLast(5)
-            println("Recipe image list: ${recipeList.firstOrNull()?.images?.firstOrNull()?.url}")
             LazyRow(modifier = Modifier.padding(16.dp)) {
                 items(recipeList) { recipe ->
                     val imageUrl = recipe.images?.firstOrNull()?.url
-                    println("Recipe image list: $imageUrl")
                     if (imageUrl != null) {
                         Image(
                             painter = rememberAsyncImagePainter(
@@ -158,8 +156,6 @@ fun HomeScreen(baguetonViewModel: BaguetonViewModel, navHostController: NavHostC
             LazyRow(modifier = Modifier.padding(16.dp)) {
                 items(recipeList.take(5)) { recipe ->
                     val imageUrl = recipe.images?.firstOrNull()?.url
-                    println("Recipe image list: $imageUrl")
-
                     if (imageUrl != null) {
                         Image(
                             painter = rememberAsyncImagePainter(

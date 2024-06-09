@@ -13,21 +13,12 @@ import okhttp3.RequestBody.Companion.toRequestBody
 import okhttp3.Response
 import java.io.IOException
 
-//data class RecipeBean(
-//    val idRecipe: String? = null,
-//    val title: String? = null,
-//    val image: String? = "R.drawable.addimg",
-//    val ingredients: String? = "liste d'ingrédients vide",
-//    val steps: String? = "liste d'étape vide"
-//)
-
-
 object RecipeAPI {
 
     val MEDIA_TYPE_JSON = "application/json; charset=utf-8".toMediaType()
     val gson = Gson()
     val client = OkHttpClient()
-    private const val URL_SERVER = "http://90.51.140.217:8082/bagueton"
+    private const val URL_SERVER = "http://192.168.1.26:8082/bagueton"
     // http://localhost:8080 http://90.51.140.217:8082/bagueton http://192.168.1.50:8082/bagueton
 
 
@@ -39,12 +30,18 @@ object RecipeAPI {
         println("Resultat: $res")
     }
 
-    fun updateRecipe(idRecipe: String?, title: String?, ingredientList: List<Ingredient>, stepList: List<Step>?){
-        val res = sendPost("$URL_SERVER/updaterecipe/$idRecipe", title?.let { RecipeBean(null, it, images = null, ingredientList, stepList ) })
+    fun updateRecipe(idRecipe: String?, title: String?, ingredientList: List<Ingredient>?, stepList: List<Step>?) {
+        val url = "$URL_SERVER/updaterecipe/$idRecipe"
+        val recipeBean = title?.let {
+            RecipeBean(null,
+                it, images = null, ingredientList, stepList)
+        }
+        val res = sendPatch(url, recipeBean)
         println("Données de la recette '$title' modifiées")
         println(res)
     }
-    // vérifier si le titre de la recette est déjà utiliser
+
+    // vérifier si le titre de la recette est déjà utilisé
     fun isTitleUsed(title: String): Boolean {
         val recipes = readRecipes()
         return recipes.any { it.title == title }
@@ -118,5 +115,20 @@ fun sendDelete(url: String): String {
     } catch (e: IOException) {
         e.printStackTrace()
         "Error: ${e.message}"
+    }
+}
+
+private fun sendPatch(url: String, toSend: Any?): String {
+    println("url : $url")
+
+    val json = gson.toJson(toSend)
+    val body = json.toRequestBody(MEDIA_TYPE_JSON)
+    val request = Request.Builder().url(url).patch(body).build()
+
+    return client.newCall(request).execute().use {
+        if (!it.isSuccessful) {
+            throw Exception("Réponse du serveur incorrect :${it.code}")
+        }
+        it.body.string()
     }
 }
