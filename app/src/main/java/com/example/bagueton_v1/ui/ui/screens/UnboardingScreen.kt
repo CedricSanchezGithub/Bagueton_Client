@@ -27,10 +27,8 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import coil.compose.rememberAsyncImagePainter
 import com.example.bagueton_v1.R
-import com.example.bagueton_v1.ui.BaguetonViewModel
 import com.example.bagueton_v1.ui.WeatherViewModel
 import com.example.bagueton_v1.ui.screens.Bagueton_v1Theme
-import previewBaguetonViewModel
 import kotlin.math.round
 
 fun main() {
@@ -39,7 +37,6 @@ fun main() {
 
 @Composable
 fun UnboardingScreen (navHostController: NavHostController? = null,
-                      baguetonViewModel: BaguetonViewModel,
                       weatherViewModel: WeatherViewModel? = null){
     LaunchedEffect(key1 = true) {
         weatherViewModel?.weatherCallAPI()
@@ -121,7 +118,7 @@ fun UnboardingScreenPreview() {
 
     Bagueton_v1Theme {
         Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
-            UnboardingScreen(baguetonViewModel = previewBaguetonViewModel())
+            UnboardingScreen()
         }
     }
 }

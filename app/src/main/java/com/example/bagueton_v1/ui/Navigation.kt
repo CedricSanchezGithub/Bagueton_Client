@@ -9,6 +9,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import com.example.bagueton_v1.ui.ui.screens.CalendarScreen
 import com.example.bagueton_v1.ui.ui.screens.CreateRecipeScreen
 //import com.example.bagueton_v1.ui.ui.screens.CreateRecipeScreen
 import com.example.bagueton_v1.ui.ui.screens.HomeScreen
@@ -48,11 +49,12 @@ sealed class Routes(val route: String) {
     }
     object TestScreen : Routes("TestScreen")
     object ContactsFormScreen : Routes("ContactsFormScreen")
+    object CalendarScreen : Routes("CalendarScreen")
 
 }
 
 @Composable
-fun AppNavigation(baguetonViewModel: BaguetonViewModel, accountViewModel: AccountViewModel, weatherViewModel: WeatherViewModel, contactsViewModel: ContactsViewModel) {
+fun AppNavigation(calendarViewModel: CalendarViewModel, baguetonViewModel: BaguetonViewModel, accountViewModel: AccountViewModel, weatherViewModel: WeatherViewModel, contactsViewModel: ContactsViewModel) {
 
     val navHostController : NavHostController = rememberNavController()
 
@@ -81,10 +83,12 @@ fun AppNavigation(baguetonViewModel: BaguetonViewModel, accountViewModel: Accoun
         //Route 7 vers les politiques de confidentialitées
         composable(route = Routes.PrivacyPolicyScreen.route){ PrivacyPolicyScreen(navHostController) }
         // Route 9 vers l'écran d'unboarding
-        composable(route = Routes.UnboardingScreen.route){ UnboardingScreen(navHostController, baguetonViewModel, weatherViewModel) }
+        composable(route = Routes.UnboardingScreen.route){ UnboardingScreen(navHostController, weatherViewModel) }
         //Route 10 vers l'écran de test
         composable(route = Routes.TestScreen.route){ TestScreen(navHostController, baguetonViewModel) }
         //Route 10 vers l'écran de contacts
         composable(route = Routes.ContactsFormScreen.route){ ContactsFormScreen(navHostController, contactsViewModel) }
+        //Route 11 vers l'écran agenda
+        composable(route = Routes.CalendarScreen.route){ CalendarScreen(calendarViewModel, navHostController) }
     }
 }

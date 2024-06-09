@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.itemsIndexed
@@ -243,7 +244,7 @@ fun UpdateHeaderRecipeScreen(baguetonViewModel: BaguetonViewModel, recipe: Recip
         val configuration = LocalConfiguration.current
         val screenHeight = configuration.screenHeightDp.dp
 
-        Box {
+        Box(contentAlignment = Alignment.Center) {
             recipe.let {
                 Image(
                     painter = rememberAsyncImagePainter(it.images?.firstOrNull()?.url),
@@ -260,8 +261,7 @@ fun UpdateHeaderRecipeScreen(baguetonViewModel: BaguetonViewModel, recipe: Recip
                         .clip(RoundedCornerShape(50.dp, 100.dp, 50.dp, 100.dp)),
                     contentScale = ContentScale.Crop
                 )
-
-                TitleInput(
+                UpdateTitleInput(
                     title = baguetonViewModel.newTitleRecipe.value,
                     onTitleChange = { newTitle ->
                         baguetonViewModel.newTitleRecipe.value = newTitle
@@ -271,7 +271,51 @@ fun UpdateHeaderRecipeScreen(baguetonViewModel: BaguetonViewModel, recipe: Recip
         }
     }
 }
-
+@Composable
+fun UpdateTitleInput(
+    title: String,
+    onTitleChange: (String) -> Unit,
+) {
+    var isTitleFocused by remember { mutableStateOf(false) }
+    Column(
+        horizontalAlignment = Alignment.CenterHorizontally,
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(16.dp)
+    ){
+        Box(
+            contentAlignment = Alignment.Center,
+            modifier = Modifier
+                .fillMaxWidth()
+                .align(Alignment.CenterHorizontally)
+                .padding(8.dp)
+                .border(1.dp, Color.Gray)
+                .width(300.dp)
+                .background(Color.White)
+                .onFocusChanged { focusState ->
+                    isTitleFocused = focusState.isFocused
+                }
+        ) {
+            if (title.isEmpty() && !isTitleFocused) {
+                Text(
+                    textAlign = TextAlign.Center,
+                    text = "Nouveau titre de la recette",
+                    color = Color.Gray,
+                    modifier = Modifier.align(Alignment.Center),
+                )
+            }
+            BasicTextField(
+                value = title,
+                onValueChange = onTitleChange,
+                singleLine = true,
+                modifier = Modifier.width(300.dp)
+                    .padding(8.dp)
+                    .align(Alignment.Center)
+                    .clip(RoundedCornerShape(50.dp, 100.dp, 50.dp, 100.dp))
+            )
+        }
+    }
+}
 @Composable
 fun BodyRecipeScreen(recipe: RecipeBean) {
     Column(Modifier.padding(32.dp)) {
@@ -523,9 +567,6 @@ fun UpdateStepList(baguetonViewModel: BaguetonViewModel, steps: List<Step>) {
         }
     }
 }
-
-
-
 
 @Composable
 fun UpdateStepInput(

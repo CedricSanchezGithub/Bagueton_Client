@@ -16,6 +16,7 @@ import java.io.IOException
 class BaguetonViewModel : ViewModel() {
 
     var recipeList = mutableStateListOf<RecipeBean>()
+    var errorMessage = mutableStateOf("")
 
     var searchText = mutableStateOf("")
 
@@ -55,17 +56,29 @@ class BaguetonViewModel : ViewModel() {
         }
     }
 
-    fun loadRecipes(){
+    fun loadRecipes() {
         viewModelScope.launch(Dispatchers.Default) {
             recipeList.clear()
             try {
                 val newRecipes = RecipeAPI.readRecipes()
                 launch(Dispatchers.Main) {
                     recipeList.addAll(newRecipes)
-                    println("Chargement des données de recette loadRecipe dans le ViewModel")
-                }
+                    errorMessage.value = ""
+                    println("Chargement des données de recette loadRecipe dans le ViewModel")                }
+            } catch (e: Throwable) {
+                e.printStackTrace()
             } catch (e: IOException) {
                 e.printStackTrace()
+                launch(Dispatchers.Main) {
+                    errorMessage.value =
+                        "Erreur de connexion Internet. Veuillez vérifier votre connexion."
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
+                launch(Dispatchers.Main) {
+                    errorMessage.value =
+                        "Erreur lors du chargement des recettes. Veuillez réessayer plus tard."
+                }
             }
         }
     }

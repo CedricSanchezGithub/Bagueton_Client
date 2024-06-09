@@ -142,7 +142,7 @@ fun MyBottomAppBar(navHostController: NavHostController? = null) {
                 Modifier.size(30.dp))
         }
         Spacer(Modifier.weight(1f, true))
-        IconButton(onClick = { navHostController?.navigate("ToolsScreen") }) {
+        IconButton(onClick = { navHostController?.navigate("ToolScreen") }) {
             Icon(Icons.Filled.AutoGraph, contentDescription = "Outils",
                 Modifier.size(30.dp))
         }

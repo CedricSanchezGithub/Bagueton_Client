@@ -7,17 +7,13 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.style.TextDecoration
-import androidx.compose.ui.tooling.preview.Preview
 import com.example.bagueton_v1.ui.AccountViewModel
 import com.example.bagueton_v1.ui.AppNavigation
 import com.example.bagueton_v1.ui.BaguetonViewModel
+import com.example.bagueton_v1.ui.CalendarViewModel
 import com.example.bagueton_v1.ui.WeatherViewModel
 import com.example.bagueton_v1.ui.screens.Bagueton_v1Theme
-import com.example.bagueton_v1.ui.ui.screens.HomeScreen
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -33,7 +29,8 @@ class MainActivity : ComponentActivity() {
                         baguetonViewModel = BaguetonViewModel(),
                         accountViewModel = AccountViewModel(),
                         weatherViewModel = WeatherViewModel(),
-                        contactsViewModel = ContactsViewModel()
+                        contactsViewModel = ContactsViewModel(),
+                        calendarViewModel = CalendarViewModel()
                     )
                 }
             }

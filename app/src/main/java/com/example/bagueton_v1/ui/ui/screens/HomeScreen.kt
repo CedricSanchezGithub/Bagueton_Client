@@ -23,6 +23,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -45,6 +46,7 @@ import previewBaguetonViewModel
 
 @Composable
 fun HomeScreen(baguetonViewModel: BaguetonViewModel, navHostController: NavHostController? = null ) {
+    val errorMessage by baguetonViewModel.errorMessage
 
     LaunchedEffect(key1 = true) {
         baguetonViewModel.loadRecipes()
@@ -71,10 +73,18 @@ fun HomeScreen(baguetonViewModel: BaguetonViewModel, navHostController: NavHostC
             Spacer(modifier = Modifier.weight(1f))
 
             Row {
-                Text(text = "Liste des commandes :",
-                    modifier = Modifier.padding(horizontal = 16.dp),
-                    textDecoration = TextDecoration.Underline,
-                )
+                if(errorMessage === ""){
+
+                    Text(text = "Liste des commandes :",
+                        modifier = Modifier.padding(horizontal = 16.dp),
+                        textDecoration = TextDecoration.Underline,
+                    )
+                } else {
+                    Text(text = baguetonViewModel.errorMessage.value,
+                        modifier = Modifier.padding(horizontal = 16.dp),
+                        textDecoration = TextDecoration.Underline,
+                    )
+                }
             }
             // Prend uniquement les 5 premiers éléments de la liste pour l'affichage
             val recipeList = baguetonViewModel.recipeList.takeLast(5)
@@ -138,7 +148,7 @@ fun HomeScreen(baguetonViewModel: BaguetonViewModel, navHostController: NavHostC
                 }
             }
 
-            Button(onClick = { /*TODO*/ },
+            Button(onClick = {  navHostController?.navigate("CalendarScreen")  },
                 modifier = Modifier
                     .height(40.dp)
                     .padding(horizontal = 16.dp)

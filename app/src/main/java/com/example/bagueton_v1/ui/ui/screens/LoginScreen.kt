@@ -50,7 +50,7 @@ fun LoginScreen(navHostController: NavHostController? = null,
             Spacer(modifier = Modifier.height(16.dp))
 
             Image(
-                painter = painterResource(id = R.drawable.icone),
+                painter = painterResource(id = R.drawable.logobagueton),
                 contentDescription = "logo",
                 Modifier
                     .width(200.dp)
@@ -129,6 +129,11 @@ fun LoginScreen(navHostController: NavHostController? = null,
                         textDecoration = TextDecoration.Underline,
                         modifier = Modifier.clickable{
                             run { navHostController?.navigate("TestScreen") }
+                        })
+                    Text(text = "Page d'accueil",
+                        textDecoration = TextDecoration.Underline,
+                        modifier = Modifier.clickable{
+                            run { navHostController?.navigate("UnboardingScreen") }
                         })
                     Spacer(modifier = Modifier.weight(1f))
                 }

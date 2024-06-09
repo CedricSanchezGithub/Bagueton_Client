@@ -46,7 +46,7 @@ fun ContactsFormScreen(navHostController: NavHostController? = null, contactsVie
                 OutlinedTextField(
                     value = contactsViewModel.name.value,
                     onValueChange = { contactsViewModel.name.value = it },
-                    label = { Text("Entrez votre nom") }
+                    label = { Text("Entrez votre nom") },
                 )
 
                 Spacer(modifier = Modifier.height(8.dp))
@@ -62,7 +62,9 @@ fun ContactsFormScreen(navHostController: NavHostController? = null, contactsVie
                 OutlinedTextField(
                     value = contactsViewModel.message.value,
                     onValueChange = { contactsViewModel.message.value = it },
-                    label = { Text("Entrez votre message") }
+                    label = { Text("Entrez votre message") },
+                    modifier = Modifier.height(200.dp)
+
                 )
 
                 Spacer(modifier = Modifier.height(16.dp))
