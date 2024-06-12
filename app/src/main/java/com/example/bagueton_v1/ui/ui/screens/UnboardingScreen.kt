@@ -56,7 +56,7 @@ fun UnboardingScreen (navHostController: NavHostController? = null,
             )
         }
         Spacer(modifier = Modifier.weight(2f))
-        Text(text = "Bienvenu sur L'application Bagueton!",
+        Text(text = "Bienvenue sur l'application Bagueton!",
             textAlign = TextAlign.Center,
             modifier = Modifier.fillMaxWidth(),
             style = MaterialTheme.typography.bodyLarge)

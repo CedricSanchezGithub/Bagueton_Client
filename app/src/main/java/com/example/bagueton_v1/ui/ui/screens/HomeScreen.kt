@@ -89,7 +89,7 @@ fun HomeScreen(baguetonViewModel: BaguetonViewModel, navHostController: NavHostC
             // Prend uniquement les 5 premiers éléments de la liste pour l'affichage
             val recipeList = baguetonViewModel.recipeList.takeLast(5)
             LazyRow(modifier = Modifier.padding(16.dp)) {
-                items(recipeList) { recipe ->
+                items(recipeList.shuffled()) { recipe ->
                     val imageUrl = recipe.images?.firstOrNull()?.url
                     if (imageUrl != null) {
                         Image(
