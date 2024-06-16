@@ -4,11 +4,11 @@ plugins {
 }
 
 android {
-    namespace = "com.example.bagueton_v1"
+    namespace = "com.c3dev.bagueton"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.example.bagueton_v1"
+        applicationId = "com.c3dev.bagueton"
         minSdk = 27
         targetSdk = 34
         versionCode = 1
