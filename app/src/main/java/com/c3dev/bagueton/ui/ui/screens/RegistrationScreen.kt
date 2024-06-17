@@ -59,7 +59,7 @@ fun RegistrationScreen(navHostController: NavHostController? = null,
     ) {
         Spacer(modifier = Modifier.weight(1f))
 
-        Image(painter = painterResource(id = R.drawable.logobagueton),
+        Image(painter = painterResource(id = R.drawable.icone),
             contentDescription = "logo",
             Modifier
                 .width(200.dp)
