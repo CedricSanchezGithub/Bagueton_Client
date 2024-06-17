@@ -25,6 +25,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -36,7 +37,7 @@ import com.c3dev.bagueton.ui.ui.theme.Bagueton_v1Theme
 
 @Composable
 fun RegistrationScreen(navHostController: NavHostController? = null,
-                accountViewModel: com.c3dev.bagueton.ui.AccountViewModel
+                accountViewModel: AccountViewModel
 ) {
 
 
@@ -71,7 +72,7 @@ fun RegistrationScreen(navHostController: NavHostController? = null,
             OutlinedTextField(
                 value = accountViewModel.choosenUsername.value,
                 onValueChange = { accountViewModel.choosenUsername.value = it },
-                label = { Text("Choisir un nom d'utilisateur") },
+                label = { Text(stringResource(id = R.string.username_choose)) },
                 singleLine = true,
                 modifier = Modifier
                     .fillMaxWidth()
@@ -82,7 +83,7 @@ fun RegistrationScreen(navHostController: NavHostController? = null,
             OutlinedTextField(
                 value = accountViewModel.choosenPassword.value,
                 onValueChange = {  accountViewModel.choosenPassword.value = it },
-                label = { Text("Choisir un mot de passe") },
+                label = { Text(stringResource(id = R.string.password)) },
                 singleLine = true,
                 visualTransformation = PasswordVisualTransformation(),
                 modifier = Modifier
@@ -93,7 +94,7 @@ fun RegistrationScreen(navHostController: NavHostController? = null,
             OutlinedTextField(
                 value = accountViewModel.choosenPasswordAgain.value,
                 onValueChange = {  accountViewModel.choosenPasswordAgain.value = it },
-                label = { Text("Confirmer le mot de passe") },
+                label = { Text(stringResource(id = R.string.password_again)) },
                 singleLine = true,
                 visualTransformation = PasswordVisualTransformation(),
                 modifier = Modifier

@@ -21,6 +21,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
@@ -33,7 +34,7 @@ import com.c3dev.bagueton.ui.ui.theme.Bagueton_v1Theme
 
 @Composable
 fun LoginScreen(navHostController: NavHostController? = null,
-                accountViewModel: com.c3dev.bagueton.ui.AccountViewModel
+                accountViewModel: AccountViewModel
 ) {
 
     Scaffold(
@@ -67,7 +68,7 @@ fun LoginScreen(navHostController: NavHostController? = null,
                 OutlinedTextField(
                     value = accountViewModel.username.value,
                     onValueChange = { accountViewModel.username.value = it },
-                    label = { Text("Nom d'utilisateur") },
+                    label = { stringResource(id = R.string.username) },
                     singleLine = true,
                     modifier = Modifier
                         .fillMaxWidth()
@@ -79,7 +80,7 @@ fun LoginScreen(navHostController: NavHostController? = null,
                 OutlinedTextField(
                     value = accountViewModel.password.value,
                     onValueChange = { accountViewModel.password.value = it },
-                    label = { Text("Mot de passe") },
+                    label = { stringResource(id = R.string.mpd) },
                     singleLine = true,
                     visualTransformation = PasswordVisualTransformation(),
                     modifier = Modifier
@@ -102,7 +103,7 @@ fun LoginScreen(navHostController: NavHostController? = null,
                     }, Modifier.fillMaxWidth(1f)
 
                 ) {
-                    Text("Se connecter")
+                    Text(stringResource(id = R.string.login))
                 }
 
                 // Affichage des messages d'erreur
@@ -118,20 +119,20 @@ fun LoginScreen(navHostController: NavHostController? = null,
                             run { navHostController?.navigate("ContactsFormScreen") }
                         })
                     Spacer(modifier = Modifier.height(8.dp))
-                    Text(text = "Version 0.3.2 : Ajout du formulaire de contact ")
+                    Text(text = stringResource(id = R.string.version))
                     Spacer(modifier = Modifier.height(8.dp))
-                    Text(text = "Politique de Confidentialité",
+                    Text(text = stringResource(id = R.string.confidentiality),
                         textDecoration = TextDecoration.Underline,
                         modifier = Modifier.clickable{
                             run { navHostController?.navigate("PrivacyPolicyScreen") }
                         })
 
-                    Text(text = "page de test",
+                    Text(text = stringResource(id = R.string.test),
                         textDecoration = TextDecoration.Underline,
                         modifier = Modifier.clickable{
                             run { navHostController?.navigate("TestScreen") }
                         })
-                    Text(text = "Page d'accueil",
+                    Text(text = stringResource(id = R.string.unboarding),
                         textDecoration = TextDecoration.Underline,
                         modifier = Modifier.clickable{
                             run { navHostController?.navigate("UnboardingScreen") }

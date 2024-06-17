@@ -30,6 +30,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
@@ -37,6 +38,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
+import com.c3dev.bagueton.R
 import com.c3dev.bagueton.ui.ui.MyBottomAppBar
 import com.c3dev.bagueton.ui.ui.SearchBar
 import com.c3dev.bagueton.ui.ui.theme.Bagueton_v1Theme
@@ -74,7 +76,7 @@ fun HomeScreen(baguetonViewModel: com.c3dev.bagueton.ui.BaguetonViewModel, navHo
             Row {
                 if(errorMessage === ""){
 
-                    Text(text = "Liste des commandes :",
+                    Text(text = stringResource(id = R.string.welcome_message),
                         modifier = Modifier.padding(horizontal = 16.dp),
                         textDecoration = TextDecoration.Underline,
                     )
@@ -98,7 +100,7 @@ fun HomeScreen(baguetonViewModel: com.c3dev.bagueton.ui.BaguetonViewModel, navHo
                                     .crossfade(true)
                                     .build()
                             ),
-                            contentDescription = "Image de ${recipe.title}",
+                            contentDescription = stringResource(id = R.string.img_of) + recipe.title,
                             modifier = Modifier
                                 .clickable { navHostController?.navigate("RecipeScreen/${recipe.id}") }
                                 .size(150.dp)
@@ -138,7 +140,7 @@ fun HomeScreen(baguetonViewModel: com.c3dev.bagueton.ui.BaguetonViewModel, navHo
                             contentAlignment = Alignment.Center
                         ) {
                             Text(
-                                text = "Image non disponible",
+                                text = stringResource(id = R.string.img_not_found),
                                 style = MaterialTheme.typography.bodyLarge,
                                 textAlign = TextAlign.Center
                             )
@@ -157,7 +159,7 @@ fun HomeScreen(baguetonViewModel: com.c3dev.bagueton.ui.BaguetonViewModel, navHo
             }
             Spacer(modifier = Modifier.weight(1f))
 
-            Text(text = "Vos recettes les plus utilisées :",
+            Text(text = stringResource(id = R.string.most_used_recipes),
                 modifier = Modifier.padding(horizontal = 16.dp),
                 textDecoration = TextDecoration.Underline,
             )
@@ -173,7 +175,7 @@ fun HomeScreen(baguetonViewModel: com.c3dev.bagueton.ui.BaguetonViewModel, navHo
                                     .crossfade(true)
                                     .build()
                             ),
-                            contentDescription = "Image de ${recipe.title}",
+                            contentDescription = stringResource(id = R.string.img_of) + recipe.title,
                             modifier = Modifier
                                 .clickable { navHostController?.navigate("RecipeScreen/${recipe.id}") }
                                 .size(150.dp)
@@ -213,7 +215,7 @@ fun HomeScreen(baguetonViewModel: com.c3dev.bagueton.ui.BaguetonViewModel, navHo
                             contentAlignment = Alignment.Center
                         ) {
                             Text(
-                                text = "Image non disponible",
+                                text = stringResource(id = R.string.img_not_found),
                                 style = MaterialTheme.typography.bodyLarge,
                                 textAlign = TextAlign.Center
                             )
@@ -226,7 +228,7 @@ fun HomeScreen(baguetonViewModel: com.c3dev.bagueton.ui.BaguetonViewModel, navHo
                     .height(40.dp)
                     .padding(horizontal = 16.dp)
             ) {
-                Text(text = "Recettes")
+                Text(text = stringResource(id = R.string.recipe))
             }
             Spacer(modifier = Modifier.weight(1f))
         }

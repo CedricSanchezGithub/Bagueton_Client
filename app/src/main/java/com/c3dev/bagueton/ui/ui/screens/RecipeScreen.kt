@@ -49,6 +49,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shadow
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
@@ -58,6 +59,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import coil.compose.rememberAsyncImagePainter
+import com.c3dev.bagueton.R
+import com.c3dev.bagueton.ui.BaguetonViewModel
 import com.c3dev.bagueton.ui.model.Ingredient
 import com.c3dev.bagueton.ui.model.RecipeBean
 import com.c3dev.bagueton.ui.model.Step
@@ -71,7 +74,7 @@ import previewBaguetonViewModel
 fun RecipeScreen(
     id: String?,
     navHostController: NavHostController? = null,
-    baguetonViewModel: com.c3dev.bagueton.ui.BaguetonViewModel
+    baguetonViewModel: BaguetonViewModel
 ) {
     var showDialog by remember { mutableStateOf(false) }
 
@@ -103,7 +106,7 @@ fun RecipeScreen(
                     }
                 ) {
                     Icon(
-                        Icons.Filled.Edit, "Modifier la recette",
+                        Icons.Filled.Edit, stringResource(id = R.string.update_recipe),
                         Modifier.background(MaterialTheme.colorScheme.primary)
                     )
                 }
@@ -119,7 +122,7 @@ fun RecipeScreen(
                             baguetonViewModel.editMode.value = false
                         }
                     ) {
-                        Icon(Icons.Filled.Clear, "Annuler", Modifier.background(MaterialTheme.colorScheme.primary))
+                        Icon(Icons.Filled.Clear, stringResource(id = R.string.cancel), Modifier.background(MaterialTheme.colorScheme.primary))
                     }
 
                     FloatingActionButton(
@@ -129,7 +132,7 @@ fun RecipeScreen(
                             baguetonViewModel.saveRecipe(id)
                         }
                     ) {
-                        Icon(Icons.Filled.Save, "Enregistrer", Modifier.background(MaterialTheme.colorScheme.tertiary))
+                        Icon(Icons.Filled.Save, stringResource(id = R.string.save), Modifier.background(MaterialTheme.colorScheme.tertiary))
                     }
 
                     FloatingActionButton(
@@ -139,7 +142,7 @@ fun RecipeScreen(
                             showDialog = true
                         }
                     ) {
-                        Icon(Icons.Filled.Delete, "Supprimer", Modifier.background(MaterialTheme.colorScheme.error))
+                        Icon(Icons.Filled.Delete, stringResource(id = R.string.delete), Modifier.background(MaterialTheme.colorScheme.error))
                     }
                 }
             }
@@ -238,7 +241,7 @@ fun HeaderRecipeScreen(recipe: RecipeBean) {
 }
 
 @Composable
-fun UpdateHeaderRecipeScreen(baguetonViewModel: com.c3dev.bagueton.ui.BaguetonViewModel, recipe: RecipeBean) {
+fun UpdateHeaderRecipeScreen(baguetonViewModel: BaguetonViewModel, recipe: RecipeBean) {
     Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.padding(16.dp)) {
         val configuration = LocalConfiguration.current
         val screenHeight = configuration.screenHeightDp.dp
@@ -298,7 +301,7 @@ fun UpdateTitleInput(
             if (title.isEmpty() && !isTitleFocused) {
                 Text(
                     textAlign = TextAlign.Center,
-                    text = "Nouveau titre de la recette",
+                    text = stringResource(id = R.string.recipe_title_new),
                     color = Color.Gray,
                     modifier = Modifier.align(Alignment.Center),
                 )
@@ -307,7 +310,8 @@ fun UpdateTitleInput(
                 value = title,
                 onValueChange = onTitleChange,
                 singleLine = true,
-                modifier = Modifier.width(300.dp)
+                modifier = Modifier
+                    .width(300.dp)
                     .padding(8.dp)
                     .align(Alignment.Center)
                     .clip(RoundedCornerShape(50.dp, 100.dp, 50.dp, 100.dp))
@@ -347,7 +351,7 @@ fun BodyRecipeScreen(recipe: RecipeBean) {
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 item {
-                    Text(text = "Liste des étapes", modifier = Modifier.padding(16.dp), fontSize = 20.sp, fontWeight = androidx.compose.ui.text.font.FontWeight.Bold, textDecoration = TextDecoration.Underline)
+                        Text(text = stringResource(id = R.string.step_list), modifier = Modifier.padding(16.dp), fontSize = 20.sp, fontWeight = androidx.compose.ui.text.font.FontWeight.Bold, textDecoration = TextDecoration.Underline)
                 }
                 itemsIndexed(recipe.steps ?: emptyList()) { index, step ->
                     Text(
@@ -404,7 +408,7 @@ fun IngredientList(ingredients: List<Ingredient>) {
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         item {
-            Text(text = "Liste des ingrédients", modifier = Modifier.padding(16.dp), fontSize = 20.sp, fontWeight = androidx.compose.ui.text.font.FontWeight.Bold, textDecoration = TextDecoration.Underline)
+            Text(text = stringResource(id = R.string.ingredient_list), modifier = Modifier.padding(16.dp), fontSize = 20.sp, fontWeight = androidx.compose.ui.text.font.FontWeight.Bold, textDecoration = TextDecoration.Underline)
         }
         items(ingredients) { ingredient ->
             Text(
@@ -425,7 +429,7 @@ fun UpdateIngredientList(baguetonViewModel: com.c3dev.bagueton.ui.BaguetonViewMo
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         item {
-            Text(text = "Liste des nouveaux ingrédients", modifier = Modifier.padding(16.dp), fontSize = 20.sp, fontWeight = androidx.compose.ui.text.font.FontWeight.Bold, textDecoration = TextDecoration.Underline)
+            Text(text = stringResource(id = R.string.ingredient_list_new), modifier = Modifier.padding(16.dp), fontSize = 20.sp, fontWeight = androidx.compose.ui.text.font.FontWeight.Bold, textDecoration = TextDecoration.Underline)
         }
         itemsIndexed(ingredients) { index, ingredient ->
             UpdateIngredientInput(
@@ -489,7 +493,7 @@ fun UpdateIngredientInput(
         ) {
             if (currentIngredient.ingredient!!.isEmpty() && !isIngredientFocused) {
                 Text(
-                    text = "Ingrédient",
+                    text = stringResource(id = R.string.ingredient),
                     color = Color.Gray,
                     modifier = Modifier.padding(8.dp)
                 )
@@ -516,7 +520,7 @@ fun UpdateIngredientInput(
         ) {
             if (currentIngredient.quantity!!.isEmpty() && !isQuantityFocused) {
                 Text(
-                    text = "Quantité",
+                    text = stringResource(id = R.string.quantity),
                     color = Color.Gray,
                     modifier = Modifier.padding(8.dp)
                 )
@@ -538,14 +542,14 @@ fun UpdateIngredientInput(
 }
 
 @Composable
-fun UpdateStepList(baguetonViewModel: com.c3dev.bagueton.ui.BaguetonViewModel, steps: List<Step>) {
+fun UpdateStepList(baguetonViewModel: BaguetonViewModel, steps: List<Step>) {
     LazyColumn(
         modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         item {
             Text(
-                text = "Liste des nouvelles étapes",
+                text = stringResource(id = R.string.step_list_new),
                 modifier = Modifier.padding(16.dp),
                 fontSize = 20.sp,
                 fontWeight = androidx.compose.ui.text.font.FontWeight.Bold,
@@ -569,7 +573,7 @@ fun UpdateStepList(baguetonViewModel: com.c3dev.bagueton.ui.BaguetonViewModel, s
 
 @Composable
 fun UpdateStepInput(
-    baguetonViewModel: com.c3dev.bagueton.ui.BaguetonViewModel,
+    baguetonViewModel: BaguetonViewModel,
     index: Int,
     step: Step,
     onStepChange: (String) -> Unit
@@ -592,7 +596,7 @@ fun UpdateStepInput(
         ) {
             if (step.description!!.isEmpty() && !isStepFocused) {
                 Text(
-                    text = "Étape",
+                    text = stringResource(id = R.string.step),
                     color = Color.Gray,
                     modifier = Modifier.padding(8.dp)
                 )

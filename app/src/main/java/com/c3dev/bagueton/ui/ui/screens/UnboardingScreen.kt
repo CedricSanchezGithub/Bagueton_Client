@@ -21,6 +21,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.res.imageResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -50,13 +51,13 @@ fun UnboardingScreen (navHostController: NavHostController? = null,
 
               Image(ImageBitmap.imageResource(id = R.drawable.logobagueton),
                 contentDescription = "logo", modifier = Modifier
-                    .height(300.dp)
-                    .width(300.dp)
-                    .fillMaxWidth(1f)
+                      .height(300.dp)
+                      .width(300.dp)
+                      .fillMaxWidth(1f)
             )
         }
         Spacer(modifier = Modifier.weight(2f))
-        Text(text = "Bienvenue sur l'application Bagueton!",
+        Text(text = stringResource(id = R.string.welcome_unboarding),
             textAlign = TextAlign.Center,
             modifier = Modifier.fillMaxWidth(),
             style = MaterialTheme.typography.bodyLarge)
@@ -89,7 +90,7 @@ fun UnboardingScreen (navHostController: NavHostController? = null,
             }
         }
         Row {
-            Text(text = "Vous avez 13 commandes aujoud'hui",Modifier.fillMaxWidth(1f),
+            Text(text = stringResource(id = R.string.order_unboarding),Modifier.fillMaxWidth(1f),
                 textAlign = TextAlign.Center)
         }
 
@@ -102,7 +103,7 @@ fun UnboardingScreen (navHostController: NavHostController? = null,
                 .padding(horizontal = 16.dp)
                 .align(Alignment.CenterHorizontally)
         ) {
-            Text(text = "Entrer")
+            Text(text = stringResource(id = R.string.enter_unboarding))
 
         }
         Spacer(modifier = Modifier.weight(1f))

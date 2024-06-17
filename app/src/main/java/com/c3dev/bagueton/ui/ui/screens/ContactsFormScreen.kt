@@ -13,9 +13,11 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
+import com.c3dev.bagueton.R
 import com.c3dev.bagueton.ui.ui.MyBottomAppBar
 import com.c3dev.bagueton.ui.ui.theme.Bagueton_v1Theme
 
@@ -36,17 +38,17 @@ fun ContactsFormScreen(navHostController: NavHostController? = null, contactsVie
                 .padding(32.dp)
         ) {
             if (contactsViewModel.isSubmitted.value) {
-                Text(text = "Merci de nous avoir contacté !", style = MaterialTheme.typography.bodyLarge)
+                Text(text = "", style = MaterialTheme.typography.bodyLarge)
             } else {
-                Text(text = "Une idée ? Un problème ?", style = MaterialTheme.typography.bodyLarge)
-                Text(text = "Contactez nous !")
+                Text(text = stringResource(id = R.string.thanks_message), style = MaterialTheme.typography.bodyLarge)
+                Text(text = stringResource(id = R.string.contact_us), style = MaterialTheme.typography.bodyMedium)
 
                 Spacer(modifier = Modifier.height(16.dp))
 
                 OutlinedTextField(
                     value = contactsViewModel.name.value,
                     onValueChange = { contactsViewModel.name.value = it },
-                    label = { Text("Entrez votre nom") },
+                    label = { stringResource(id = R.string.name) },
                 )
 
                 Spacer(modifier = Modifier.height(8.dp))
@@ -54,7 +56,7 @@ fun ContactsFormScreen(navHostController: NavHostController? = null, contactsVie
                 OutlinedTextField(
                     value = contactsViewModel.email.value,
                     onValueChange = { contactsViewModel.email.value = it },
-                    label = { Text("Entrez votre email") }
+                    label = { stringResource(id = R.string.send_email) }
                 )
 
                 Spacer(modifier = Modifier.height(8.dp))
@@ -62,7 +64,7 @@ fun ContactsFormScreen(navHostController: NavHostController? = null, contactsVie
                 OutlinedTextField(
                     value = contactsViewModel.message.value,
                     onValueChange = { contactsViewModel.message.value = it },
-                    label = { Text("Entrez votre message") },
+                    label = { stringResource(id = R.string.send_message) },
                     modifier = Modifier.height(200.dp)
 
                 )
@@ -73,7 +75,7 @@ fun ContactsFormScreen(navHostController: NavHostController? = null, contactsVie
                     onClick = { contactsViewModel.createForm(name = contactsViewModel.name.value, email = contactsViewModel.email.value, message = contactsViewModel.message.value) },
                     modifier = Modifier.align(Alignment.CenterHorizontally)
                 ) {
-                    Text("Submit")
+                    Text(stringResource(id = R.string.send_message))
                 }
             }
         }

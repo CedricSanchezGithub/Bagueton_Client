@@ -29,6 +29,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -103,7 +104,7 @@ fun ImageGrid(recipes: List<RecipeBean>, navHostController: NavHostController?) 
 
                             Image(
                                 painter = rememberAsyncImagePainter(imageUrl),
-                                contentDescription = "Image for ${recipe.title}",
+                                contentDescription = stringResource(id = R.string.img_of) + recipe.title,
                                 modifier = Modifier
                                     .fillMaxSize()
                                     .clickable { run { navHostController?.navigate("RecipeScreen/${recipe.id}") } },
@@ -138,7 +139,7 @@ fun ImageGrid(recipes: List<RecipeBean>, navHostController: NavHostController?) 
                             // Optionally handle the case where there is no image
                             Image(
                                 painter = rememberAsyncImagePainter(R.drawable.icone),
-                                contentDescription = "Image for ${recipe.title}",
+                                contentDescription = stringResource(id = R.string.img_of) + recipe.title,
                                 modifier = Modifier
                                     .fillMaxSize()
                                     .clickable { run { navHostController?.navigate("RecipeScreen/${recipe.id}") } },

@@ -1,3 +1,52 @@
 <resources>
     <string name="app_name">Bagueton</string>
+    <string name="welcome_unboarding">"Bienvenue sur l'application Bagueton!"</string>
+    <string name="order_unboarding">Vous avez 13 commandes aujoud`hui</string>
+    <string name="enter_unboarding">Vous avez 13 commandes aujoud`hui</string>
+    <string name="welcome_message">Bienvenue, utilisateur</string>
+    <string name="list_order">Liste des commandes :</string>
+    <string name="img_of">Image de </string>
+    <string name="img_not_found">Image introuvable</string>
+    <string name="most_used_recipes">Recettes les plus utilisées</string>
+    <string name="recipe">Recette</string>
+
+    <string name="thanks_message">Merci de nous avoir contacté !</string>
+    <string name="contact_us">Contactez-nous</string>
+    <string name="name">Entrez votre nom</string>
+    <string name="send_message">Entrez votre message</string>
+    <string name="send_email">Entrez votre email</string>
+
+    <string name="step">Étape</string>
+    <string name="quantity">Quantité</string>
+    <string name="ingredient">Ingrédients</string>"
+    <string name="title_recipe">Titre de la recette</string>
+    <string name="new_recipe">Nouvelle recette</string>
+    <string name="send_recipe">Enregistrer la recette</string>
+    <string name="add_ingredient">Ajouter un ingrédient</string>
+    <string name="add_step">Ajouter une étape</string>
+    <string name="step_recipe">Étapes de préparation</string>
+    <string name="add_title">Ajouter un ingrédient</string>
+
+    <string name="username">Nom d`utilisateur</string>
+    <string name="mpd">Mot de passe</string>
+    <string name="error_login">Nom d`utilisateur ou mot de passe invalide</string>
+    <string name="version">Version 0.3.2 : Ajout du formulaire de contact </string>
+    <string name="confidentiality">Politique de Confidentialité</string>
+    <string name="test">Page de test</string>
+    <string name="login">Page d`accueil</string>
+    <string name="unboarding">Se connecter</string>
+
+    <string name="update_recipe">Mettre à jour la recette</string>
+    <string name="cancel">Annuler</string>
+    <string name="save">Enregistrer</string>
+    <string name="delete">Supprimer</string>
+    <string name="recipe_title_new">Nouveau titre de la recette</string>
+    <string name="step_list">Liste des étapes</string>
+    <string name="step_list_new">Liste des nouvelles étapes</string>
+    <string name="ingredient_list">Liste des ingrédients</string>
+    <string name="ingredient_list_new">Liste des nouveaux ingrédients</string>
+
+    <string name="username_choose">Choisir un mot de passe</string>
+    <string name="password">Choisir un nom d`utilisateur</string>
+    <string name="password_again">Confirmer le mot de passe</string>
 </resources>

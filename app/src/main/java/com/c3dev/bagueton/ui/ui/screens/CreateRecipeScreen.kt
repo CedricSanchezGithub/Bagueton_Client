@@ -28,11 +28,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
+import com.c3dev.bagueton.R
 import com.c3dev.bagueton.ui.BaguetonViewModel
 import com.c3dev.bagueton.ui.model.Ingredient
 import com.c3dev.bagueton.ui.model.Step
@@ -42,7 +44,7 @@ import com.c3dev.bagueton.ui.ui.theme.Bagueton_v1Theme
 @Composable
 fun CreateRecipeScreen(
     navHostController: NavHostController? = null,
-    baguetonViewModel: com.c3dev.bagueton.ui.BaguetonViewModel
+    baguetonViewModel: BaguetonViewModel
 ) {
     Scaffold(
         bottomBar = {
@@ -60,7 +62,7 @@ fun CreateRecipeScreen(
 
         ) {
             Spacer(modifier = Modifier.height(16.dp))
-            Text(text = "Nouvelle recette")
+            Text(text = stringResource(id = R.string.new_recipe))
             Spacer(modifier = Modifier.height(16.dp))
 
             TitleInput(
@@ -71,7 +73,7 @@ fun CreateRecipeScreen(
             )
             Spacer(modifier = Modifier.height(16.dp))
 
-            Text(text = "Ingrédients")
+            Text(text = stringResource(id = R.string.ingredient))
             for ((index, ingredient) in baguetonViewModel.ingredientsList.withIndex()) {
                 IngredientInput(
                     ingredient = ingredient,
@@ -85,11 +87,11 @@ fun CreateRecipeScreen(
                 )
             }
             Button(onClick = { baguetonViewModel.addIngredient() }) {
-                Text("Ajouter un ingrédient")
+                Text(stringResource(id = R.string.add_ingredient))
             }
             Spacer(modifier = Modifier.height(16.dp))
 
-            Text(text = "Étapes de préparation")
+            Text(text = stringResource(id = R.string.step_recipe))
             for ((index, step) in baguetonViewModel.stepsList.withIndex()) {
                 StepInput(
                     step = step,
@@ -99,7 +101,7 @@ fun CreateRecipeScreen(
                 )
             }
             Button(onClick = { baguetonViewModel.addStep() }) {
-                Text("Ajouter une étape")
+                Text(stringResource(id = R.string.add_step))
             }
             Spacer(modifier = Modifier.height(16.dp))
 
@@ -110,7 +112,7 @@ fun CreateRecipeScreen(
                     steps = baguetonViewModel.stepsList
                 )
             }) {
-                Text("Enregistrer la recette")
+                Text(stringResource(id = R.string.send_recipe))
             }
         }
     }
@@ -143,7 +145,7 @@ fun TitleInput(
             if (title.isEmpty() && !isTitleFocused) {
                 Text(
                     textAlign = TextAlign.Center,
-                    text = "Titre de la recette",
+                    text = stringResource(id = R.string.title_recipe),
                     color = Color.Gray,
                     modifier = Modifier.align(Alignment.Center)
                 )
@@ -152,7 +154,8 @@ fun TitleInput(
                 value = title,
                 onValueChange = onTitleChange,
                 singleLine = true,
-                modifier = Modifier.width(300.dp)
+                modifier = Modifier
+                    .width(300.dp)
                     .padding(8.dp)
                     .align(Alignment.Center)
             )
@@ -185,7 +188,7 @@ fun IngredientInput(
         ) {
             if (ingredient.ingredient!!.isEmpty() && !isIngredientFocused) {
                 Text(
-                    text = "Ingrédient",
+                    text = stringResource(id = R.string.ingredient),
                     color = Color.Gray,
                     modifier = Modifier.padding(8.dp)
                 )
@@ -209,7 +212,7 @@ fun IngredientInput(
         ) {
             if (ingredient.quantity!!.isEmpty() && !isQuantityFocused) {
                 Text(
-                    text = "Quantité",
+                    text = stringResource(id = R.string.quantity),
                     color = Color.Gray,
                     modifier = Modifier.padding(8.dp)
                 )
@@ -248,7 +251,7 @@ fun StepInput(
         ) {
             if (step.description!!.isEmpty() && !isStepFocused) {
                 Text(
-                    text = "Étape",
+                    text = stringResource(id = R.string.step),
                     color = Color.Gray,
                     modifier = Modifier.padding(8.dp)
                 )
