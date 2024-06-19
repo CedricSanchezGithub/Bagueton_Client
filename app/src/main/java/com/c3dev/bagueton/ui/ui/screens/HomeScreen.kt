@@ -30,6 +30,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
@@ -37,6 +38,8 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
+import com.c3dev.bagueton.R
+import com.c3dev.bagueton.ui.BaguetonViewModel
 import com.c3dev.bagueton.ui.ui.MyBottomAppBar
 import com.c3dev.bagueton.ui.ui.SearchBar
 import com.c3dev.bagueton.ui.ui.theme.Bagueton_v1Theme
@@ -44,22 +47,25 @@ import previewBaguetonViewModel
 
 
 @Composable
-fun HomeScreen(baguetonViewModel: com.c3dev.bagueton.ui.BaguetonViewModel, navHostController: NavHostController? = null ) {
+fun HomeScreen(baguetonViewModel: BaguetonViewModel, navHostController: NavHostController? = null) {
+    // Accéder à la variable errorMessage dans l'instance de BaguetonViewModel
     val errorMessage by baguetonViewModel.errorMessage
 
+    // LaunchedEffect est utilisé pour charger les recettes au démarrage de la composable
     LaunchedEffect(key1 = true) {
         baguetonViewModel.loadRecipes()
     }
 
-    Scaffold (
+    Scaffold(
         topBar = {
-            SearchBar(baguetonViewModel = baguetonViewModel,welcomeMessage = "Bienvenue, utilisateur",
-                navHostController = navHostController
-            )
+            // Passer l'instance de BaguetonViewModel à SearchBar
+            SearchBar(baguetonViewModel = baguetonViewModel, welcomeMessage = stringResource(id = R.string.welcome_message))
         },
         bottomBar = {
+            // Passer l'instance de NavHostController à MyBottomAppBar
             MyBottomAppBar(navHostController = navHostController)
         }
+
 
     ){innerPadding ->
 
@@ -87,10 +93,10 @@ fun HomeScreen(baguetonViewModel: com.c3dev.bagueton.ui.BaguetonViewModel, navHo
             }
             // Prend uniquement les 5 premiers éléments de la liste pour l'affichage
             val recipeList = baguetonViewModel.recipeList.takeLast(5)
-            LazyRow(modifier = Modifier.padding(16.dp)) {
-                items(recipeList.shuffled()) { recipe ->
-                    val imageUrl = recipe.images?.firstOrNull()?.url
-                    if (imageUrl != null) {
+            LazyRow(modifier = Modifier.padding(16.dp)) { // Créer une liste horizontale avec un padding de 16dp
+                items(recipeList) { recipe -> // Itérer sur chaque recette
+                    val imageUrl = recipe.images?.firstOrNull()?.url // Obtenir l'URL de la première image de la recette
+                    if (imageUrl != null) { // Si l'URL de l'image n'est pas nulle
                         Image(
                             painter = rememberAsyncImagePainter(
                                 ImageRequest.Builder(LocalContext.current)
@@ -98,27 +104,29 @@ fun HomeScreen(baguetonViewModel: com.c3dev.bagueton.ui.BaguetonViewModel, navHo
                                     .crossfade(true)
                                     .build()
                             ),
-                            contentDescription = "Image de ${recipe.title}",
+                            contentDescription = "Image de ${recipe.title}", // Description de l'image pour l'accessibilité
                             modifier = Modifier
-                                .clickable { navHostController?.navigate("RecipeScreen/${recipe.id}") }
-                                .size(150.dp)
-                                .padding(10.dp)
+                                // Rendre l'image cliquable pour naviguer vers les détails de la recette
+                                .clickable { navHostController?.navigate(route = "RecipeScreen/${recipe.id}") }
+                                .size(150.dp) // Définir la taille de l'image
+                                .padding(10.dp) // Ajouter un padding autour de l'image
                                 .border(
                                     1.dp,
                                     MaterialTheme.colorScheme.primary,
-                                    RoundedCornerShape(16.dp, 32.dp, 16.dp, 32.dp)
+                                    RoundedCornerShape(16.dp, 32.dp, 16.dp, 32.dp) // Bordure arrondie
                                 )
                                 .shadow(
                                     elevation = 8.dp,
-                                    shape = RoundedCornerShape(16.dp, 32.dp, 16.dp, 32.dp),
+                                    shape = RoundedCornerShape(16.dp, 32.dp, 16.dp, 32.dp), // Ajouter une ombre avec une forme arrondie
                                     clip = true
                                 )
-                                .clip(RoundedCornerShape(16.dp, 32.dp, 16.dp, 32.dp))
-                                .fillMaxSize(),
-                            contentScale = ContentScale.Crop
+                                .clip(RoundedCornerShape(16.dp, 32.dp, 16.dp, 32.dp)) // Découper l'image avec une forme arrondie
+                                .fillMaxSize(), // Remplir la taille disponible
+                            contentScale = ContentScale.Crop // Recadrer l'image pour remplir l'espace
                         )
-                    } else {
+                    }
                         // Ajouter un cadre vide et un texte de remplacement si l'URL est null, évite le crash
+                    else {
                         Box(
                             modifier = Modifier
                                 .size(150.dp)

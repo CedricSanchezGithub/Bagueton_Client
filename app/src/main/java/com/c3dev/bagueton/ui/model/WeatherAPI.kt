@@ -38,6 +38,7 @@ interface WeatherApiService {
         @Query("lang") lang: String
     ): Call<WeatherResponse>
 }
+// https://api.openweathermap.org/data/2.5/weather?q=Boisseron&appid=4b933d035bf6f0e8f16d78d9e5b41d8c&lang=FR
 
 object WeatherAPI {
     private const val URL_API = "https://api.openweathermap.org/data/2.5/"
@@ -55,7 +56,7 @@ object WeatherAPI {
 
         return try {
             val response = call.execute()
-            println(response)
+            println("response: $response")
             if (response.isSuccessful) {
                 response.body()
             } else {
@@ -73,28 +74,4 @@ fun main() {
     WeatherAPI.fetchWeather()
 }
 
-// private fun executeCall() {
-//    launch(Dispatchers.Main) {
-//        try {
-//            val response = ApiClient.apiService.getPostById(1)
-//
-//            if (response.isSuccessful && response.body() != null) {
-//                val content = response.body()
-//                //do something
-//            } else {
-//                Toast.makeText(
-//                    this@MainActivity,
-//                    "Error Occurred: ${response.message()}",
-//                     Toast.LENGTH_LONG
-//                ).show()
-//            }
-//
-//        } catch (e: Exception) {
-//            Toast.makeText(
-//                this@MainActivity,
-//                "Error Occurred: ${e.message}",
-//                Toast.LENGTH_LONG
-//            ).show()
-//        }
-//    }
-//}
+
