@@ -2,7 +2,7 @@
     <string name="app_name">Bagueton</string>
     <string name="welcome_unboarding">"Bienvenue sur l'application Bagueton!"</string>
     <string name="order_unboarding">Vous avez 13 commandes aujoud`hui</string>
-    <string name="enter_unboarding">Vous avez 13 commandes aujoud`hui</string>
+    <string name="enter_unboarding">Entrer</string>
     <string name="welcome_message">Bienvenue, utilisateur</string>
     <string name="list_order">Liste des commandes :</string>
     <string name="img_of">Image de </string>

@@ -127,12 +127,10 @@ fun TitleInput(
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier
-            .fillMaxWidth()
             .padding(16.dp)
     ){
         Box(
             modifier = Modifier
-                .fillMaxWidth()
                 .align(Alignment.CenterHorizontally)
                 .padding(8.dp)
                 .border(1.dp, Color.Gray)
@@ -172,16 +170,10 @@ fun IngredientInput(
     var isIngredientFocused by remember { mutableStateOf(false) }
     var isQuantityFocused by remember { mutableStateOf(false) }
 
-    Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(16.dp)
-    ) {
+    Column{
         Box(
             modifier = Modifier
-                .fillMaxWidth()
                 .border(1.dp, Color.Gray)
-                .padding(8.dp)
                 .onFocusChanged { focusState ->
                     isIngredientFocused = focusState.isFocused
                 }
@@ -191,19 +183,22 @@ fun IngredientInput(
                     text = stringResource(id = R.string.ingredient),
                     color = Color.Gray,
                     modifier = Modifier.padding(8.dp)
+                        .width(300.dp)
+
                 )
             }
             BasicTextField(
                 value = ingredient.ingredient ?: "",
                 onValueChange = onIngredientChange,
                 singleLine = true,
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier.padding(8.dp)
+                    .width(300.dp)
+
             )
         }
         Spacer(modifier = Modifier.height(8.dp))
         Box(
             modifier = Modifier
-                .fillMaxWidth()
                 .border(1.dp, Color.Gray)
                 .padding(8.dp)
                 .onFocusChanged { focusState ->
@@ -222,7 +217,6 @@ fun IngredientInput(
                 onValueChange = onQuantityChange,
                 keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Number),
                 singleLine = true,
-                modifier = Modifier.fillMaxWidth()
             )
         }
     }
@@ -237,12 +231,10 @@ fun StepInput(
 
     Column(
         modifier = Modifier
-            .fillMaxWidth()
             .padding(16.dp)
     ) {
         Box(
             modifier = Modifier
-                .fillMaxWidth()
                 .border(1.dp, Color.Gray)
                 .padding(8.dp)
                 .onFocusChanged { focusState ->
@@ -260,7 +252,6 @@ fun StepInput(
                 value = step.description ?: "",
                 onValueChange = onStepChange,
                 singleLine = true,
-                modifier = Modifier.fillMaxWidth()
             )
         }
     }
