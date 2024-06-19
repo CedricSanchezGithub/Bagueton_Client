@@ -18,7 +18,7 @@ object RecipeAPI {
     val MEDIA_TYPE_JSON = "application/json; charset=utf-8".toMediaType()
     val gson = Gson()
     val client = OkHttpClient()
-    private const val URL_SERVER = "http://90.51.140.217:8082/bagueton"
+    private const val URL_SERVER = "http://90.51.140.217:30001/bagueton"
     // http://localhost:8080 http://90.51.140.217:8082/bagueton http://192.168.1.50:8082/bagueton
 
 
@@ -83,7 +83,7 @@ private fun sendGet(url: String): String {
         if (!it.isSuccessful) {
             throw Exception("Réponse du serveur incorrect :${it.code}")
         }
-        it.body.string()
+        it.body!!.string()
     }
 }
 
@@ -99,7 +99,7 @@ fun sendPost(url: String, toSend: Any?): String {
         if (!it.isSuccessful) {
             throw Exception("Réponse du serveur incorrect :${it.code}")
         }
-        it.body.string()
+        it.body!!.string()
     }
 }
 
@@ -111,7 +111,7 @@ fun sendDelete(url: String): String {
 
     return try {
         val response: Response = client.newCall(request).execute()
-        response.body.string()
+        response.body!!.string()
     } catch (e: IOException) {
         e.printStackTrace()
         "Error: ${e.message}"
@@ -129,6 +129,6 @@ private fun sendPatch(url: String, toSend: Any?): String {
         if (!it.isSuccessful) {
             throw Exception("Réponse du serveur incorrect :${it.code}")
         }
-        it.body.string()
+        it.body!!.string()
     }
 }

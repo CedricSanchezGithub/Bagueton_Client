@@ -2,6 +2,7 @@ package com.c3dev.bagueton.ui
 
 import ContactsFormScreen
 import ContactsViewModel
+import LoginScreen
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
@@ -13,9 +14,9 @@ import com.c3dev.bagueton.ui.ui.screens.CalendarScreen
 import com.c3dev.bagueton.ui.ui.screens.CreateRecipeScreen
 import com.c3dev.bagueton.ui.ui.screens.HomeScreen
 import com.c3dev.bagueton.ui.ui.screens.ListRecipeScreen
-import com.c3dev.bagueton.ui.ui.screens.LoginScreen
 import com.c3dev.bagueton.ui.ui.screens.PrivacyPolicyScreen
 import com.c3dev.bagueton.ui.ui.screens.RecipeScreen
+import com.c3dev.bagueton.ui.ui.screens.ToolScreenCalc
 import com.c3dev.bagueton.ui.ui.screens.ToolsScreen
 import com.c3dev.bagueton.ui.ui.screens.UnboardingScreen
 import com.c3dev.bagueton.ui.ui.screens.tests.TestScreen
@@ -37,15 +38,17 @@ sealed class Routes(val route: String) {
     object FavoriteScreen : Routes("FavoriteScreen")
     //Route 7
     object ToolsScreen : Routes("ToolsScreen")
-    //Route 7
-    object PrivacyPolicyScreen : Routes("PrivacyPolicyScreen")
+    //Route 7.5
+    object ToolScreenCalc : Routes("ToolScreenCalc")
     //Route 8
-    object UnboardingScreen : Routes("UnboardingScreen")
+    object PrivacyPolicyScreen : Routes("PrivacyPolicyScreen")
     //Route 9
+    object UnboardingScreen : Routes("UnboardingScreen")
+    //Route 10
     object UpdateRecipeScreen : Routes("UpdateRecipeScreen/{id}"){
         fun createRoute(id: String) = "UpdateRecipeScreen/$id"
-        //Route 10
     }
+    //Route 11
     object TestScreen : Routes("TestScreen")
     object ContactsFormScreen : Routes("ContactsFormScreen")
     object CalendarScreen : Routes("CalendarScreen")
@@ -53,7 +56,11 @@ sealed class Routes(val route: String) {
 }
 
 @Composable
-fun AppNavigation(calendarViewModel: CalendarViewModel, baguetonViewModel: com.c3dev.bagueton.ui.BaguetonViewModel, accountViewModel: com.c3dev.bagueton.ui.AccountViewModel, weatherViewModel: WeatherViewModel, contactsViewModel: ContactsViewModel) {
+fun AppNavigation(calendarViewModel: CalendarViewModel,
+                  baguetonViewModel: BaguetonViewModel,
+                  accountViewModel: AccountViewModel,
+                  weatherViewModel: WeatherViewModel,
+                  contactsViewModel: ContactsViewModel) {
 
     val navHostController : NavHostController = rememberNavController()
 
@@ -76,18 +83,19 @@ fun AppNavigation(calendarViewModel: CalendarViewModel, baguetonViewModel: com.c
         //Route 4 vers ajouter une recette
         composable(route = Routes.CreateRecipeScreen.route){ CreateRecipeScreen(navHostController, baguetonViewModel) }
         //Route 5 vers l'écran de connexion
-        composable(route = Routes.LoginScreen.route){ LoginScreen(navHostController, accountViewModel) }
+        composable(route = Routes.LoginScreen.route){ LoginScreen(accountViewModel, navHostController) }
         //Route 6 vers l'écran de favoris
         composable(route = Routes.ToolsScreen.route){ ToolsScreen(navHostController, baguetonViewModel) }
+        composable(route = Routes.ToolScreenCalc.route){ ToolScreenCalc(navHostController, baguetonViewModel) }
         //Route 7 vers les politiques de confidentialitées
         composable(route = Routes.PrivacyPolicyScreen.route){ PrivacyPolicyScreen(navHostController) }
         // Route 9 vers l'écran d'unboarding
         composable(route = Routes.UnboardingScreen.route){ UnboardingScreen(navHostController, weatherViewModel) }
         //Route 10 vers l'écran de test
         composable(route = Routes.TestScreen.route){ TestScreen(navHostController, baguetonViewModel) }
-        //Route 10 vers l'écran de contacts
+        //Route 11 vers l'écran de contacts
         composable(route = Routes.ContactsFormScreen.route){ ContactsFormScreen(navHostController, contactsViewModel) }
-        //Route 11 vers l'écran agenda
+        //Route 12 vers l'écran agenda
         composable(route = Routes.CalendarScreen.route){ CalendarScreen(calendarViewModel, navHostController) }
     }
 }

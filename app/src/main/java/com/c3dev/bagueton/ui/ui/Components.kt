@@ -93,9 +93,9 @@ fun SearchBar(
                 placeholder = { Text("Rechercher") },
                 modifier = Modifier
                     .weight(1f)
-                    .heightIn(min = 20.dp)
-                    .clip(RoundedCornerShape(50))
-                    .border(1.dp, MaterialTheme.colorScheme.onBackground, RoundedCornerShape(50.dp))
+                    .heightIn(min = 10.dp)
+                    .clip(RoundedCornerShape(5.dp))
+                    .border(1.dp, MaterialTheme.colorScheme.inverseOnSurface, RoundedCornerShape(5.dp))
             )
 
             Spacer(Modifier.width(8.dp))
@@ -137,7 +137,7 @@ fun MyBottomAppBar(navHostController: NavHostController? = null) {
                 Modifier.size(30.dp))
         }
         Spacer(Modifier.weight(1f, true))
-        IconButton(onClick = { navHostController?.navigate("ToolScreen") }) {
+        IconButton(onClick = { navHostController?.navigate("ToolsScreen") }) {
             Icon(Icons.Filled.AutoGraph, contentDescription = "Outils",
                 Modifier.size(30.dp))
         }

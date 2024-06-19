@@ -49,7 +49,7 @@ fun UnboardingScreen (navHostController: NavHostController? = null,
         Row(modifier = Modifier.fillMaxWidth(1f),
             horizontalArrangement = Arrangement.Center) {
 
-              Image(ImageBitmap.imageResource(id = R.drawable.icone),
+              Image(ImageBitmap.imageResource(id = R.drawable.logobagueton),
                 contentDescription = "logo", modifier = Modifier
                       .height(300.dp)
                       .width(300.dp)
@@ -75,13 +75,14 @@ fun UnboardingScreen (navHostController: NavHostController? = null,
             }
             Row {
                 Text(
-                    text = "${
-                        weatherData?.main?.temp?.minus(273.15)?.let { round(it * 10) / 10 } ?: "N/A"
-                    } °C",
+                    text = weatherData?.main?.temp?.let {
+                        "${(it - 273.15).let { temp -> round(temp * 10) / 10 }} °C"
+                    } ?: "Chargement des données météos ...",
                     modifier = Modifier.fillMaxWidth(1f),
                     textAlign = TextAlign.Center
                 )
             }
+
             Row {
                 weatherData?.name?.let {
                     Text(text = it,Modifier.fillMaxWidth(1f),

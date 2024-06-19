@@ -13,14 +13,16 @@ import com.c3dev.bagueton.ui.AppNavigation
 import com.c3dev.bagueton.ui.BaguetonViewModel
 import com.c3dev.bagueton.ui.CalendarViewModel
 import com.c3dev.bagueton.ui.WeatherViewModel
+import com.c3dev.bagueton.ui.model.usermanager.SessionManager
 import com.c3dev.bagueton.ui.ui.theme.Bagueton_v1Theme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        // Initialiser SessionManager
+        SessionManager.init(this)
         setContent {
             Bagueton_v1Theme {
-                // A surface container using the 'background' color from the theme
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
@@ -30,7 +32,7 @@ class MainActivity : ComponentActivity() {
                         accountViewModel = AccountViewModel(),
                         weatherViewModel = WeatherViewModel(),
                         contactsViewModel = ContactsViewModel(),
-                        calendarViewModel = CalendarViewModel()
+                        calendarViewModel = CalendarViewModel(),
                     )
                 }
             }

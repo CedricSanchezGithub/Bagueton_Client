@@ -3,7 +3,7 @@
     <string name="welcome_unboarding">"Bienvenue sur l'application Bagueton!"</string>
     <string name="order_unboarding">Vous avez 13 commandes aujoud`hui</string>
     <string name="enter_unboarding">Entrer</string>
-    <string name="welcome_message">Bienvenue, utilisateur</string>
+    <string name="welcome_message">Bienvenue, </string>
     <string name="list_order">Liste des commandes :</string>
     <string name="img_of">Image de </string>
     <string name="img_not_found">Image introuvable</string>
@@ -30,11 +30,11 @@
     <string name="username">Nom d`utilisateur</string>
     <string name="mpd">Mot de passe</string>
     <string name="error_login">Nom d`utilisateur ou mot de passe invalide</string>
-    <string name="version">Version 0.3.2 : Ajout du formulaire de contact </string>
+    <string name="version">Version 0.5: Gestion de comptes</string>
     <string name="confidentiality">Politique de Confidentialité</string>
     <string name="test">Page de test</string>
-    <string name="login">Page d`accueil</string>
-    <string name="unboarding">Se connecter</string>
+    <string name="login">Login</string>
+    <string name="unboarding">Retourner sur l`écran d`accueil</string>
 
     <string name="update_recipe">Mettre à jour la recette</string>
     <string name="cancel">Annuler</string>

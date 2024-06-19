@@ -1,6 +1,7 @@
 package com.c3dev.bagueton.ui.ui.screens
 
 import android.content.res.Configuration
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -11,6 +12,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
@@ -22,7 +24,7 @@ import com.c3dev.bagueton.ui.ui.theme.Bagueton_v1Theme
 
 @Composable
 fun ToolsScreen(
-    navHostController: NavHostController? = null, baguetonViewModel: com.c3dev.bagueton.ui.BaguetonViewModel
+    navHostController: NavHostController? = null, baguetonViewModel: BaguetonViewModel
 ) {
 
     Column {
@@ -34,6 +36,13 @@ fun ToolsScreen(
             Text(text = "Écran des outils :", modifier = Modifier.padding(horizontal = 16.dp) )
             Text(text = "En construction...", modifier = Modifier.padding(horizontal = 16.dp) )
         }
+            Text(
+                text = "Calcule recettes",
+                textDecoration = TextDecoration.Underline,
+                modifier = Modifier.clickable {
+                    navHostController?.navigate("ToolScreenCalc")
+                }
+            )
 
         Spacer(Modifier.weight(1f, true))
         MyBottomAppBar(navHostController)

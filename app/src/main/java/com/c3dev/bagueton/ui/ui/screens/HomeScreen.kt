@@ -39,6 +39,7 @@ import androidx.navigation.NavHostController
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
 import com.c3dev.bagueton.R
+import com.c3dev.bagueton.ui.AccountViewModel
 import com.c3dev.bagueton.ui.BaguetonViewModel
 import com.c3dev.bagueton.ui.ui.MyBottomAppBar
 import com.c3dev.bagueton.ui.ui.SearchBar
@@ -47,7 +48,7 @@ import previewBaguetonViewModel
 
 
 @Composable
-fun HomeScreen(baguetonViewModel: BaguetonViewModel, navHostController: NavHostController? = null) {
+fun HomeScreen(baguetonViewModel: BaguetonViewModel, navHostController: NavHostController? = null, accountViewModel: AccountViewModel? = null) {
     // Accéder à la variable errorMessage dans l'instance de BaguetonViewModel
     val errorMessage by baguetonViewModel.errorMessage
 
@@ -59,7 +60,11 @@ fun HomeScreen(baguetonViewModel: BaguetonViewModel, navHostController: NavHostC
     Scaffold(
         topBar = {
             // Passer l'instance de BaguetonViewModel à SearchBar
-            SearchBar(baguetonViewModel = baguetonViewModel, welcomeMessage = stringResource(id = R.string.welcome_message))
+            SearchBar(baguetonViewModel = baguetonViewModel,
+                welcomeMessage = stringResource(id = R.string.welcome_message) + " " + (accountViewModel?.username)
+
+
+            )
         },
         bottomBar = {
             // Passer l'instance de NavHostController à MyBottomAppBar
