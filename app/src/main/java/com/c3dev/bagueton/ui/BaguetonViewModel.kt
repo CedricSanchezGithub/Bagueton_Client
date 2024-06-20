@@ -1,6 +1,5 @@
 package com.c3dev.bagueton.ui
 
-import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
@@ -31,7 +30,7 @@ class BaguetonViewModel : ViewModel() {
     var newIngredientsRecipe = mutableStateListOf<Ingredient>()
 
     var editMode = mutableStateOf(false)
-    var multiplication = mutableIntStateOf(1)
+
     fun createRecipe(title: String, ingredients: List<Ingredient>, steps: List<Step>){
         viewModelScope.launch(Dispatchers.Default) {
             ingredientsList.clear()

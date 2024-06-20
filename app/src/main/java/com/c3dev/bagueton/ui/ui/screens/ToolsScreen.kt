@@ -33,15 +33,15 @@ fun ToolsScreen(
             navHostController = navHostController
         )
         Row {
-            Text(text = "Écran des outils :", modifier = Modifier.padding(horizontal = 16.dp) )
-            Text(text = "En construction...", modifier = Modifier.padding(horizontal = 16.dp) )
+            Text(text = "Écran des outils :", modifier = Modifier.padding(16.dp) )
+            Text(text = "En construction...", modifier = Modifier.padding(16.dp) )
         }
             Text(
-                text = "Calcule recettes",
+                text = "Calcul recettes",
                 textDecoration = TextDecoration.Underline,
                 modifier = Modifier.clickable {
                     navHostController?.navigate("ToolScreenCalc")
-                }
+                }.padding(16.dp)
             )
 
         Spacer(Modifier.weight(1f, true))

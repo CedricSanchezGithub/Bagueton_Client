@@ -12,6 +12,7 @@ import com.c3dev.bagueton.ui.AccountViewModel
 import com.c3dev.bagueton.ui.AppNavigation
 import com.c3dev.bagueton.ui.BaguetonViewModel
 import com.c3dev.bagueton.ui.CalendarViewModel
+import com.c3dev.bagueton.ui.ToolsViewModel
 import com.c3dev.bagueton.ui.WeatherViewModel
 import com.c3dev.bagueton.ui.model.usermanager.SessionManager
 import com.c3dev.bagueton.ui.ui.theme.Bagueton_v1Theme
@@ -33,6 +34,7 @@ class MainActivity : ComponentActivity() {
                         weatherViewModel = WeatherViewModel(),
                         contactsViewModel = ContactsViewModel(),
                         calendarViewModel = CalendarViewModel(),
+                        toolsViewModel = ToolsViewModel()
                     )
                 }
             }

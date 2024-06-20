@@ -60,7 +60,8 @@ fun AppNavigation(calendarViewModel: CalendarViewModel,
                   baguetonViewModel: BaguetonViewModel,
                   accountViewModel: AccountViewModel,
                   weatherViewModel: WeatherViewModel,
-                  contactsViewModel: ContactsViewModel) {
+                  contactsViewModel: ContactsViewModel,
+                  toolsViewModel: ToolsViewModel) {
 
     val navHostController : NavHostController = rememberNavController()
 
@@ -86,7 +87,7 @@ fun AppNavigation(calendarViewModel: CalendarViewModel,
         composable(route = Routes.LoginScreen.route){ LoginScreen(accountViewModel, navHostController) }
         //Route 6 vers l'écran de favoris
         composable(route = Routes.ToolsScreen.route){ ToolsScreen(navHostController, baguetonViewModel) }
-        composable(route = Routes.ToolScreenCalc.route){ ToolScreenCalc(navHostController, baguetonViewModel) }
+        composable(route = Routes.ToolScreenCalc.route){ ToolScreenCalc(navHostController, baguetonViewModel, toolsViewModel) }
         //Route 7 vers les politiques de confidentialitées
         composable(route = Routes.PrivacyPolicyScreen.route){ PrivacyPolicyScreen(navHostController) }
         // Route 9 vers l'écran d'unboarding
