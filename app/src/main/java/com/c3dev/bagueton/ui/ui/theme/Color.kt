@@ -2,7 +2,7 @@ package com.c3dev.bagueton.ui.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
-val md_theme_light_primary = Color(0xFF7F5600)
+val md_theme_light_primary = Color(0xFF7E5F1D)
 val md_theme_light_onPrimary = Color(255, 244, 229)
 val md_theme_light_primaryContainer = Color(0xFFFFDEAE)
 val md_theme_light_onPrimaryContainer = Color(0xFF281900)

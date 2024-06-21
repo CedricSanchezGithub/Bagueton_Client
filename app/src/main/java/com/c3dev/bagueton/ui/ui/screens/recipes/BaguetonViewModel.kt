@@ -1,13 +1,14 @@
-package com.c3dev.bagueton.ui
+package com.c3dev.bagueton.ui.ui.screens.recipes
 
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.c3dev.bagueton.ui.model.Ingredient
 import com.c3dev.bagueton.ui.model.RecipeAPI
-import com.c3dev.bagueton.ui.model.RecipeBean
-import com.c3dev.bagueton.ui.model.Step
+import com.c3dev.bagueton.ui.model.beans.Ingredient
+import com.c3dev.bagueton.ui.model.beans.RecipeBean
+import com.c3dev.bagueton.ui.model.beans.Step
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -30,7 +31,7 @@ class BaguetonViewModel : ViewModel() {
     var newIngredientsRecipe = mutableStateListOf<Ingredient>()
 
     var editMode = mutableStateOf(false)
-
+    var httpCode = mutableIntStateOf(0)
     fun createRecipe(title: String, ingredients: List<Ingredient>, steps: List<Step>){
         viewModelScope.launch(Dispatchers.Default) {
             ingredientsList.clear()
@@ -41,11 +42,12 @@ class BaguetonViewModel : ViewModel() {
                     titleRecipe.value = "$title est déjà utilisé, choisissez un autre nom :)"
                     return@launch
                 }
-                println(ingredientsList)
-                println(stepsList)
                 ingredientsList.addAll(ingredients)
                 stepsList.addAll(steps)
-                RecipeAPI.createRecipe(title = title, steps = stepsList, ingredients = ingredientsList)
+                val response = RecipeAPI.createRecipe(title = title, steps = stepsList, ingredients = ingredientsList)
+                withContext(Dispatchers.Main) {
+                    httpCode.intValue = response.code // Mettre à jour le code de réponse
+                }
                 val newRecipe = RecipeBean(title = title, steps = stepsList, ingredients = ingredientsList)
                 launch(Dispatchers.Main) {
                     recipeList.add(newRecipe)
@@ -128,25 +130,21 @@ class BaguetonViewModel : ViewModel() {
         ingredientsList.add(Ingredient(ingredient = "", quantity = ""))
     }
 
-    fun initializeNewIngredientsRecipe(ingredients: List<Ingredient>) {
-        newIngredientsRecipe.clear()
-        newIngredientsRecipe.addAll(ingredients)
-    }
-
-    fun initializeNewStepsRecipe(steps: List<Step>) {
-        newStepsRecipe.clear()
-        newStepsRecipe.addAll(steps)
-    }
-
     fun updateIngredient(index: Int, newIngredient: String, newQuantity: String) {
-        if (index < newIngredientsRecipe.size) {
-            newIngredientsRecipe[index] = Ingredient(ingredient = newIngredient, quantity = newQuantity)
+        if (index < ingredientsList.size) {
+            ingredientsList[index] = Ingredient(ingredient = newIngredient, quantity = newQuantity)
+            println("Updating ingredient at index $index to $newIngredient with quantity $newQuantity")
+        } else {
+            println("Invalid index $index for updating ingredient")
         }
     }
 
     fun updateStep(index: Int, newDescription: String) {
-        if (index < newStepsRecipe.size) {
-            newStepsRecipe[index] = Step(description = newDescription)
+        if (index < stepsList.size) {
+            stepsList[index] = Step(description = newDescription)
+            println("Updating step at index $index to $newDescription")
+        } else {
+            println("Invalid index $index for updating step")
         }
     }
 }

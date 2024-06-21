@@ -2,6 +2,7 @@ import android.content.res.Configuration
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -14,10 +15,6 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -27,25 +24,35 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.c3dev.bagueton.R
-import com.c3dev.bagueton.ui.AccountViewModel
+import com.c3dev.bagueton.ui.model.usermanager.AccountViewModel
 import com.c3dev.bagueton.ui.model.usermanager.User
 import com.c3dev.bagueton.ui.ui.MyBottomAppBar
+import com.c3dev.bagueton.ui.ui.screens.login.LoginViewModel
 import com.c3dev.bagueton.ui.ui.theme.Bagueton_v1Theme
+import com.c3dev.bagueton.ui.ui.theme.LocalThemeViewModel
+import com.c3dev.bagueton.ui.ui.theme.ThemeToggleButton
 
 @Composable
 fun LoginScreen(accountViewModel: AccountViewModel,
-                navHostController: NavHostController? = null) {
+                navHostController: NavHostController? = null,
+                loginViewModel: LoginViewModel) {
 
-    var username by remember { mutableStateOf("") }
-    var password by remember { mutableStateOf("") }
-    var confirmPassword by remember { mutableStateOf("") }
-    var message by remember { mutableStateOf("") }
-    var isRegisterScreen by remember { mutableStateOf(false) }
+
+    val themeViewModel = LocalThemeViewModel.current
 
     Scaffold(
+        topBar = {
+            Row(
+                modifier = Modifier.padding(8.dp),
+                verticalAlignment = androidx.compose.ui.Alignment.CenterVertically
+            ) {
+                Spacer(modifier = Modifier.weight(1f))
+                ThemeToggleButton(themeViewModel = themeViewModel)
+            }
+        },
         bottomBar = {
             MyBottomAppBar(navHostController = navHostController)
-        }
+        },
     ) { innerPadding ->
 
         Column(
@@ -62,8 +69,8 @@ fun LoginScreen(accountViewModel: AccountViewModel,
                 verticalArrangement = Arrangement.Center
             ) {
                 TextField(
-                    value = username,
-                    onValueChange = { username = it },
+                    value = loginViewModel.username.value,
+                    onValueChange = { loginViewModel.username.value = it },
                     label = { Text("Username") },
                     modifier = Modifier.fillMaxWidth()
                 )
@@ -71,8 +78,8 @@ fun LoginScreen(accountViewModel: AccountViewModel,
                 Spacer(modifier = Modifier.height(8.dp))
 
                 TextField(
-                    value = password,
-                    onValueChange = { password = it },
+                    value = loginViewModel.password.value,
+                    onValueChange = { loginViewModel.password.value = it },
                     label = { Text("Mot de passe") },
                     visualTransformation = PasswordVisualTransformation(),
                     modifier = Modifier.fillMaxWidth()
@@ -80,10 +87,10 @@ fun LoginScreen(accountViewModel: AccountViewModel,
 
                 Spacer(modifier = Modifier.height(8.dp))
 
-                if (isRegisterScreen) {
+                if (loginViewModel.isRegisterScreen.value) {
                     TextField(
-                        value = confirmPassword,
-                        onValueChange = { confirmPassword = it },
+                        value = loginViewModel.confirmPassword.value,
+                        onValueChange = { loginViewModel.confirmPassword.value = it },
                         label = { Text("Confirmez votre mot de passe") },
                         visualTransformation = PasswordVisualTransformation(),
                         modifier = Modifier.fillMaxWidth()
@@ -95,17 +102,17 @@ fun LoginScreen(accountViewModel: AccountViewModel,
 
             Button(
                 onClick = {
-                    if (isRegisterScreen) {
-                        if (password == confirmPassword) {
-                            accountViewModel.registerUser(User(username, password)) {
-                                message = it
+                    if (loginViewModel.isRegisterScreen.value) {
+                        if (loginViewModel.password.value == loginViewModel.confirmPassword.value) {
+                            accountViewModel.registerUser(User(loginViewModel.username.value, loginViewModel.password.value)) {
+                                loginViewModel.message.value = it
                             }
                         } else {
-                            message = "Les mots de passe ne correspondent pas"
+                            loginViewModel.message.value = "Les mots de passe ne correspondent pas"
                         }
                     } else {
-                        accountViewModel.loginUser(username, password) {
-                            message = it
+                        accountViewModel.loginUser(loginViewModel.username.value, loginViewModel.password.value) {
+                            loginViewModel.message.value = it
                         }
                     }
                 },
@@ -113,15 +120,15 @@ fun LoginScreen(accountViewModel: AccountViewModel,
                     .fillMaxWidth()
                     .padding(horizontal = 16.dp)
             ) {
-                Text(if (isRegisterScreen) "S'enregistrer" else "Login")
+                Text(if (loginViewModel.isRegisterScreen.value) "S'enregistrer" else "Login")
             }
 
             Spacer(modifier = Modifier.height(8.dp))
 
             Text(
-                text = if (isRegisterScreen) "Déjà un compte ? Connectez-vous" else "Pas de compte ? S'enregistrer",
+                text = if (loginViewModel.isRegisterScreen.value) "Déjà un compte ? Connectez-vous" else "Pas de compte ? S'enregistrer",
                 modifier = Modifier
-                    .clickable { isRegisterScreen = !isRegisterScreen }
+                    .clickable { loginViewModel.isRegisterScreen.value = !loginViewModel.isRegisterScreen.value }
                     .padding(16.dp),
                 style = MaterialTheme.typography.bodyMedium,
                 textDecoration = TextDecoration.Underline
@@ -129,7 +136,7 @@ fun LoginScreen(accountViewModel: AccountViewModel,
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            Text(text = message, style = MaterialTheme.typography.bodyLarge)
+            Text(text = loginViewModel.message.value, style = MaterialTheme.typography.bodyLarge)
 
             Spacer(modifier = Modifier.height(32.dp))
 
@@ -182,7 +189,7 @@ fun LoginScreen(accountViewModel: AccountViewModel,
 fun LoginScreenPreview() {
     Bagueton_v1Theme {
         Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
-            LoginScreen(accountViewModel = AccountViewModel())
+            LoginScreen(accountViewModel = AccountViewModel(), loginViewModel = LoginViewModel())
         }
     }
 }

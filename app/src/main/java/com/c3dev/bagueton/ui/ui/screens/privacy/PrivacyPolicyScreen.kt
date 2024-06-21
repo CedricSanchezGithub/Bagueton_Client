@@ -1,4 +1,4 @@
-package com.c3dev.bagueton.ui.ui.screens
+package com.c3dev.bagueton.ui.ui.screens.privacy
 
 import android.content.res.Configuration
 import androidx.compose.foundation.layout.Column
@@ -43,7 +43,7 @@ fun PrivacyPolicyScreen(navHostController : NavHostController? = null) {
                 // Sous-titre et corps du texte
                 Spacer(modifier = Modifier.height(32.dp))
                 SectionTitle("Données Personnelles Collectées")
-                sectionBody(
+                SectionBody(
                     """
             Nous utilisons des services d'authentification tiers, tels que Google et Facebook, pour faciliter votre connexion à notre application. Nous ne stockons aucune donnée personnelle vous concernant sur nos serveurs à part les recettes que vous créez. Ces données ne contiennent aucune information personnelle à moins que vous ne choisissiez d'inclure de telles informations dans vos recettes.
         """.trimIndent()
@@ -51,19 +51,19 @@ fun PrivacyPolicyScreen(navHostController : NavHostController? = null) {
                 Spacer(modifier = Modifier.height(16.dp))
 
                 SectionTitle("Utilisation des Données")
-                sectionBody("Les données collectées, c'est-à-dire les recettes, sont utilisées uniquement pour vous permettre d'accéder et de gérer vos créations culinaires dans l'application.")
+                SectionBody("Les données collectées, c'est-à-dire les recettes, sont utilisées uniquement pour vous permettre d'accéder et de gérer vos créations culinaires dans l'application.")
                 Spacer(modifier = Modifier.height(16.dp))
 
                 SectionTitle("Stockage des Données")
-                sectionBody("Vos recettes sont stockées sur un serveur personnel et ne sont pas partagées avec des tiers. Nous nous engageons à protéger vos données contre l'accès non autorisé, l'utilisation ou la divulgation.")
+                SectionBody("Vos recettes sont stockées sur un serveur personnel et ne sont pas partagées avec des tiers. Nous nous engageons à protéger vos données contre l'accès non autorisé, l'utilisation ou la divulgation.")
                 Spacer(modifier = Modifier.height(16.dp))
 
                 SectionTitle("Sécurité")
-                sectionBody("Nous prenons la sécurité de vos données très au sérieux et mettons en œuvre toutes les mesures de sécurité nécessaires pour protéger vos informations.")
+                SectionBody("Nous prenons la sécurité de vos données très au sérieux et mettons en œuvre toutes les mesures de sécurité nécessaires pour protéger vos informations.")
                 Spacer(modifier = Modifier.height(16.dp))
 
                 SectionTitle("Vos Droits")
-                sectionBody(
+                SectionBody(
                     """
             Conformément au RGPD, vous avez le droit d'accéder à vos données personnelles, de demander leur correction ou leur suppression. Vous pouvez exercer ces droits en nous contactant directement par email à [adresse email], que vous pouvez utiliser également pour toute question relative à la protection de vos données.
         """.trimIndent()
@@ -71,11 +71,11 @@ fun PrivacyPolicyScreen(navHostController : NavHostController? = null) {
                 Spacer(modifier = Modifier.height(16.dp))
 
                 SectionTitle("Suppression de Compte")
-                sectionBody("Vous pouvez demander la suppression de votre compte et de vos données associées à tout moment en nous contactant à l'adresse email mentionnée.")
+                SectionBody("Vous pouvez demander la suppression de votre compte et de vos données associées à tout moment en nous contactant à l'adresse email mentionnée.")
                 Spacer(modifier = Modifier.height(16.dp))
 
                 SectionTitle("Contact")
-                sectionBody("Pour toute question concernant cette politique ou vos données personnelles, n'hésitez pas à nous contacter à admin@lynxproject.fr.")
+                SectionBody("Pour toute question concernant cette politique ou vos données personnelles, n'hésitez pas à nous contacter à admin@lynxproject.fr.")
             }
         }
     }
@@ -89,7 +89,7 @@ fun SectionTitle(text: String) {
 }
 
 @Composable
-fun sectionBody(text: String) {
+fun SectionBody(text: String) {
     Text(
         text = text,
         style = MaterialTheme.typography.bodyMedium

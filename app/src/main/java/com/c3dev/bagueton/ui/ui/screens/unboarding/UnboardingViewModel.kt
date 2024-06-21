@@ -1,4 +1,4 @@
-package com.c3dev.bagueton.ui
+package com.c3dev.bagueton.ui.ui.screens.unboarding
 
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
@@ -11,7 +11,7 @@ import kotlinx.coroutines.withContext
 import java.io.IOException
 
 
-class WeatherViewModel : ViewModel() {
+class UnboardingViewModel : ViewModel() {
 var weatherData = mutableStateOf<WeatherResponse?>(null)
 
 

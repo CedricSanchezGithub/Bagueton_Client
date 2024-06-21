@@ -1,12 +1,7 @@
-package com.c3dev.bagueton.ui
+package com.c3dev.bagueton.ui.model.usermanager
 
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
-import com.c3dev.bagueton.ui.model.usermanager.ApiResponse
-import com.c3dev.bagueton.ui.model.usermanager.LoginRequest
-import com.c3dev.bagueton.ui.model.usermanager.RetrofitClient
-import com.c3dev.bagueton.ui.model.usermanager.SessionManager
-import com.c3dev.bagueton.ui.model.usermanager.User
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

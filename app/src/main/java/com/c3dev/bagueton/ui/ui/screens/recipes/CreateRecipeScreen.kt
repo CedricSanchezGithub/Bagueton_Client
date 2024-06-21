@@ -1,4 +1,4 @@
-package com.c3dev.bagueton.ui.ui.screens
+package com.c3dev.bagueton.ui.ui.screens.recipes
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -35,9 +35,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.c3dev.bagueton.R
-import com.c3dev.bagueton.ui.BaguetonViewModel
-import com.c3dev.bagueton.ui.model.Ingredient
-import com.c3dev.bagueton.ui.model.Step
+import com.c3dev.bagueton.ui.model.beans.Ingredient
+import com.c3dev.bagueton.ui.model.beans.Step
 import com.c3dev.bagueton.ui.ui.MyBottomAppBar
 import com.c3dev.bagueton.ui.ui.theme.Bagueton_v1Theme
 
@@ -69,38 +68,53 @@ fun CreateRecipeScreen(
                 title = baguetonViewModel.titleRecipe.value,
                 onTitleChange = { newTitle ->
                     baguetonViewModel.titleRecipe.value = newTitle
-                }
+                },
             )
-            Spacer(modifier = Modifier.height(16.dp))
-
-            Text(text = stringResource(id = R.string.ingredient))
+            Text(text = stringResource(id = R.string.ingredient),
+                modifier = Modifier.padding(16.dp))
             for ((index, ingredient) in baguetonViewModel.ingredientsList.withIndex()) {
                 IngredientInput(
                     ingredient = ingredient,
                     onIngredientChange = { newIngredient ->
+                        println("Updating ingredient at index $index to $newIngredient")
                         baguetonViewModel.updateIngredient(index, newIngredient, ingredient.quantity ?: "")
                     },
                     onQuantityChange = { newQuantity ->
                         val filteredQuantity = newQuantity.filter { it.isDigit() }
+                        println("Updating quantity at index $index to $filteredQuantity")
                         baguetonViewModel.updateIngredient(index, ingredient.ingredient ?: "", filteredQuantity)
+                    },
+                    onDelete = {
+                        println("Deleting ingredient at index $index")
+                        baguetonViewModel.ingredientsList.removeAt(index)
                     }
                 )
+
             }
-            Button(onClick = { baguetonViewModel.addIngredient() }) {
+            Button(onClick = { baguetonViewModel.addIngredient() },
+                modifier = Modifier.padding(16.dp)
+            ) {
                 Text(stringResource(id = R.string.add_ingredient))
             }
-            Spacer(modifier = Modifier.height(16.dp))
+
 
             Text(text = stringResource(id = R.string.step_recipe))
             for ((index, step) in baguetonViewModel.stepsList.withIndex()) {
                 StepInput(
                     step = step,
                     onStepChange = { newStep ->
+                        println("Updating step at index $index to $newStep")
                         baguetonViewModel.updateStep(index, newStep)
+                    },
+                    onDelete = {
+                        println("Deleting step at index $index")
+                        baguetonViewModel.stepsList.removeAt(index)
                     }
                 )
             }
-            Button(onClick = { baguetonViewModel.addStep() }) {
+            Button(onClick = { baguetonViewModel.addStep() },
+                    modifier = Modifier.padding(16.dp)
+            ) {
                 Text(stringResource(id = R.string.add_step))
             }
             Spacer(modifier = Modifier.height(16.dp))
@@ -114,6 +128,10 @@ fun CreateRecipeScreen(
             }) {
                 Text(stringResource(id = R.string.send_recipe))
             }
+            Text(
+                text = "Code de retour: ${baguetonViewModel.httpCode.intValue}",
+                modifier = Modifier.padding(16.dp)
+            )
         }
     }
 }
@@ -165,15 +183,21 @@ fun TitleInput(
 fun IngredientInput(
     ingredient: Ingredient,
     onIngredientChange: (String) -> Unit,
-    onQuantityChange: (String) -> Unit
+    onQuantityChange: (String) -> Unit,
+    onDelete: () -> Unit
 ) {
     var isIngredientFocused by remember { mutableStateOf(false) }
     var isQuantityFocused by remember { mutableStateOf(false) }
 
-    Column{
+    Column(
+        modifier = Modifier
+            .padding(horizontal = 16.dp, vertical = 8.dp) // Ajouter un padding global à la colonne
+    ) {
         Box(
             modifier = Modifier
                 .border(1.dp, Color.Gray)
+                .padding(8.dp)
+                .width(300.dp)
                 .onFocusChanged { focusState ->
                     isIngredientFocused = focusState.isFocused
                 }
@@ -183,24 +207,25 @@ fun IngredientInput(
                     text = stringResource(id = R.string.ingredient),
                     color = Color.Gray,
                     modifier = Modifier.padding(8.dp)
-                        .width(300.dp)
-
                 )
             }
             BasicTextField(
                 value = ingredient.ingredient ?: "",
-                onValueChange = onIngredientChange,
+                onValueChange = {
+                    println("Ingredient changed: $it")
+                    onIngredientChange(it)
+                },
                 singleLine = true,
                 modifier = Modifier.padding(8.dp)
-                    .width(300.dp)
-
             )
         }
-        Spacer(modifier = Modifier.height(8.dp))
+        Spacer(modifier = Modifier.height(8.dp)) // Ajouter un espace entre les champs
+
         Box(
             modifier = Modifier
                 .border(1.dp, Color.Gray)
                 .padding(8.dp)
+                .width(300.dp)
                 .onFocusChanged { focusState ->
                     isQuantityFocused = focusState.isFocused
                 }
@@ -214,18 +239,32 @@ fun IngredientInput(
             }
             BasicTextField(
                 value = ingredient.quantity ?: "",
-                onValueChange = onQuantityChange,
+                onValueChange = {
+                    val filteredQuantity = it.filter { it.isDigit() }
+                    println("Quantity changed: $filteredQuantity")
+                    onQuantityChange(filteredQuantity)
+                },
                 keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Number),
                 singleLine = true,
+                modifier = Modifier.padding(8.dp)
             )
+        }
+        Spacer(modifier = Modifier.height(8.dp)) // Ajouter un espace entre le champ et le bouton
+
+        Button(onClick = onDelete) {
+            Text(text = "Supprimer")
         }
     }
 }
 
+
+
+
 @Composable
 fun StepInput(
     step: Step,
-    onStepChange: (String) -> Unit
+    onStepChange: (String) -> Unit,
+    onDelete: () -> Unit
 ) {
     var isStepFocused by remember { mutableStateOf(false) }
 
@@ -237,6 +276,7 @@ fun StepInput(
             modifier = Modifier
                 .border(1.dp, Color.Gray)
                 .padding(8.dp)
+                .width(300.dp)
                 .onFocusChanged { focusState ->
                     isStepFocused = focusState.isFocused
                 }
@@ -250,12 +290,22 @@ fun StepInput(
             }
             BasicTextField(
                 value = step.description ?: "",
-                onValueChange = onStepChange,
+                onValueChange = {
+                    println("Step changed: $it")
+                    onStepChange(it)
+                },
                 singleLine = true,
+                modifier = Modifier.padding(8.dp)
             )
+        }
+        Spacer(modifier = Modifier.height(8.dp)) // Ajouter un espace entre le champ et le bouton
+
+        Button(onClick = onDelete) {
+            Text(text = "Supprimer")
         }
     }
 }
+
 
 @Preview(showBackground = true, showSystemUi = true)
 @Composable

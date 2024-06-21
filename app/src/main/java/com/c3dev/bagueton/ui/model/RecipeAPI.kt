@@ -4,6 +4,9 @@ package com.c3dev.bagueton.ui.model
 import com.c3dev.bagueton.ui.model.RecipeAPI.MEDIA_TYPE_JSON
 import com.c3dev.bagueton.ui.model.RecipeAPI.client
 import com.c3dev.bagueton.ui.model.RecipeAPI.gson
+import com.c3dev.bagueton.ui.model.beans.Ingredient
+import com.c3dev.bagueton.ui.model.beans.RecipeBean
+import com.c3dev.bagueton.ui.model.beans.Step
 import com.google.gson.Gson
 import com.google.gson.JsonSyntaxException
 import okhttp3.MediaType.Companion.toMediaType
@@ -14,6 +17,7 @@ import okhttp3.Response
 import java.io.IOException
 
 object RecipeAPI {
+    data class HttpResponse(val body: String, val code: Int)
 
     val MEDIA_TYPE_JSON = "application/json; charset=utf-8".toMediaType()
     val gson = Gson()
@@ -22,13 +26,15 @@ object RecipeAPI {
     // http://localhost:8080 http://90.51.140.217:8082/bagueton http://192.168.1.50:8082/bagueton
 
 
-    fun createRecipe(title: String, ingredients: List<Ingredient>, steps: List<Step>?){
-        val res = sendPost("$URL_SERVER/createrecipe",
-            RecipeBean(null, title, images = null, ingredients, steps )
+    fun createRecipe(title: String, ingredients: List<Ingredient>, steps: List<Step>?): HttpResponse {
+        val response = sendPost("$URL_SERVER/createrecipe",
+            RecipeBean(null, title, images = null, ingredients, steps)
         )
         println("Creation de la recette $title")
-        println("Resultat: $res")
+        println("Resultat: ${response.body}")
+        return response
     }
+
 
     fun updateRecipe(idRecipe: String?, title: String?, ingredientList: List<Ingredient>?, stepList: List<Step>?) {
         val url = "$URL_SERVER/updaterecipe/$idRecipe"
@@ -87,19 +93,16 @@ private fun sendGet(url: String): String {
     }
 }
 
-fun sendPost(url: String, toSend: Any?): String {
+fun sendPost(url: String, toSend: Any?): RecipeAPI.HttpResponse {
     println("url : $url")
 
     val json = gson.toJson(toSend)
-
     val body = json.toRequestBody(MEDIA_TYPE_JSON)
     val request = Request.Builder().url(url).post(body).build()
 
-    return client.newCall(request).execute().use {
-        if (!it.isSuccessful) {
-            throw Exception("Réponse du serveur incorrect :${it.code}")
-        }
-        it.body!!.string()
+    client.newCall(request).execute().use { response ->
+        val responseBody = response.body!!.string()
+        return RecipeAPI.HttpResponse(responseBody, response.code)
     }
 }
 

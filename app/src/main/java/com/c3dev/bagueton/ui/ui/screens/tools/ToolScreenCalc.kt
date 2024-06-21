@@ -1,4 +1,4 @@
-package com.c3dev.bagueton.ui.ui.screens
+package com.c3dev.bagueton.ui.ui.screens.tools
 
 import android.content.res.Configuration
 import androidx.compose.foundation.background
@@ -32,10 +32,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.PopupProperties
 import androidx.navigation.NavHostController
-import com.c3dev.bagueton.ui.BaguetonViewModel
-import com.c3dev.bagueton.ui.ToolsViewModel
 import com.c3dev.bagueton.ui.ui.MyBottomAppBar
 import com.c3dev.bagueton.ui.ui.SearchBar
+import com.c3dev.bagueton.ui.ui.screens.recipes.BaguetonViewModel
 import com.c3dev.bagueton.ui.ui.theme.Bagueton_v1Theme
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -95,6 +94,7 @@ fun ToolScreenCalc(
                                     toolsViewModel.selectedOptionText.value = selectionOption.title
                                     toolsViewModel.selectedRecipe.value = selectionOption
                                     toolsViewModel.expanded.value = false
+                                    toolsViewModel.updateNewQuantity()
                                 },
                                 contentPadding = ExposedDropdownMenuDefaults.ItemContentPadding,
                             )
@@ -110,8 +110,11 @@ fun ToolScreenCalc(
             Spacer(modifier = Modifier.height(16.dp))
 
             val totalWeight = toolsViewModel.totalWeight
-            val finalWeight = totalWeight * toolsViewModel.multiplier
-
+            val finalWeight = if (toolsViewModel.totalWeightRequest.value.isNotEmpty()) {
+                toolsViewModel.totalWeightRequest.value.toInt()
+            } else {
+                totalWeight * toolsViewModel.multiplier
+            }
             Text("Poids total : $finalWeight grammes")
 
             Spacer(modifier = Modifier.height(16.dp))
@@ -134,14 +137,12 @@ fun ToolScreenCalc(
                             )
                         }
                         ingredient.quantity?.let { quantity ->
+                            val updatedQuantity = toolsViewModel.newQuantity(quantity)
                             Text(
-                                text = "${toolsViewModel.newQuantity(
-                                    weight = quantity.toInt(), 
-                                    totalWeight = toolsViewModel.totalWeight,
-                                    totalWeightRequest = toolsViewModel.totalWeightRequest.value.toIntOrNull() ?: toolsViewModel.totalWeight, 
-                                    isTotalWeightActive = toolsViewModel.isTotalWeightActive.value)} g",
-                                    modifier = Modifier.align(Alignment.CenterVertically)
-                                                       .padding(8.dp)
+                                text = "$updatedQuantity g",
+                                modifier = Modifier
+                                    .align(Alignment.CenterVertically)
+                                    .padding(8.dp)
                             )
                         }
                     }
@@ -165,12 +166,7 @@ fun TwoTextFields(toolsViewModel: ToolsViewModel) {
                 onValueChange = { newText ->
                     if (newText.all { it.isDigit() }) {
                         toolsViewModel.multiplication.value = newText
-                        toolsViewModel.newQuantity(
-                            weight = toolsViewModel.totalWeight,
-                            totalWeight = toolsViewModel.totalWeight,
-                            totalWeightRequest = toolsViewModel.totalWeightRequest.value.toIntOrNull() ?: toolsViewModel.totalWeight,
-                            isTotalWeightActive = toolsViewModel.isTotalWeightActive.value
-                        )
+                        toolsViewModel.updateNewQuantity()
                     }
                 },
                 label = { Text("Multiplicateur") },
@@ -188,6 +184,7 @@ fun TwoTextFields(toolsViewModel: ToolsViewModel) {
                 onValueChange = { newText ->
                     if (newText.all { it.isDigit() }) {
                         toolsViewModel.totalWeightRequest.value = newText
+                        toolsViewModel.updateNewQuantity()
                     }
                 },
                 label = { Text("Poids total voulu") },
@@ -203,6 +200,7 @@ fun TwoTextFields(toolsViewModel: ToolsViewModel) {
         }
     }
 }
+
 @Preview(showBackground = true, showSystemUi = true, uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Preview(showBackground = true, showSystemUi = true, uiMode = Configuration.UI_MODE_NIGHT_NO)
 @Composable

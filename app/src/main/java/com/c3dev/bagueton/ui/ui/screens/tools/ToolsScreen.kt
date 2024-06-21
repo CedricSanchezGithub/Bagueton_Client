@@ -1,4 +1,4 @@
-package com.c3dev.bagueton.ui.ui.screens
+package com.c3dev.bagueton.ui.ui.screens.tools
 
 import android.content.res.Configuration
 import androidx.compose.foundation.clickable
@@ -16,9 +16,9 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
-import com.c3dev.bagueton.ui.BaguetonViewModel
 import com.c3dev.bagueton.ui.ui.MyBottomAppBar
 import com.c3dev.bagueton.ui.ui.SearchBar
+import com.c3dev.bagueton.ui.ui.screens.recipes.BaguetonViewModel
 import com.c3dev.bagueton.ui.ui.theme.Bagueton_v1Theme
 
 
@@ -29,7 +29,7 @@ fun ToolsScreen(
 
     Column {
 
-        SearchBar(baguetonViewModel = baguetonViewModel,welcomeMessage = "Bienvenue, utilisateur",
+        SearchBar(baguetonViewModel = baguetonViewModel,
             navHostController = navHostController
         )
         Row {

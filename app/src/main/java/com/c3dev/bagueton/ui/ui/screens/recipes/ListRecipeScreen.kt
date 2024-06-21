@@ -1,4 +1,4 @@
-package com.c3dev.bagueton.ui.ui.screens
+package com.c3dev.bagueton.ui.ui.screens.recipes
 
 import android.content.res.Configuration
 import androidx.compose.foundation.Image
@@ -38,15 +38,14 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import coil.compose.rememberAsyncImagePainter
 import com.c3dev.bagueton.R
-import com.c3dev.bagueton.ui.BaguetonViewModel
-import com.c3dev.bagueton.ui.model.RecipeBean
+import com.c3dev.bagueton.ui.model.beans.RecipeBean
 import com.c3dev.bagueton.ui.ui.MyBottomAppBar
 import com.c3dev.bagueton.ui.ui.SearchBar
 import com.c3dev.bagueton.ui.ui.theme.Bagueton_v1Theme
 
 
 @Composable
-fun ListRecipeScreen(navHostController: NavHostController? = null, baguetonViewModel: com.c3dev.bagueton.ui.BaguetonViewModel) {
+fun ListRecipeScreen(navHostController: NavHostController? = null, baguetonViewModel: BaguetonViewModel) {
     Scaffold (
         topBar = {
             SearchBar(baguetonViewModel = baguetonViewModel)

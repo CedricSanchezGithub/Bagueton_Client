@@ -1,4 +1,4 @@
-package com.c3dev.bagueton.ui.ui.screens
+package com.c3dev.bagueton.ui.ui.screens.recipes
 
 import android.content.res.Configuration
 import androidx.compose.foundation.Image
@@ -60,15 +60,13 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import coil.compose.rememberAsyncImagePainter
 import com.c3dev.bagueton.R
-import com.c3dev.bagueton.ui.BaguetonViewModel
-import com.c3dev.bagueton.ui.model.Ingredient
-import com.c3dev.bagueton.ui.model.RecipeBean
-import com.c3dev.bagueton.ui.model.Step
+import com.c3dev.bagueton.ui.model.beans.Ingredient
+import com.c3dev.bagueton.ui.model.beans.RecipeBean
+import com.c3dev.bagueton.ui.model.beans.Step
 import com.c3dev.bagueton.ui.ui.ConfirmDeleteDialog
 import com.c3dev.bagueton.ui.ui.MyBottomAppBar
 import com.c3dev.bagueton.ui.ui.SearchBar
 import com.c3dev.bagueton.ui.ui.theme.Bagueton_v1Theme
-import previewBaguetonViewModel
 
 @Composable
 fun RecipeScreen(
@@ -369,7 +367,7 @@ fun BodyRecipeScreen(recipe: RecipeBean) {
 }
 
 @Composable
-fun UpdateBodyRecipeScreen(baguetonViewModel: com.c3dev.bagueton.ui.BaguetonViewModel, recipe: RecipeBean) {
+fun UpdateBodyRecipeScreen(baguetonViewModel: BaguetonViewModel, recipe: RecipeBean) {
     Column(Modifier.padding(32.dp)) {
         Box(
             modifier = Modifier
@@ -423,7 +421,7 @@ fun IngredientList(ingredients: List<Ingredient>) {
 }
 
 @Composable
-fun UpdateIngredientList(baguetonViewModel: com.c3dev.bagueton.ui.BaguetonViewModel, ingredients: List<Ingredient>) {
+fun UpdateIngredientList(baguetonViewModel: BaguetonViewModel, ingredients: List<Ingredient>) {
     LazyColumn(
         modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally
@@ -463,7 +461,7 @@ fun UpdateIngredientList(baguetonViewModel: com.c3dev.bagueton.ui.BaguetonViewMo
 
 @Composable
 fun UpdateIngredientInput(
-    baguetonViewModel: com.c3dev.bagueton.ui.BaguetonViewModel,
+    baguetonViewModel: BaguetonViewModel,
     index: Int,
     onIngredientChange: (String) -> Unit,
     onQuantityChange: (String) -> Unit
@@ -632,10 +630,7 @@ fun UpdateStepInput(
 fun RecipeScreenPreview() {
     Bagueton_v1Theme {
         Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
-            RecipeScreen(  // ID de la recette factice
-                baguetonViewModel = previewBaguetonViewModel(),
-                id = "coucou34"
-            )
+            RecipeScreen( baguetonViewModel = BaguetonViewModel(), id = "1", navHostController = null)
         }
     }
 }

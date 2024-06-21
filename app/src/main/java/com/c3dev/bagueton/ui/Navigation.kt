@@ -1,7 +1,5 @@
 package com.c3dev.bagueton.ui
 
-import ContactsFormScreen
-import ContactsViewModel
 import LoginScreen
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
@@ -10,16 +8,23 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import com.c3dev.bagueton.ui.ui.screens.CalendarScreen
-import com.c3dev.bagueton.ui.ui.screens.CreateRecipeScreen
-import com.c3dev.bagueton.ui.ui.screens.HomeScreen
-import com.c3dev.bagueton.ui.ui.screens.ListRecipeScreen
-import com.c3dev.bagueton.ui.ui.screens.PrivacyPolicyScreen
-import com.c3dev.bagueton.ui.ui.screens.RecipeScreen
-import com.c3dev.bagueton.ui.ui.screens.ToolScreenCalc
-import com.c3dev.bagueton.ui.ui.screens.ToolsScreen
-import com.c3dev.bagueton.ui.ui.screens.UnboardingScreen
+import com.c3dev.bagueton.ui.model.usermanager.AccountViewModel
+import com.c3dev.bagueton.ui.ui.screens.form.ContactsFormScreen
+import com.c3dev.bagueton.ui.ui.screens.form.ContactsViewModel
+import com.c3dev.bagueton.ui.ui.screens.login.LoginViewModel
+import com.c3dev.bagueton.ui.ui.screens.privacy.PrivacyPolicyScreen
+import com.c3dev.bagueton.ui.ui.screens.recipes.BaguetonViewModel
+import com.c3dev.bagueton.ui.ui.screens.recipes.CreateRecipeScreen
+import com.c3dev.bagueton.ui.ui.screens.recipes.HomeScreen
+import com.c3dev.bagueton.ui.ui.screens.recipes.ListRecipeScreen
+import com.c3dev.bagueton.ui.ui.screens.recipes.RecipeScreen
 import com.c3dev.bagueton.ui.ui.screens.tests.TestScreen
+import com.c3dev.bagueton.ui.ui.screens.tools.ToolScreenCalc
+import com.c3dev.bagueton.ui.ui.screens.tools.ToolsScreen
+import com.c3dev.bagueton.ui.ui.screens.tools.ToolsViewModel
+import com.c3dev.bagueton.ui.ui.screens.unboarding.UnboardingScreen
+import com.c3dev.bagueton.ui.ui.screens.unboarding.UnboardingViewModel
+import com.c3dev.bagueton.ui.ui.theme.ThemeViewModel
 
 sealed class Routes(val route: String) {
     //Route 1
@@ -44,24 +49,20 @@ sealed class Routes(val route: String) {
     object PrivacyPolicyScreen : Routes("PrivacyPolicyScreen")
     //Route 9
     object UnboardingScreen : Routes("UnboardingScreen")
-    //Route 10
-    object UpdateRecipeScreen : Routes("UpdateRecipeScreen/{id}"){
-        fun createRoute(id: String) = "UpdateRecipeScreen/$id"
-    }
     //Route 11
     object TestScreen : Routes("TestScreen")
     object ContactsFormScreen : Routes("ContactsFormScreen")
-    object CalendarScreen : Routes("CalendarScreen")
 
 }
 
 @Composable
-fun AppNavigation(calendarViewModel: CalendarViewModel,
-                  baguetonViewModel: BaguetonViewModel,
+fun AppNavigation(baguetonViewModel: BaguetonViewModel,
                   accountViewModel: AccountViewModel,
-                  weatherViewModel: WeatherViewModel,
+                  weatherViewModel: UnboardingViewModel,
                   contactsViewModel: ContactsViewModel,
-                  toolsViewModel: ToolsViewModel) {
+                  toolsViewModel: ToolsViewModel,
+                  loginViewModel: LoginViewModel
+) {
 
     val navHostController : NavHostController = rememberNavController()
 
@@ -80,11 +81,11 @@ fun AppNavigation(calendarViewModel: CalendarViewModel,
             }
         }
         // Route 3 vers la liste des recettes
-        composable(route = Routes.ListRecipeScreen.route) { ListRecipeScreen(navHostController, baguetonViewModel)}
+        composable(route = Routes.ListRecipeScreen.route) { ListRecipeScreen(navHostController, baguetonViewModel) }
         //Route 4 vers ajouter une recette
         composable(route = Routes.CreateRecipeScreen.route){ CreateRecipeScreen(navHostController, baguetonViewModel) }
         //Route 5 vers l'écran de connexion
-        composable(route = Routes.LoginScreen.route){ LoginScreen(accountViewModel, navHostController) }
+        composable(route = Routes.LoginScreen.route){ LoginScreen(accountViewModel, navHostController, loginViewModel) }
         //Route 6 vers l'écran de favoris
         composable(route = Routes.ToolsScreen.route){ ToolsScreen(navHostController, baguetonViewModel) }
         composable(route = Routes.ToolScreenCalc.route){ ToolScreenCalc(navHostController, baguetonViewModel, toolsViewModel) }
@@ -93,10 +94,8 @@ fun AppNavigation(calendarViewModel: CalendarViewModel,
         // Route 9 vers l'écran d'unboarding
         composable(route = Routes.UnboardingScreen.route){ UnboardingScreen(navHostController, weatherViewModel) }
         //Route 10 vers l'écran de test
-        composable(route = Routes.TestScreen.route){ TestScreen(navHostController, baguetonViewModel) }
+        composable(route = Routes.TestScreen.route){ TestScreen(navHostController, themeViewModel = ThemeViewModel()) }
         //Route 11 vers l'écran de contacts
         composable(route = Routes.ContactsFormScreen.route){ ContactsFormScreen(navHostController, contactsViewModel) }
-        //Route 12 vers l'écran agenda
-        composable(route = Routes.CalendarScreen.route){ CalendarScreen(calendarViewModel, navHostController) }
     }
 }

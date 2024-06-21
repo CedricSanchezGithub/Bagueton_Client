@@ -1,16 +1,4 @@
-package com.c3dev.bagueton.ui.model
-
-//data class Ingredient(val name: String, val quantity: String)
-//
-//data class Recipe(
-//    val id: Int,
-//    val name: String,
-//    val steps: String,
-//    val imageResId: Int,
-//    val ingredients: List<Ingredient>
-//)
-
-
+package com.c3dev.bagueton.ui.model.beans
 
 data class RecipeBean(
     var id: String? = null,
@@ -36,11 +24,3 @@ data class Step(
     var id: String ? = null
 )
 
-data class ContactFormBean(
-
-    var  id: String?,
-    var email: String,
-    var message: String,
-    var name: String
-
-)

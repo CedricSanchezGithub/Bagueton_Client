@@ -1,3 +1,5 @@
+package com.c3dev.bagueton.ui.ui.screens.form
+
 import android.content.res.Configuration
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer

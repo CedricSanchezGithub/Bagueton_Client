@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">Bagueton</string>
-    <string name="welcome_unboarding">"Bienvenue sur l'application Bagueton!"</string>
+    <string name="welcome_unboarding">"Bienvenue !"</string>
     <string name="order_unboarding">Vous avez 13 commandes aujoud`hui</string>
     <string name="enter_unboarding">Entrer</string>
     <string name="welcome_message">Bienvenue, </string>
@@ -17,7 +17,7 @@
     <string name="send_email">Entrez votre email</string>
 
     <string name="step">Étape</string>
-    <string name="quantity">Quantité</string>
+    <string name="quantity">Quantité (en grammes)</string>
     <string name="ingredient">Ingrédients</string>"
     <string name="title_recipe">Titre de la recette</string>
     <string name="new_recipe">Nouvelle recette</string>

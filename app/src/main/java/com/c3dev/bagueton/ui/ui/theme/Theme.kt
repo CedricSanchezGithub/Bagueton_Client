@@ -75,10 +75,9 @@ private val DarkColors = darkColorScheme(
 @Composable
 fun Bagueton_v1Theme(
     useDarkTheme: Boolean = isSystemInDarkTheme(),
-    content: @Composable() () -> Unit
+    content: @Composable () -> Unit
 ) {
-    val colors = LightColors
-
+    val colors = if (useDarkTheme) DarkColors else LightColors
 
     MaterialTheme(
         colorScheme = colors,

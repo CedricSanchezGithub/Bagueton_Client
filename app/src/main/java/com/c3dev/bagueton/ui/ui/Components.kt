@@ -1,5 +1,6 @@
 package com.c3dev.bagueton.ui.ui
 
+import android.content.res.Configuration
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -13,8 +14,8 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
+import androidx.compose.material.icons.filled.AllInbox
 import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material.icons.filled.AutoGraph
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.MoreVert
@@ -32,21 +33,17 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
-import com.c3dev.bagueton.R
+import com.c3dev.bagueton.ui.ui.screens.recipes.BaguetonViewModel
+import com.c3dev.bagueton.ui.ui.theme.Bagueton_v1Theme
 
 
 @Composable
 fun SearchBar(
     modifier: Modifier = Modifier,
-    baguetonViewModel: com.c3dev.bagueton.ui.BaguetonViewModel,
-    welcomeMessage: String? = stringResource(id = R.string.welcome_message),
+    baguetonViewModel: BaguetonViewModel,
     navHostController: NavHostController? = null
 ) {
 
@@ -109,19 +106,7 @@ fun SearchBar(
                 )
             }
         }
-        if (welcomeMessage != null) {
-            Spacer(modifier = Modifier.height(16.dp))
-            Text(text = welcomeMessage,
-                fontWeight = FontWeight(800),
-                textDecoration = TextDecoration.Underline,
-                modifier = Modifier
-                    .padding(horizontal = 16.dp)
-                    .fillMaxWidth(),
-                textAlign = TextAlign.Center)
-        }
     }
-
-
 }
 
 
@@ -138,7 +123,7 @@ fun MyBottomAppBar(navHostController: NavHostController? = null) {
         }
         Spacer(Modifier.weight(1f, true))
         IconButton(onClick = { navHostController?.navigate("ToolsScreen") }) {
-            Icon(Icons.Filled.AutoGraph, contentDescription = "Outils",
+            Icon(Icons.Filled.AllInbox, contentDescription = "Outils",
                 Modifier.size(30.dp))
         }
         Spacer(Modifier.weight(1f, true))
@@ -177,14 +162,20 @@ fun ConfirmDeleteDialog(
     )
 }
 
-@Preview(showBackground = true, showSystemUi = false)
+@Preview(showBackground = true, showSystemUi = false, uiMode = Configuration.UI_MODE_NIGHT_YES)
+
 @Composable
 fun PreviewMyBottomAppBar() {
-    MyBottomAppBar()
+    Bagueton_v1Theme(useDarkTheme = false) {
+        MyBottomAppBar()
+    }
 }
 
 @Preview(showBackground = true, showSystemUi = false)
 @Composable
 fun SearchBarPreview() {
-    SearchBar(baguetonViewModel = com.c3dev.bagueton.ui.BaguetonViewModel())
+    Bagueton_v1Theme(useDarkTheme = false) {
+
+    SearchBar(baguetonViewModel = BaguetonViewModel())
+        }
 }

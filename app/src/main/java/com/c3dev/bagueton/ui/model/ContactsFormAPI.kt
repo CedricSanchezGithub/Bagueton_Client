@@ -1,5 +1,6 @@
 package com.c3dev.bagueton.ui.model
 
+import com.c3dev.bagueton.ui.model.beans.ContactFormBean
 import okhttp3.Request
 import okhttp3.RequestBody.Companion.toRequestBody
 

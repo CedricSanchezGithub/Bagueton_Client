@@ -1,4 +1,4 @@
-package com.c3dev.bagueton.ui.ui.screens
+package com.c3dev.bagueton.ui.ui.screens.registration
 
 import android.content.res.Configuration
 import androidx.compose.foundation.Image
@@ -30,7 +30,7 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.c3dev.bagueton.R
-import com.c3dev.bagueton.ui.AccountViewModel
+import com.c3dev.bagueton.ui.model.usermanager.AccountViewModel
 import com.c3dev.bagueton.ui.ui.MyBottomAppBar
 import com.c3dev.bagueton.ui.ui.theme.Bagueton_v1Theme
 
