@@ -1,6 +1,7 @@
 package com.c3dev.bagueton.ui
 
 import LoginScreen
+import TestScreen
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
@@ -18,13 +19,11 @@ import com.c3dev.bagueton.ui.ui.screens.recipes.CreateRecipeScreen
 import com.c3dev.bagueton.ui.ui.screens.recipes.HomeScreen
 import com.c3dev.bagueton.ui.ui.screens.recipes.ListRecipeScreen
 import com.c3dev.bagueton.ui.ui.screens.recipes.RecipeScreen
-import com.c3dev.bagueton.ui.ui.screens.tests.TestScreen
 import com.c3dev.bagueton.ui.ui.screens.tools.ToolScreenCalc
 import com.c3dev.bagueton.ui.ui.screens.tools.ToolsScreen
 import com.c3dev.bagueton.ui.ui.screens.tools.ToolsViewModel
 import com.c3dev.bagueton.ui.ui.screens.unboarding.UnboardingScreen
 import com.c3dev.bagueton.ui.ui.screens.unboarding.UnboardingViewModel
-import com.c3dev.bagueton.ui.ui.theme.ThemeViewModel
 
 sealed class Routes(val route: String) {
     //Route 1
@@ -94,7 +93,7 @@ fun AppNavigation(baguetonViewModel: BaguetonViewModel,
         // Route 9 vers l'écran d'unboarding
         composable(route = Routes.UnboardingScreen.route){ UnboardingScreen(navHostController, weatherViewModel) }
         //Route 10 vers l'écran de test
-        composable(route = Routes.TestScreen.route){ TestScreen(navHostController, themeViewModel = ThemeViewModel()) }
+        composable(route = Routes.TestScreen.route){ TestScreen() }
         //Route 11 vers l'écran de contacts
         composable(route = Routes.ContactsFormScreen.route){ ContactsFormScreen(navHostController, contactsViewModel) }
     }

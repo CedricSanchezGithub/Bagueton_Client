@@ -1,4 +1,4 @@
-package com.c3dev.bagueton.ui.model.usermanager
+package com.c3dev.bagueton.ui.model.beans
 
 data class User(
     val username: String,

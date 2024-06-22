@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="step">Étape</string>
+    <string name="quantity">Quantité (en grammes)</string>
+    <string name="ingredient">Ingrédients</string>"
+    <string name="title_recipe">Titre de la recette</string>
+    <string name="new_recipe">Nouvelle recette</string>
+    <string name="send_recipe">Enregistrer la recette</string>
+    <string name="add_ingredient">Ajouter un ingrédient</string>
+    <string name="add_step">Ajouter une étape</string>
+    <string name="step_recipe">Étapes de préparation</string>
+    <string name="add_title">Ajouter un ingrédient</string>
+
+</resources>

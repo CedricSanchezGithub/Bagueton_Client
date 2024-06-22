@@ -36,6 +36,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
+import com.c3dev.bagueton.R
 import com.c3dev.bagueton.ui.ui.screens.recipes.BaguetonViewModel
 import com.c3dev.bagueton.ui.ui.theme.Bagueton_v1Theme
 
@@ -147,20 +148,17 @@ fun ConfirmDeleteDialog(
 ) {
     AlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text(text = "Confirmer la suppression") },
-        text = { Text("Êtes-vous sûr de vouloir supprimer cette recette ?") },
+        title = { R.string.confirm_delete_title },
+        text = { R.string.confirm_delete_message },
         confirmButton = {
-            Button(onClick = onConfirm) {
-                Text("Confirmer")
-            }
+            Button(onClick = onConfirm) { R.string.confirm_button }
         },
         dismissButton = {
-            Button(onClick = onDismiss) {
-                Text("Annuler")
-            }
+            Button(onClick = onDismiss) { R.string.dismiss_button }
         }
     )
 }
+
 
 @Preview(showBackground = true, showSystemUi = false, uiMode = Configuration.UI_MODE_NIGHT_YES)
 

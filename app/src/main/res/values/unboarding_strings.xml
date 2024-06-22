@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Bagueton</string>
+    <string name="welcome_unboarding">"Bienvenue !"</string>
+    <string name="order_unboarding">Vous avez 13 commandes aujoud`hui</string>
+    <string name="enter_unboarding">Entrer</string>
+    <string name="welcome_message">Bienvenue, </string>
+    <string name="list_order">Liste des commandes :</string>
+    <string name="img_of">Image de </string>
+    <string name="img_not_found">Image introuvable</string>
+    <string name="most_used_recipes">Recettes les plus utilisées</string>
+    <string name="recipe">Recette</string>
+
+</resources>

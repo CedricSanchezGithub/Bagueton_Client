@@ -80,7 +80,7 @@ fun RegistrationScreen(accountViewModel: AccountViewModel) {
             OutlinedTextField(
                 value = accountViewModel.choosenPassword.value,
                 onValueChange = {  accountViewModel.choosenPassword.value = it },
-                label = { Text(stringResource(id = R.string.password)) },
+                label = { Text(stringResource(id = R.string.password_choose)) },
                 singleLine = true,
                 visualTransformation = PasswordVisualTransformation(),
                 modifier = Modifier
@@ -109,7 +109,7 @@ fun RegistrationScreen(accountViewModel: AccountViewModel) {
                     if (username.value.isNotBlank() && password.value.isNotBlank()) {
                         // Supposons que la connexion est réussie
                     } else {
-                        errorMessage.value = "Nom d'utilisateur ou mot de passe invalide"
+                        errorMessage.value = R.string.username_invalide.toString()
                     }
                 },Modifier.fillMaxWidth(1f)
 

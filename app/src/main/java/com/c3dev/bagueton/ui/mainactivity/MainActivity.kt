@@ -1,4 +1,4 @@
-package com.c3dev.bagueton.ui.viewmodel
+package com.c3dev.bagueton.ui.mainactivity
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity

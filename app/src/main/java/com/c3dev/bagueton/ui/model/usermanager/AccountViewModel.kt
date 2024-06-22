@@ -2,17 +2,14 @@ package com.c3dev.bagueton.ui.model.usermanager
 
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
+import com.c3dev.bagueton.ui.model.beans.ApiResponse
+import com.c3dev.bagueton.ui.model.beans.LoginRequest
+import com.c3dev.bagueton.ui.model.beans.User
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
 class AccountViewModel : ViewModel(){
-
-    // États pour stocker le nom d'utilisateur et le mot de passe entrés par l'utilisateur
-    val username =   mutableStateOf("")
-    val password =   mutableStateOf("")
-    // État pour gérer l'affichage des messages d'erreur
-    val errorMessage =   mutableStateOf("")
 
     val choosenUsername = mutableStateOf("")
     val choosenPassword = mutableStateOf("")
