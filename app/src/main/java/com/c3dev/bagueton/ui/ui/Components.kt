@@ -18,7 +18,6 @@ import androidx.compose.material.icons.filled.AllInbox
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Home
-import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.RestaurantMenu
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.AlertDialog
@@ -97,15 +96,6 @@ fun SearchBar(
             )
 
             Spacer(Modifier.width(8.dp))
-
-            // Bouton pour plus d'options
-            IconButton(onClick = { /* Déclenchez le menu ici */ }) {
-                Icon(
-                    imageVector = Icons.Default.MoreVert,
-                    contentDescription = "Plus d'options",
-                    tint = MaterialTheme.colorScheme.onSurface
-                )
-            }
         }
     }
 }
