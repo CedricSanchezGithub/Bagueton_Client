@@ -1,43 +1,49 @@
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
-import com.c3dev.bagueton.ui.model.CommitsViewModel
+import androidx.navigation.NavHostController
+import com.c3dev.bagueton.ui.ui.MyBottomAppBar
+import com.c3dev.bagueton.ui.ui.SearchBar
+import com.c3dev.bagueton.ui.ui.screens.recipes.BaguetonViewModel
 
 @Composable
-fun TestScreen(commitsViewModel: CommitsViewModel = viewModel()) {
-    val commits by commitsViewModel.commits.observeAsState(emptyList())
+fun TestScreen(baguetonViewModel: BaguetonViewModel,
+               navHostController: NavHostController? = null) {
 
-    Column(modifier = Modifier.fillMaxSize()) {
-        LazyColumn {
-            items(commits) { commit ->
-                Text(
-                    text = commit.commit.message,
-                    style = MaterialTheme.typography.bodyLarge,
-                    modifier = Modifier.padding(8.dp)
-                )
-            }
+    Scaffold(
+        topBar = {
+            // Passer l'instance de BaguetonViewModel à SearchBar
+            SearchBar(baguetonViewModel = baguetonViewModel)
+        },
+        bottomBar = {
+            // Passer l'instance de NavHostController à MyBottomAppBar
+            MyBottomAppBar(navHostController = navHostController)
+        }
+
+
+    ){innerPadding ->
+
+        Column(modifier = Modifier.padding(innerPadding)){
+
+            Text(text = "Page de test")
         }
     }
 }
+
+
 
 @Preview(showBackground = true)
 @Composable
 fun DefaultPreview() {
     MaterialTheme {
         Surface {
-            TestScreen()
+            TestScreen( baguetonViewModel = BaguetonViewModel())
         }
     }
 }

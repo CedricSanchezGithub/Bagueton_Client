@@ -3,8 +3,9 @@
 
     <string name="thanks_message">Merci de nous avoir contacté !</string>
     <string name="contact_us">Contactez-nous</string>
-    <string name="name">Entrez votre nom</string>
-    <string name="send_message">Entrez votre message</string>
-    <string name="send_email">Entrez votre email</string>
+    <string name="name">Votre nom</string>
+    <string name="message_to_send">Votre message</string>
+    <string name="send_email">Votre email</string>
+    <string name="message_send">Envoyer</string>
 
 </resources>

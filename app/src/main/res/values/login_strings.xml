@@ -2,7 +2,7 @@
 
     <resources>
 
-        <string name="username_label">Username</string>
+        <string name="username_label">Identifiant</string>
         <string name="password_label">Mot de passe</string>
         <string name="confirm_password_label">Confirmez votre mot de passe</string>
         <string name="register_button">S\'enregistrer</string>

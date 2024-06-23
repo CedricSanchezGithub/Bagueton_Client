@@ -93,7 +93,7 @@ fun AppNavigation(baguetonViewModel: BaguetonViewModel,
         // Route 9 vers l'écran d'unboarding
         composable(route = Routes.UnboardingScreen.route){ UnboardingScreen(navHostController, weatherViewModel) }
         //Route 10 vers l'écran de test
-        composable(route = Routes.TestScreen.route){ TestScreen() }
+        composable(route = Routes.TestScreen.route){ TestScreen(baguetonViewModel, navHostController) }
         //Route 11 vers l'écran de contacts
         composable(route = Routes.ContactsFormScreen.route){ ContactsFormScreen(navHostController, contactsViewModel) }
     }

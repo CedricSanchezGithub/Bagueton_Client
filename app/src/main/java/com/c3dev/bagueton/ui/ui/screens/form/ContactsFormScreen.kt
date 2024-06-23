@@ -41,8 +41,8 @@ fun ContactsFormScreen(navHostController: NavHostController? = null, contactsVie
         ) {
             if (contactsViewModel.isSubmitted.value) {
                 Text(text = "", style = MaterialTheme.typography.bodyLarge)
-            } else {
                 Text(text = stringResource(id = R.string.thanks_message), style = MaterialTheme.typography.bodyLarge)
+            } else {
                 Text(text = stringResource(id = R.string.contact_us), style = MaterialTheme.typography.bodyMedium)
 
                 Spacer(modifier = Modifier.height(16.dp))
@@ -50,7 +50,7 @@ fun ContactsFormScreen(navHostController: NavHostController? = null, contactsVie
                 OutlinedTextField(
                     value = contactsViewModel.name.value,
                     onValueChange = { contactsViewModel.name.value = it },
-                    label = { stringResource(id = R.string.name) },
+                    label = { Text(text = stringResource(id = R.string.name)) },
                 )
 
                 Spacer(modifier = Modifier.height(8.dp))
@@ -58,7 +58,7 @@ fun ContactsFormScreen(navHostController: NavHostController? = null, contactsVie
                 OutlinedTextField(
                     value = contactsViewModel.email.value,
                     onValueChange = { contactsViewModel.email.value = it },
-                    label = { stringResource(id = R.string.send_email) }
+                    label = { Text(text = stringResource(id = R.string.send_email)) }
                 )
 
                 Spacer(modifier = Modifier.height(8.dp))
@@ -66,7 +66,7 @@ fun ContactsFormScreen(navHostController: NavHostController? = null, contactsVie
                 OutlinedTextField(
                     value = contactsViewModel.message.value,
                     onValueChange = { contactsViewModel.message.value = it },
-                    label = { stringResource(id = R.string.send_message) },
+                    label = { Text(text = stringResource(id = R.string.message_to_send)) },
                     modifier = Modifier.height(200.dp)
 
                 )
@@ -77,7 +77,7 @@ fun ContactsFormScreen(navHostController: NavHostController? = null, contactsVie
                     onClick = { contactsViewModel.createForm(name = contactsViewModel.name.value, email = contactsViewModel.email.value, message = contactsViewModel.message.value) },
                     modifier = Modifier.align(Alignment.CenterHorizontally)
                 ) {
-                    Text(stringResource(id = R.string.send_message))
+                    Text(stringResource(id = R.string.message_send))
                 }
             }
         }

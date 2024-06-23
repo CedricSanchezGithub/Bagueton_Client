@@ -410,7 +410,7 @@ fun IngredientList(ingredients: List<Ingredient>) {
         }
         items(ingredients) { ingredient ->
             Text(
-                text = "${ingredient.ingredient}, ${ingredient.quantity}",
+                text = "${ingredient.ingredient}, ${ingredient.quantity}g",
                 textAlign = TextAlign.Center,
                 modifier = Modifier
                     .fillMaxWidth()
