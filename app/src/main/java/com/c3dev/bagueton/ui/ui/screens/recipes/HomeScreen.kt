@@ -137,7 +137,8 @@ fun RecipeImage(
     navHostController: NavHostController?
 ) {
     val imageUrl = recipe.images?.firstOrNull()?.url
-    val imageContent = @Composable {
+    val imageContent =
+        @Composable {
         if (!imageUrl.isNullOrEmpty()) {
             Image(
                 painter = rememberAsyncImagePainter(

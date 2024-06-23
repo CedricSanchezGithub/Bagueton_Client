@@ -1,5 +1,6 @@
 import android.content.res.Configuration
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -29,6 +30,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ImageBitmap
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.PasswordVisualTransformation
@@ -75,12 +77,24 @@ fun LoginScreen(accountViewModel: AccountViewModel,
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = CenterHorizontally
         ) {
-            Image(
-                ImageBitmap.imageResource(id = R.drawable.logobagueton),
-                contentDescription = "logo", modifier = Modifier
-                    .height(200.dp)
-                    .width(200.dp)
-            )
+            if(!themeViewModel.isDarkTheme.value){
+
+                Image(
+                    ImageBitmap.imageResource(id = R.drawable.logobagueton),
+                    contentDescription = "logo", modifier = Modifier
+                        .height(200.dp)
+                        .width(200.dp)
+                )
+            } else{
+                Image(
+                    ImageBitmap.imageResource(id = R.drawable.logobagueton),
+                    contentScale = ContentScale.Crop,
+                    contentDescription = "logo", modifier = Modifier
+                        .width(200.dp)
+                        .border(3.dp, MaterialTheme.colorScheme.primary)
+                )
+                Spacer(modifier = Modifier.height(16.dp))
+            }
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -90,7 +104,7 @@ fun LoginScreen(accountViewModel: AccountViewModel,
                 TextField(
                     value = loginViewModel.username.value,
                     onValueChange = { loginViewModel.username.value = it },
-                    label = { R.string.username_label },
+                    label = { Text(stringResource(id = R.string.username_label)) },
                     modifier = Modifier.fillMaxWidth()
                 )
 
@@ -99,7 +113,7 @@ fun LoginScreen(accountViewModel: AccountViewModel,
                 TextField(
                     value = loginViewModel.password.value,
                     onValueChange = { loginViewModel.password.value = it },
-                    label = { R.string.password_label },
+                    label = { Text(stringResource(id = R.string.password_label)) },
                     visualTransformation = PasswordVisualTransformation(),
                     modifier = Modifier.fillMaxWidth()
                 )
@@ -110,7 +124,7 @@ fun LoginScreen(accountViewModel: AccountViewModel,
                     TextField(
                         value = loginViewModel.confirmPassword.value,
                         onValueChange = { loginViewModel.confirmPassword.value = it },
-                        label = { R.string.confirm_password_label },
+                        label = { Text(stringResource(id = R.string.confirm_password_label)) },
                         visualTransformation = PasswordVisualTransformation(),
                         modifier = Modifier.fillMaxWidth()
                     )
