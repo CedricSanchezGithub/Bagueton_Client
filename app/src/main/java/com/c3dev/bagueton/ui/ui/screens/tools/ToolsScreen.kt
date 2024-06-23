@@ -36,8 +36,8 @@ fun ToolsScreen(
         Column(modifier = Modifier.padding(innerPadding)) {
 
             CardMinimalExample(navHostController)
-            AgendaCard(navHostController)
-            ProofingChamberCard(navHostController)
+            AgendaCard()
+            ProofingChamberCard()
 
         }
     }
@@ -66,7 +66,7 @@ fun CardMinimalExample(navHostController: NavHostController? = null) {
 }
 
 @Composable
-fun AgendaCard(navHostController: NavHostController? = null) {
+fun AgendaCard() {
     Card(
         modifier = Modifier.padding(16.dp),
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
@@ -89,7 +89,7 @@ fun AgendaCard(navHostController: NavHostController? = null) {
 }
 
 @Composable
-fun ProofingChamberCard(navHostController: NavHostController? = null) {
+fun ProofingChamberCard() {
     Card(
         modifier = Modifier.padding(16.dp),
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
