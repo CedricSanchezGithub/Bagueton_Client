@@ -30,6 +30,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
@@ -37,6 +38,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
+import com.c3dev.bagueton.R
 import com.c3dev.bagueton.ui.model.beans.RecipeBean
 import com.c3dev.bagueton.ui.ui.MyBottomAppBar
 import com.c3dev.bagueton.ui.ui.SearchBar
@@ -49,10 +51,16 @@ fun HomeScreen(baguetonViewModel: BaguetonViewModel,
 {
     // Accéder à la variable errorMessage dans l'instance de BaguetonViewModel
     val errorMessage by baguetonViewModel.errorMessage
-    // LaunchedEffect est utilisé pour charger les recettes au démarrage de la composable
+
+    // LaunchedEffect est utilisé pour effectuer des opérations de chargement
+    // ou des effets secondaires lorsque le composable est initialement composé.
+    // Lorsque la valeur de key1 change, LaunchedEffect sera réexécuté.
+    // Ici, key1 est fixé à true, donc l'effet est exécuté une seule fois
+    // lorsque le composable est initialement composé.
     LaunchedEffect(key1 = true) {
         baguetonViewModel.loadRecipes()
     }
+
 
     Scaffold(
         topBar = {
@@ -78,7 +86,8 @@ fun HomeScreen(baguetonViewModel: BaguetonViewModel,
             Row {
                 if(errorMessage === ""){
 
-                    Text(text = "Liste des commandes :",
+                    Text(
+                        text = stringResource(id = R.string.app_name),
                         modifier = Modifier.padding(horizontal = 16.dp),
                         textDecoration = TextDecoration.Underline,
                     )
@@ -103,18 +112,19 @@ fun HomeScreen(baguetonViewModel: BaguetonViewModel,
                     .height(40.dp)
                     .padding(horizontal = 16.dp)
             ) {
-                Text(text = "Agenda")
+                Text(text = stringResource(id = R.string.agenda))
 
             }
             Spacer(modifier = Modifier.weight(1f))
 
-            Text(text = "Vos recettes les plus utilisées :",
+            Text(text = stringResource(id = R.string.most_used_recipes),
                 modifier = Modifier.padding(horizontal = 16.dp),
                 textDecoration = TextDecoration.Underline,
             )
 
+            val recipeListMostUsed = baguetonViewModel.recipeList
             LazyRow(modifier = Modifier.padding(16.dp)) {
-                items(recipeList) { recipe ->
+                items(recipeListMostUsed) { recipe ->
                     RecipeImage(recipe = recipe, navHostController = navHostController)
                 }
             }
@@ -124,7 +134,7 @@ fun HomeScreen(baguetonViewModel: BaguetonViewModel,
                     .height(40.dp)
                     .padding(horizontal = 16.dp)
             ) {
-                Text(text = "Recettes")
+                Text(text = stringResource(id = R.string.recipes))
             }
             Spacer(modifier = Modifier.weight(1f))
         }
@@ -136,10 +146,26 @@ fun RecipeImage(
     recipe: RecipeBean,
     navHostController: NavHostController?
 ) {
+    // Récupère l'URL de la première image de la recette, s'il y en a une
     val imageUrl = recipe.images?.firstOrNull()?.url
-    val imageContent =
-        @Composable {
+
+    // Conteneur pour l'image ou le texte alternatif
+    Box(
+        modifier = Modifier
+            .size(150.dp) // Taille du conteneur
+            .padding(10.dp) // Espacement intérieur
+            .border(
+                1.dp, // Épaisseur de la bordure
+                MaterialTheme.colorScheme.primary, // Couleur de la bordure
+                RoundedCornerShape(16.dp, 32.dp, 16.dp, 32.dp) // Coins arrondis
+            )
+            .clip(RoundedCornerShape(16.dp, 32.dp, 16.dp, 32.dp)) // Coupe le contenu aux coins arrondis
+            .clickable { navHostController?.navigate(route = "RecipeScreen/${recipe.id}") } // Navigation vers l'écran de la recette
+            .fillMaxSize(), // Remplit la taille disponible
+        contentAlignment = Alignment.Center // Centre le contenu
+    ) {
         if (!imageUrl.isNullOrEmpty()) {
+            // Affiche l'image de la recette
             Image(
                 painter = rememberAsyncImagePainter(
                     ImageRequest.Builder(LocalContext.current)
@@ -147,39 +173,26 @@ fun RecipeImage(
                         .crossfade(true)
                         .build()
                 ),
-                contentDescription = "Image de ${recipe.title}",
-                contentScale = ContentScale.Crop,
-                modifier = Modifier.shadow(elevation = 8.dp,
-                shape = RoundedCornerShape(16.dp, 32.dp, 16.dp, 32.dp),
-                clip = true
-            )
+                contentDescription = "Image de ${recipe.title}", // Description de l'image
+                contentScale = ContentScale.Crop, // Recadre l'image pour remplir le conteneur
+                modifier = Modifier.shadow(
+                    elevation = 8.dp, // Ajoute une ombre à l'image
+                    shape = RoundedCornerShape(16.dp, 32.dp, 16.dp, 32.dp),
+                    clip = true
+                )
             )
         } else {
+            // Affiche un texte si l'image n'est pas disponible
             Text(
-                text = "Image non disponible",
+                text = stringResource(id = R.string.image_not_available),
                 style = MaterialTheme.typography.bodyLarge,
                 textAlign = TextAlign.Center
             )
         }
     }
-
-    Box(
-        modifier = Modifier
-            .size(150.dp)
-            .padding(10.dp)
-            .border(
-                1.dp,
-                MaterialTheme.colorScheme.primary,
-                RoundedCornerShape(16.dp, 32.dp, 16.dp, 32.dp)
-            )
-            .clip(RoundedCornerShape(16.dp, 32.dp, 16.dp, 32.dp))
-            .clickable { navHostController?.navigate(route = "RecipeScreen/${recipe.id}") }
-            .fillMaxSize(),
-        contentAlignment = Alignment.Center
-    ) {
-        imageContent()
-    }
 }
+
+
 
 
 @Preview(showBackground = true, showSystemUi = true, uiMode = UI_MODE_NIGHT_YES)

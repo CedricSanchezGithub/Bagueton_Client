@@ -11,5 +11,6 @@
     <string name="add_step">Ajouter une étape</string>
     <string name="step_recipe">Étapes de préparation</string>
     <string name="add_title">Ajouter un ingrédient</string>
+    <string name="img_of">Image de</string>
 
 </resources>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Bagueton</string>
+    <string name="list_orders">Liste des commandes :</string>
+    <string name="most_used_recipes">Vos recettes les plus utilisées :</string>
+    <string name="agenda">Agenda</string>
+    <string name="recipes">Recettes</string>
+    <string name="image_not_available">Image non disponible</string>
+
+</resources>
