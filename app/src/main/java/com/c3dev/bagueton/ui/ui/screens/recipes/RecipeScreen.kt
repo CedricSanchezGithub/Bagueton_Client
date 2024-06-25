@@ -51,6 +51,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
@@ -349,7 +350,7 @@ fun BodyRecipeScreen(recipe: RecipeBean) {
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 item {
-                        Text(text = stringResource(id = R.string.step_list), modifier = Modifier.padding(16.dp), fontSize = 20.sp, fontWeight = androidx.compose.ui.text.font.FontWeight.Bold, textDecoration = TextDecoration.Underline)
+                        Text(text = stringResource(id = R.string.step_list), modifier = Modifier.padding(16.dp), fontSize = 20.sp, fontWeight = FontWeight.Bold, textDecoration = TextDecoration.Underline)
                 }
                 itemsIndexed(recipe.steps ?: emptyList()) { index, step ->
                     Text(
@@ -550,24 +551,25 @@ fun UpdateStepList(baguetonViewModel: BaguetonViewModel, steps: List<Step>) {
                 text = stringResource(id = R.string.step_list_new),
                 modifier = Modifier.padding(16.dp),
                 fontSize = 20.sp,
-                fontWeight = androidx.compose.ui.text.font.FontWeight.Bold,
+                fontWeight = FontWeight.Bold,
                 textDecoration = TextDecoration.Underline
             )
         }
         itemsIndexed(steps) { index, step ->
-            if (index < baguetonViewModel.newStepsRecipe.size) {
-                UpdateStepInput(
-                    baguetonViewModel = baguetonViewModel,
-                    index = index,
-                    step = step,
-                    onStepChange = { newDescription ->
-                        baguetonViewModel.updateStep(index, newDescription)
-                    }
-                )
-            }
+            println("Rendering step at index: $index with description: ${step.description}")
+            UpdateStepInput(
+                baguetonViewModel = baguetonViewModel,
+                index = index,
+                step = step,
+                onStepChange = { newDescription ->
+                    println("UpdateStepList onStepChange: $newDescription")
+                    baguetonViewModel.updateStep(index, newDescription)
+                }
+            )
         }
     }
 }
+
 
 @Composable
 fun UpdateStepInput(

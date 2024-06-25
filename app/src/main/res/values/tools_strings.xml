@@ -1,6 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <string name="proofing_chamber_title">Calcul de Chambre de Pousse</string>
+    <string name="proofing_chamber_message">Cette fonctionnalité est en construction…</string>
+    <string name="proofing_chamber_button">Chambre de Pousse</string>
 
+    <string name="agenda_card_title">Ecran d\'Agenda &amp; Commandes</string>
+    <string name="agenda_card_message">Cette fonctionnalité est en construction…</string>
+    <string name="agenda_card_button">Agenda</string>
+
+    <string name="card_minimal_example_title">Écran de calcul de recette</string>
+    <string name="card_minimal_example_description">Sur cet écran, vous pouvez calculer les ingrédients de votre recette soit en utilisant un multiplicateur de recette, soit en spécifiant le poids final souhaité du produit.</string>
+    <string name="card_minimal_example_button">Calculateur</string>
 
 </resources>

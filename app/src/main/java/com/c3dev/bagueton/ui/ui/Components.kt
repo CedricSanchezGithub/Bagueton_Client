@@ -32,6 +32,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
@@ -92,7 +93,11 @@ fun SearchBar(
                     .weight(1f)
                     .heightIn(min = 10.dp)
                     .clip(RoundedCornerShape(5.dp))
-                    .border(1.dp, MaterialTheme.colorScheme.inverseOnSurface, RoundedCornerShape(5.dp))
+                    .border(
+                        1.dp,
+                        MaterialTheme.colorScheme.inverseOnSurface,
+                        RoundedCornerShape(5.dp)
+                    )
             )
 
             Spacer(Modifier.width(8.dp))
@@ -138,13 +143,13 @@ fun ConfirmDeleteDialog(
 ) {
     AlertDialog(
         onDismissRequest = onDismiss,
-        title = { R.string.confirm_delete_title },
-        text = { R.string.confirm_delete_message },
+        title = { Text(text = stringResource(id = R.string.confirm_delete_title)) },
+        text = { Text(text = stringResource(id = R.string.confirm_delete_message)) },
         confirmButton = {
-            Button(onClick = onConfirm) { R.string.confirm_button }
+            Button(onClick = onConfirm) { Text(text = stringResource(id = R.string.confirm_button)) }
         },
         dismissButton = {
-            Button(onClick = onDismiss) { R.string.dismiss_button }
+            Button(onClick = onDismiss) { Text(text = stringResource(id = R.string.dismiss_button)) }
         }
     )
 }

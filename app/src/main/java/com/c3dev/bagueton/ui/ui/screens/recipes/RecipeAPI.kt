@@ -1,9 +1,9 @@
-package com.c3dev.bagueton.ui.model
+package com.c3dev.bagueton.ui.ui.screens.recipes
 
 
-import com.c3dev.bagueton.ui.model.RecipeAPI.MEDIA_TYPE_JSON
-import com.c3dev.bagueton.ui.model.RecipeAPI.client
-import com.c3dev.bagueton.ui.model.RecipeAPI.gson
+import com.c3dev.bagueton.ui.ui.screens.recipes.RecipeAPI.MEDIA_TYPE_JSON
+import com.c3dev.bagueton.ui.ui.screens.recipes.RecipeAPI.client
+import com.c3dev.bagueton.ui.ui.screens.recipes.RecipeAPI.gson
 import com.c3dev.bagueton.ui.model.beans.Ingredient
 import com.c3dev.bagueton.ui.model.beans.RecipeBean
 import com.c3dev.bagueton.ui.model.beans.Step
@@ -22,7 +22,7 @@ object RecipeAPI {
     val MEDIA_TYPE_JSON = "application/json; charset=utf-8".toMediaType()
     val gson = Gson()
     val client = OkHttpClient()
-    private const val URL_SERVER = "http://90.51.140.217:30001/bagueton"
+    private const val URL_SERVER = "http://192.168.1.26:8081/bagueton"
     // http://localhost:8080 http://90.51.140.217:8082/bagueton http://192.168.1.50:8082/bagueton
 
 
@@ -30,7 +30,6 @@ object RecipeAPI {
         val response = sendPost("$URL_SERVER/createrecipe",
             RecipeBean(null, title, images = null, ingredients, steps)
         )
-        println("Creation de la recette $title")
         println("Resultat: ${response.body}")
         return response
     }

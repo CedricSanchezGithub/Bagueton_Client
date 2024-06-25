@@ -1,34 +1,13 @@
-package com.c3dev.bagueton.ui.model
+package com.c3dev.bagueton.ui.ui.screens.unboarding
 
+import com.c3dev.bagueton.ui.model.beans.WeatherResponse
 import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
 import retrofit2.http.Query
 
-// Définition des classes de données pour correspondre au JSON reçu
-data class Coord(val lon: Double, val lat: Double)
-data class Weather(val id: Int, val main: String, val description: String, val icon: String)
-data class Main(val temp: Double, val feels_like: Double, val temp_min: Double, val temp_max: Double, val pressure: Int, val humidity: Int)
-data class Wind(val speed: Double, val deg: Int)
-data class Clouds(val all: Int)
-data class Sys(val type: Int, val id: Int, val country: String, val sunrise: Long, val sunset: Long)
-data class WeatherResponse(
-    val coord: Coord,
-    val weather: List<Weather>,
-    val base: String,
-    val main: Main,
-    val visibility: Int,
-    val wind: Wind,
-    val clouds: Clouds,
-    val dt: Long,
-    val sys: Sys,
-    val timezone: Int,
-    val id: Long,
-    val name: String,
-    val cod: Int
-)
-
+// Retrofit est utilisé sur l'API pour récupérer les données
 // Interface pour définir les endpoints de l'API
 interface WeatherApiService {
     @GET("weather")
@@ -69,9 +48,4 @@ object WeatherAPI {
         }
     }
 }
-
-fun main() {
-    WeatherAPI.fetchWeather()
-}
-
 

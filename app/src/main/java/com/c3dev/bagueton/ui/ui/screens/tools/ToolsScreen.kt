@@ -14,9 +14,11 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
+import com.c3dev.bagueton.R
 import com.c3dev.bagueton.ui.ui.MyBottomAppBar
 import com.c3dev.bagueton.ui.ui.SearchBar
 import com.c3dev.bagueton.ui.ui.screens.recipes.BaguetonViewModel
@@ -35,7 +37,7 @@ fun ToolsScreen(
 
         Column(modifier = Modifier.padding(innerPadding)) {
 
-            CardMinimalExample(navHostController)
+            RecipeCalcCard(navHostController)
             AgendaCard()
             ProofingChamberCard()
 
@@ -44,22 +46,22 @@ fun ToolsScreen(
 }
 
 @Composable
-fun CardMinimalExample(navHostController: NavHostController? = null) {
+fun RecipeCalcCard(navHostController: NavHostController? = null) {
     Card(
         modifier = Modifier.padding(16.dp),
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
     ) {
         Column(modifier = Modifier.padding(16.dp)) {
-            Text(text = "Écran de calcul de recette")
+            Text(text = stringResource(id = R.string.card_minimal_example_title))
             Spacer(modifier = Modifier.padding(8.dp))
             Text(
-                text = "Sur cet écran, vous pouvez calculer les ingrédients de votre recette soit en utilisant un multiplicateur de recette, soit en spécifiant le poids final souhaité du produit."
+                text = stringResource(id = R.string.card_minimal_example_description)
             )
             Button(
                 onClick = { navHostController?.navigate("ToolScreenCalc") },
                 modifier = Modifier.padding(top = 8.dp)
             ) {
-                Text("Aller au calculateur de recettes")
+                Text(stringResource(id = R.string.card_minimal_example_button))
             }
         }
     }
@@ -72,17 +74,17 @@ fun AgendaCard() {
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
     ) {
         Column(modifier = Modifier.padding(16.dp)) {
-            Text(text = "Ecran d'Agenda & Commandes")
+            Text(text = stringResource(id = R.string.agenda_card_title))
             Spacer(modifier = Modifier.padding(8.dp))
-            Text(text = "Cette fonctionnalité est en construction...")
+            Text(text = stringResource(id = R.string.agenda_card_message))
 
             Button(
                 onClick = {
-                    // Ajoutez la navigation ou l'action appropriée ici si nécessaire
+                    // En construction...
                 },
                 modifier = Modifier.padding(top = 8.dp)
             ) {
-                Text("Agenda")
+                Text(stringResource(id = R.string.agenda_card_button))
             }
         }
     }
@@ -95,22 +97,21 @@ fun ProofingChamberCard() {
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
     ) {
         Column(modifier = Modifier.padding(16.dp)) {
-            Text(text = "Calcul de Chambre de Pousse")
+            Text(text = stringResource(id = R.string.proofing_chamber_title))
             Spacer(modifier = Modifier.padding(8.dp))
-            Text(text = "Cette fonctionnalité est en construction...")
+            Text(text = stringResource(id = R.string.proofing_chamber_message))
 
             Button(
                 onClick = {
-                    // Ajoutez la navigation ou l'action appropriée ici si nécessaire
+                    // En construction...
                 },
                 modifier = Modifier.padding(top = 8.dp)
             ) {
-                Text("Calcul de Chambre de Pousse")
+                Text(stringResource(id = R.string.proofing_chamber_button))
             }
         }
     }
 }
-
 
 @Preview(showBackground = true, showSystemUi = true, uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Preview(showBackground = true, showSystemUi = true, uiMode = Configuration.UI_MODE_NIGHT_NO)

@@ -3,7 +3,6 @@ package com.c3dev.bagueton.ui.ui.screens.form
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.c3dev.bagueton.ui.model.ContactsFormAPI
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.io.IOException

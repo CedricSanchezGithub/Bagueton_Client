@@ -1,4 +1,4 @@
-package com.c3dev.bagueton.ui.model
+package com.c3dev.bagueton.ui.ui.screens.tests
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

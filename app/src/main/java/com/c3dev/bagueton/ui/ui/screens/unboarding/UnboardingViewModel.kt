@@ -3,8 +3,7 @@ package com.c3dev.bagueton.ui.ui.screens.unboarding
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.c3dev.bagueton.ui.model.WeatherAPI
-import com.c3dev.bagueton.ui.model.WeatherResponse
+import com.c3dev.bagueton.ui.model.beans.WeatherResponse
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext

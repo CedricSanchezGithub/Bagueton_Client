@@ -20,6 +20,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -45,6 +46,11 @@ fun CreateRecipeScreen(
     navHostController: NavHostController? = null,
     baguetonViewModel: BaguetonViewModel
 ) {
+
+    LaunchedEffect(key1 = true) {
+        baguetonViewModel.clearRecipe()
+    }
+
     Scaffold(
         bottomBar = {
             MyBottomAppBar(navHostController = navHostController)
@@ -89,7 +95,6 @@ fun CreateRecipeScreen(
                         baguetonViewModel.ingredientsList.removeAt(index)
                     }
                 )
-
             }
             Button(onClick = { baguetonViewModel.addIngredient() },
                 modifier = Modifier.padding(16.dp)
@@ -120,6 +125,7 @@ fun CreateRecipeScreen(
             Spacer(modifier = Modifier.height(16.dp))
 
             Button(onClick = {
+                println("Données de stepsList : ${baguetonViewModel.stepsList.map { it.description }}")
                 baguetonViewModel.createRecipe(
                     title = baguetonViewModel.titleRecipe.value,
                     ingredients = baguetonViewModel.ingredientsList,
@@ -257,9 +263,6 @@ fun IngredientInput(
     }
 }
 
-
-
-
 @Composable
 fun StepInput(
     step: Step,
@@ -291,14 +294,13 @@ fun StepInput(
             BasicTextField(
                 value = step.description ?: "",
                 onValueChange = {
-                    println("Step changed: $it")
                     onStepChange(it)
                 },
                 singleLine = true,
                 modifier = Modifier.padding(8.dp)
             )
         }
-        Spacer(modifier = Modifier.height(8.dp)) // Ajouter un espace entre le champ et le bouton
+        Spacer(modifier = Modifier.height(8.dp))
 
         Button(onClick = onDelete) {
             Text(text = "Supprimer")

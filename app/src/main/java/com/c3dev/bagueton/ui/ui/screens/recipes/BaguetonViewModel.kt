@@ -5,7 +5,6 @@ import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.c3dev.bagueton.ui.model.RecipeAPI
 import com.c3dev.bagueton.ui.model.beans.Ingredient
 import com.c3dev.bagueton.ui.model.beans.RecipeBean
 import com.c3dev.bagueton.ui.model.beans.Step
@@ -21,7 +20,6 @@ class BaguetonViewModel : ViewModel() {
 
     var searchText = mutableStateOf("")
 
-    var imageRecipe = mutableStateOf("")
     var titleRecipe = mutableStateOf("")
     var ingredientsList = mutableStateListOf<Ingredient>()
     var stepsList = mutableStateListOf<Step>()
@@ -32,28 +30,48 @@ class BaguetonViewModel : ViewModel() {
 
     var editMode = mutableStateOf(false)
     var httpCode = mutableIntStateOf(0)
-    fun createRecipe(title: String, ingredients: List<Ingredient>, steps: List<Step>){
+
+    fun clearRecipe(){
+
+        titleRecipe.value = ""
+        ingredientsList.clear()
+        stepsList.clear()
+
+    }
+
+    fun createRecipe(title: String, ingredients: List<Ingredient>, steps: List<Step>) {
         viewModelScope.launch(Dispatchers.Default) {
-            ingredientsList.clear()
-            stepsList.clear()
+            println("Données de stepsList avant clear : ${stepsList.map { it.description }}")
+
             try {
                 if (RecipeAPI.isTitleUsed(title)) {
                     println("Le nom de recette $title est déjà utilisé.")
-                    titleRecipe.value = "$title est déjà utilisé, choisissez un autre nom :)"
-                    return@launch
+                    withContext(Dispatchers.Main) {
+                        titleRecipe.value = "$title est déjà utilisé, choisissez un autre nom :)"
+                    }
+                    return@launch  // Sortie anticipée de la coroutine si le titre est déjà utilisé
                 }
+
                 ingredientsList.addAll(ingredients)
+                println("Données de steps avant addAll : ${steps.map { it.description }}")
                 stepsList.addAll(steps)
+                println("Données de stepsList après addAll : ${stepsList.map { it.description }}")
+
                 val response = RecipeAPI.createRecipe(title = title, steps = stepsList, ingredients = ingredientsList)
                 withContext(Dispatchers.Main) {
-                    httpCode.intValue = response.code // Mettre à jour le code de réponse
-                }
-                val newRecipe = RecipeBean(title = title, steps = stepsList, ingredients = ingredientsList)
-                launch(Dispatchers.Main) {
-                    recipeList.add(newRecipe)
+                    httpCode.intValue = response.code
+                    if (response.code == 200) {
+                        val newRecipe = RecipeBean(title = title, steps = stepsList, ingredients = ingredientsList)
+                        recipeList.add(newRecipe)
+                    } else {
+                        println("Erreur lors de la création de la recette : ${response.body}")
+                    }
                 }
             } catch (e: IOException) {
                 e.printStackTrace()
+                withContext(Dispatchers.Main) {
+                    println("Erreur réseau : ${e.message}")
+                }
             }
         }
     }
@@ -133,7 +151,6 @@ class BaguetonViewModel : ViewModel() {
     fun updateIngredient(index: Int, newIngredient: String, newQuantity: String) {
         if (index < ingredientsList.size) {
             ingredientsList[index] = Ingredient(ingredient = newIngredient, quantity = newQuantity)
-            println("Updating ingredient at index $index to $newIngredient with quantity $newQuantity")
         } else {
             println("Invalid index $index for updating ingredient")
         }
@@ -142,7 +159,6 @@ class BaguetonViewModel : ViewModel() {
     fun updateStep(index: Int, newDescription: String) {
         if (index < stepsList.size) {
             stepsList[index] = Step(description = newDescription)
-            println("Updating step at index $index to $newDescription")
         } else {
             println("Invalid index $index for updating step")
         }

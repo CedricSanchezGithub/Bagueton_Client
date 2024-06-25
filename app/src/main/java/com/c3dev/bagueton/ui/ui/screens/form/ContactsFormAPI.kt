@@ -1,18 +1,19 @@
-package com.c3dev.bagueton.ui.model
+package com.c3dev.bagueton.ui.ui.screens.form
 
 import com.c3dev.bagueton.ui.model.beans.ContactFormBean
+import com.c3dev.bagueton.ui.ui.screens.recipes.RecipeAPI
 import okhttp3.Request
 import okhttp3.RequestBody.Companion.toRequestBody
 
 object ContactsFormAPI{
 
-    private const val URL_SERVER = "http://90.51.140.217:30001/bagueton"
+    private const val URL_SERVER = "http://192.168.1.26:8081/bagueton"
     // http://localhost:8080 http://90.51.140.217:8082/bagueton http://192.168.1.50:8082/bagueton
 
 
     fun createContactForm(name: String, email: String, message: String)  {
 
-        val res: String = sendPost("$URL_SERVER/form", ContactFormBean(name, email, name, message))
+        val res: String = sendPost("$URL_SERVER/form", ContactFormBean(null, email, name, message))
              println("Réponse du serveur : $res")
 
     }
