@@ -15,6 +15,8 @@ import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
@@ -76,51 +78,69 @@ fun CreateRecipeScreen(
                     baguetonViewModel.titleRecipe.value = newTitle
                 },
             )
-            Text(text = stringResource(id = R.string.ingredient),
-                modifier = Modifier.padding(16.dp))
-            for ((index, ingredient) in baguetonViewModel.ingredientsList.withIndex()) {
-                IngredientInput(
-                    ingredient = ingredient,
-                    onIngredientChange = { newIngredient ->
-                        println("Updating ingredient at index $index to $newIngredient")
-                        baguetonViewModel.updateIngredient(index, newIngredient, ingredient.quantity ?: "")
-                    },
-                    onQuantityChange = { newQuantity ->
-                        val filteredQuantity = newQuantity.filter { it.isDigit() }
-                        println("Updating quantity at index $index to $filteredQuantity")
-                        baguetonViewModel.updateIngredient(index, ingredient.ingredient ?: "", filteredQuantity)
-                    },
-                    onDelete = {
-                        println("Deleting ingredient at index $index")
-                        baguetonViewModel.ingredientsList.removeAt(index)
+            Card(
+                modifier = Modifier.padding(16.dp),
+                elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),){
+                Column(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Text(text = stringResource(id = R.string.ingredient),
+                        modifier = Modifier.padding(16.dp).width(300.dp), textAlign = TextAlign.Center)
+                    for ((index, ingredient) in baguetonViewModel.ingredientsList.withIndex()) {
+                        IngredientInput(
+                            ingredient = ingredient,
+                            onIngredientChange = { newIngredient ->
+                                baguetonViewModel.updateIngredient(index, newIngredient, ingredient.quantity ?: "")
+                            },
+                            onQuantityChange = { newQuantity ->
+                                val filteredQuantity = newQuantity.filter { it.isDigit() }
+                                baguetonViewModel.updateIngredient(index, ingredient.ingredient ?: "", filteredQuantity)
+                            },
+                            onDelete = {
+                                baguetonViewModel.ingredientsList.removeAt(index)
+                            }
+                        )
                     }
-                )
-            }
-            Button(onClick = { baguetonViewModel.addIngredient() },
-                modifier = Modifier.padding(16.dp)
-            ) {
-                Text(stringResource(id = R.string.add_ingredient))
+                    Button(onClick = { baguetonViewModel.addIngredient() },
+                        modifier = Modifier.padding(16.dp)
+                    ) {
+                        Text(stringResource(id = R.string.add_ingredient))
+                    }
+                }
             }
 
+            Card(
+                modifier = Modifier.padding(16.dp),
+                elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
+                ) {
+                Column(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Text(text = stringResource(id = R.string.step_recipe),
+                        modifier = Modifier.padding(16.dp), textAlign = TextAlign.Center)
 
-            Text(text = stringResource(id = R.string.step_recipe))
-            for ((index, step) in baguetonViewModel.stepsList.withIndex()) {
-                StepInput(
-                    step = step,
-                    onStepChange = { newStep ->
-                        println("Updating step at index $index to $newStep")
-                        baguetonViewModel.updateStep(index, newStep)
-                    },
-                    onDelete = {
-                        println("Deleting step at index $index")
-                        baguetonViewModel.stepsList.removeAt(index)
+                    for ((index, step) in baguetonViewModel.stepsList.withIndex()) {
+                        StepInput(
+                            step = step,
+                            onStepChange = { newStep ->
+                                println("Updating step at index $index to $newStep")
+                                baguetonViewModel.updateStep(index, newStep)
+                            },
+                            onDelete = {
+                                println("Deleting step at index $index")
+                                baguetonViewModel.stepsList.removeAt(index)
+                            }
+                        )
                     }
-                )
-            }
-            Button(onClick = { baguetonViewModel.addStep() },
-                    modifier = Modifier.padding(16.dp)
-            ) {
-                Text(stringResource(id = R.string.add_step))
+                    Button(
+                        onClick = { baguetonViewModel.addStep() },
+                        modifier = Modifier.padding(16.dp)
+                    ) {
+                        Text(stringResource(id = R.string.add_step))
+                    }
+                }
             }
             Spacer(modifier = Modifier.height(16.dp))
 
@@ -157,7 +177,6 @@ fun TitleInput(
             modifier = Modifier
                 .align(Alignment.CenterHorizontally)
                 .padding(8.dp)
-                .border(1.dp, Color.Gray)
                 .width(300.dp)
                 .background(Color.White)
                 .onFocusChanged { focusState ->
