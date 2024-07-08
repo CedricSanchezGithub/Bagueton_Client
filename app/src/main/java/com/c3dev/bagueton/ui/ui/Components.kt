@@ -14,9 +14,9 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
-import androidx.compose.material.icons.filled.AllInbox
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Close
+import androidx.compose.material.icons.filled.DeveloperBoard
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.RestaurantMenu
 import androidx.compose.material.icons.filled.Search
@@ -119,7 +119,7 @@ fun MyBottomAppBar(navHostController: NavHostController? = null) {
         }
         Spacer(Modifier.weight(1f, true))
         IconButton(onClick = { navHostController?.navigate("ToolsScreen") }) {
-            Icon(Icons.Filled.AllInbox, contentDescription = "Outils",
+            Icon(Icons.Filled.DeveloperBoard, contentDescription = "Outils",
                 Modifier.size(30.dp))
         }
         Spacer(Modifier.weight(1f, true))

@@ -43,7 +43,7 @@ class MainActivity : ComponentActivity() {
                             weatherViewModel = UnboardingViewModel(),
                             contactsViewModel = ContactsViewModel(),
                             toolsViewModel = ToolsViewModel(),
-                            loginViewModel = LoginViewModel()
+                            loginViewModel = LoginViewModel(),
                         )
                     }
                 }

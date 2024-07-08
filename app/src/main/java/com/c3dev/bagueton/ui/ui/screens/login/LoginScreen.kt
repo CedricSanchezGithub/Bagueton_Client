@@ -216,7 +216,7 @@ fun CustomizedLinks(navHostController: NavHostController?) {
                 contentAlignment = Alignment.Center,
                 modifier = Modifier
                     .padding(8.dp)
-                    .clickable { /* Version action */ }
+                    .clickable { navHostController?.navigate("GitHubCommitScreen") }
             ) {
                 Column(horizontalAlignment = CenterHorizontally) {
                     Icon(imageVector = Icons.Filled.Info, contentDescription = "Version")

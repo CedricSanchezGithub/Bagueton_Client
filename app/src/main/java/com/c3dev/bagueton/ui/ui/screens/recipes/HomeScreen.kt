@@ -19,11 +19,13 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -39,6 +41,8 @@ import androidx.navigation.NavHostController
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
 import com.c3dev.bagueton.R
+import com.c3dev.bagueton.ui.exceptions.CustomSnackBarViewModel
+import com.c3dev.bagueton.ui.exceptions.CustomSnackbar
 import com.c3dev.bagueton.ui.model.beans.RecipeBean
 import com.c3dev.bagueton.ui.ui.MyBottomAppBar
 import com.c3dev.bagueton.ui.ui.SearchBar
@@ -47,11 +51,12 @@ import com.c3dev.bagueton.ui.ui.theme.Bagueton_v1Theme
 
 @Composable
 fun HomeScreen(baguetonViewModel: BaguetonViewModel,
-               navHostController: NavHostController? = null)
+               navHostController: NavHostController? = null,
+               customSnackBarViewModel: CustomSnackBarViewModel? = null)
 {
     // Accéder à la variable errorMessage dans l'instance de BaguetonViewModel
     val errorMessage by baguetonViewModel.errorMessage
-
+    val snackbarHostState = remember { SnackbarHostState() }
     // LaunchedEffect est utilisé pour effectuer des opérations de chargement
     // ou des effets secondaires lorsque le composable est initialement composé.
     // Lorsque la valeur de key1 change, LaunchedEffect sera réexécuté.
@@ -64,12 +69,15 @@ fun HomeScreen(baguetonViewModel: BaguetonViewModel,
 
     Scaffold(
         topBar = {
-            // Passer l'instance de BaguetonViewModel à SearchBar
             SearchBar(baguetonViewModel = baguetonViewModel)
         },
         bottomBar = {
-            // Passer l'instance de NavHostController à MyBottomAppBar
             MyBottomAppBar(navHostController = navHostController)
+        },
+        snackbarHost = {
+            if (customSnackBarViewModel != null) {
+                CustomSnackbar(snackbarHostState = snackbarHostState, customSnackBarViewModel = customSnackBarViewModel)
+            }
         }
 
 

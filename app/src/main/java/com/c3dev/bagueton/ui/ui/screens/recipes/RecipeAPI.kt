@@ -1,6 +1,7 @@
 package com.c3dev.bagueton.ui.ui.screens.recipes
 
 
+import com.c3dev.bagueton.ui.exceptions.CustomSnackBarViewModel
 import com.c3dev.bagueton.ui.ui.screens.recipes.RecipeAPI.MEDIA_TYPE_JSON
 import com.c3dev.bagueton.ui.ui.screens.recipes.RecipeAPI.client
 import com.c3dev.bagueton.ui.ui.screens.recipes.RecipeAPI.gson
@@ -18,11 +19,10 @@ import java.io.IOException
 
 object RecipeAPI {
     data class HttpResponse(val body: String, val code: Int)
-
     val MEDIA_TYPE_JSON = "application/json; charset=utf-8".toMediaType()
     val gson = Gson()
     val client = OkHttpClient()
-    private const val URL_SERVER = "http://192.168.1.26:8081/bagueton"
+    private const val URL_SERVER = "http://90.51.140.217:30001/bagueton"
     // http://localhost:8080 http://90.51.140.217:8082/bagueton http://192.168.1.50:8082/bagueton
 
 
@@ -62,6 +62,11 @@ object RecipeAPI {
             println("Erreur de syntaxe JSON: ${e.message}")
             // Gérer l'erreur de conversion JSON
         } catch (e: IOException) {
+            val customSnackBarViewModel = CustomSnackBarViewModel()
+            customSnackBarViewModel.errorServerMessage.value = "Erreur d'IO: ${e.message}"
+            customSnackBarViewModel.errorServer.value = true
+            println("customSnackBarViewModel.errorServerMessage.value = ${customSnackBarViewModel.errorServerMessage.value}")
+            println("customSnackBarViewModel.errorServer.value = ${customSnackBarViewModel.errorServer.value}")
             println("Erreur d'IO: ${e.message}")
             // Gérer les erreurs d'entrée/sortie, par exemple un problème de réseau
         } catch (e: Exception) {
