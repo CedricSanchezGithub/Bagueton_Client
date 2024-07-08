@@ -20,7 +20,7 @@
         android:theme="@style/Theme.Bagueton_v1"
         tools:targetApi="tiramisu">
         <activity
-            android:name="com.c3dev.bagueton.ui.viewmodel.MainActivity"
+            android:name="com.c3dev.bagueton.ui.mainactivity.MainActivity"
             android:exported="true"
             android:theme="@style/Theme.Bagueton_v1">
             <intent-filter>

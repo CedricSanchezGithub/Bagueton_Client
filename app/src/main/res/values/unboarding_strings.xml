@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="welcome_unboarding">"Bienvenue !"</string>
+    <string name="order_unboarding">Vous avez 13 commandes aujoud`hui</string>
+    <string name="enter_unboarding">Entrer</string>
+    <string name="welcome_message">Bienvenue, </string>
+
+</resources>

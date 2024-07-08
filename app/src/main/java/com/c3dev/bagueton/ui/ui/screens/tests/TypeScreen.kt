@@ -18,11 +18,11 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.c3dev.bagueton.ui.ui.MyBottomAppBar
 import com.c3dev.bagueton.ui.ui.SearchBar
+import com.c3dev.bagueton.ui.ui.screens.recipes.BaguetonViewModel
 import com.c3dev.bagueton.ui.ui.theme.Bagueton_v1Theme
-import previewBaguetonViewModel
 
 @Composable
-fun TypeScreen(baguetonViewModel: com.c3dev.bagueton.ui.BaguetonViewModel, navHostController: NavHostController? = null ) {
+fun TypeScreen(baguetonViewModel: BaguetonViewModel, navHostController: NavHostController? = null ) {
 
     LaunchedEffect(key1 = true) {
         baguetonViewModel.loadRecipes()
@@ -31,7 +31,7 @@ fun TypeScreen(baguetonViewModel: com.c3dev.bagueton.ui.BaguetonViewModel, navHo
     Scaffold(
         topBar = {
             SearchBar(
-                baguetonViewModel = baguetonViewModel, welcomeMessage = "Bienvenue, utilisateur",
+                baguetonViewModel = baguetonViewModel,
                 navHostController = navHostController
             )
         },
@@ -62,7 +62,7 @@ fun TypeScreenPreview() {
 
     Bagueton_v1Theme {
         Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
-            TypeScreen(baguetonViewModel = previewBaguetonViewModel())
+            TypeScreen(baguetonViewModel = BaguetonViewModel())
         }
     }
 }

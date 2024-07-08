@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="username_choose">Choisissez un pseudo</string>
+    <string name="password_choose">Choisissez un mot de passe</string>
+    <string name="password_again">Re-Choisissez un mot de passe</string>
+    <string name="username_invalide">Nom d\'utilisateur ou mot de passe invalide</string>
+
+</resources>

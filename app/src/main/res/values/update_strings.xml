@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="update_recipe">Mettre à jour la recette</string>
+    <string name="cancel">Annuler</string>
+    <string name="save">Enregistrer</string>
+    <string name="delete">Supprimer</string>
+    <string name="recipe_title_new">Nouveau titre de la recette</string>
+    <string name="step_list">Liste des étapes</string>
+    <string name="step_list_new">Liste des nouvelles étapes</string>
+    <string name="ingredient_list">Liste des ingrédients</string>
+    <string name="ingredient_list_new">Liste des nouveaux ingrédients</string>
+
+</resources>

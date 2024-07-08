@@ -51,6 +51,7 @@ android {
 
 dependencies {
     implementation(libs.androidx.benchmark.macro)
+    implementation(libs.androidx.runtime.livedata)
     val navVersion = "2.7.7"
     implementation("androidx.navigation:navigation-compose:$navVersion")
     implementation(libs.androidx.core.ktx)
